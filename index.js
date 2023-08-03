@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 import { getAllProjectsURLs, getLogsFromUrls, transformLogs, getSetEnvs } from './controllers/controller.js'
+import {danger} from './services/test.js'
 
 async function main() {
-    await getSetEnvs()
+    // await getSetEnvs()
+
+    danger()
 
     // const urls = await getAllProjectsURLs()
 

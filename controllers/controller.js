@@ -25,21 +25,12 @@ async function transformLogs(logs) {
     return JSONLogs
 }
 
-import { exec } from 'child_process'
-import { promisify } from 'util'
-const execute = promisify(exec)
-
 async function getSetEnvs() {
-    const s = await execute(`PowerShell && $Env:author= 'pedro.thiago.aee'`)
-    // const author = await ask('Qual o inicio do email (antes do @)?', '')
-    // const project = await ask('Qual a url do projeto que deverá ser feito o commit?', '')
+    const author = await ask('Qual o inicio do email (antes do @)?', '')
+    const project = await ask('Qual a url do projeto que deverá ser feito o commit?', '')
 
 
-    // await setEnvironmentVariable({author, project})
-
-
-    // console.log(process.env.author)
-    // console.log(process.env.project)
+    await setEnvironmentVariable({author, project})
 }
 
 export {getAllProjectsURLs, getLogsFromUrls, transformLogs, getSetEnvs}

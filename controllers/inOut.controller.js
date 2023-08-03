@@ -11,7 +11,6 @@ async function ask(question, defaultAnswer) {
     })
 
     return answers.variable
-
  }
 
 
