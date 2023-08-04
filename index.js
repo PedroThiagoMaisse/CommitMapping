@@ -1,18 +1,21 @@
 #!/usr/bin/env node
-import { getAllProjectsURLs, getLogsFromUrls, transformLogs, getSetEnvs } from './controllers/controller.js'
-import {danger} from './services/test.js'
+import { getAllProjectsURLs, getLogsFromUrls, transformLogs, commitToGit } from './controllers/controller.js'
+import { die, born } from './controllers/phaser.js';
 
 async function main() {
-    // await getSetEnvs()
+    await born()
 
-    danger()
+    const urls = await getAllProjectsURLs()
 
-    // const urls = await getAllProjectsURLs()
+    const logs = await getLogsFromUrls(urls)
 
-    // const logs = await getLogsFromUrls(urls)
+    const JSONLogs = await transformLogs(logs)
 
-    // const JSONLogs = await transformLogs(logs)
-   
+    await commitToGit(JSONLogs)
+
+    await die()
+
+    return
 }
 
 main()

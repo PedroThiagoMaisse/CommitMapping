@@ -1,17 +1,3 @@
-New Crawler
-
-inOutController
-ASK
-
-inOutController
-{
-    --- generate .batch
-    enter a repository
-    enter temp - create a new folder
-    [
-    change 1 archive to include new info, 
-    commit with new date
-    ]
-
-    push
-}
+Habilitar o log do número de linhas
+Habilitar o log do nome do projeto (e perguntar sobre)
+Habilitar o log das linguagens dos arquivos alterados

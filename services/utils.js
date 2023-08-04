@@ -1,8 +1,29 @@
-import { exec } from 'child_process'
 import { promisify } from 'util'
 import fs from 'fs'
-const createFolder = promisify(fs.mkdir)
+import { createFile } from '../controllers/inOut.controller.js'
+const _createFolder = promisify(fs.mkdir)
 const deleteFolder = promisify(fs.rm)
+const readFile = promisify(fs.readFile)
+const readFolder = promisify(fs.readdir)
+const exist = promisify(fs.exists)
+
+async function createFolder(path) {
+    const brokenPath = path.split('/')
+    let currentPath = ''
+
+    for (let index = 0; index < brokenPath.length; index++) {
+        const element = brokenPath[index];
+        if (element != '') {
+            currentPath = currentPath ? currentPath + '/' + element : element
+            const flip = await exist(currentPath)
+            if (!flip) {
+                _createFolder(currentPath)
+            }
+        }
+    }
+
+
+}
 
 async function filterFor(string, array) {
     const returnArray = []
@@ -16,30 +37,49 @@ async function filterFor(string, array) {
     return returnArray
 }
 
+async function crawler(path) {
+    if (!path) { path = process.env.lookatpath }
+    if (path != '/') { path = path + '/' }
+    
+    let array = []
+    const y = await readFolder(path)
 
-async function crawller() {
-    return `
-/Users/729761/Desktop/Projetos/QrcodeKit/agrvai/frontend/.git
-/Users/729761/Desktop/Projetos/QrcodeKit/app/.git
-/Users/729761/Desktop/Projetos/QrcodeKit/backend/.git
-/Users/729761/Desktop/Projetos/QrcodeKit/front pipe/frontend/.git
-/Users/729761/Desktop/Projetos/QrcodeKit/frontendOLD/.git
-/Users/729761/Desktop/Projetos/QrcodeKit/newApp/my-app/.git`.split('\n')
+    for (let index = 0; index < y.length; index++) {
+        if (y[index].indexOf('.') === -1 && y[index] !== 'node_modules')
+            try {
+                const s = await crawler(path + y[index])
+                array.push(...s)
+            } catch  {
+                array.push()
+            }
+        
+        array.push(path + y[index])
+    }
+
+    return array
 }
 
 async function generateTempFolder() {
-    const path = '/commit_mapping_temp'
-    try {
-        await createFolder(path)
-    }
-    catch (err) {
-        if (err.code == 'EEXIST') {
-            await deleteFolder(path, { recursive: true, force: true })
-            await createFolder(path)
-        }
-    }
+    const path = process.env.commitpath + '/temp/'
+    if(await exist(path)) {await deleteFolder(path, { recursive: true, force: true })}
+    process.env.commitpathtemp = path
+   
+    await createFolder(path)
     return path 
 }
 
+async function getFile(path) {
+    if (!await exist(path)) {
+        createFile(path, '')
+        return ''
+    }
 
-export {crawller, filterFor, generateTempFolder}
+    const string = await readFile(path, 'utf-8')
+    
+    return string
+
+}
+
+
+
+export {crawler, filterFor, generateTempFolder, createFolder, getFile}

@@ -1,36 +1,47 @@
-import {crawller, filterFor, generateTempFolder} from '../services/utils.js'
-import {getUrlPerPath,cloneRepository, generateFilteredLogs, logsToJson} from './git.controller.js'
-import { setEnvironmentVariable } from '../services/Envs.js'
-import {ask} from './inOut.controller.js'
+import {crawler, filterFor, generateTempFolder} from '../services/utils.js'
+import {getUrlPerPath,cloneRepository, generateFilteredLogs, logsToJson, cloneProject, modifyAndCommit, setProject} from './git.controller.js'
+import { log, warn, err, spinner, startLog, finishLog } from '../services/log.js'
 
 async function getAllProjectsURLs() {
-    const paths = await filterFor('.git', await crawller())
+    startLog('Pegando Todas as urls de projetos')
+    const unfilteredPaths = await crawler()
+    const paths = await filterFor('.git', unfilteredPaths)
     const urls = await getUrlPerPath(paths)
     
+    finishLog(urls.length + ' Urls encontradas')
     return urls
 }
 
 async function getLogsFromUrls(urls) {
+    startLog(`Pegando todos os commits feitos por "${process.env.author}"`)
     const tempFolderPath = await generateTempFolder()
     const clonedReposPath = await cloneRepository(urls, tempFolderPath)
-    const logs = await generateFilteredLogs(clonedReposPath)
+    const { array, count } = await generateFilteredLogs(clonedReposPath)
 
-    return logs
+    finishLog(`${count} Commits encontrados`)
+    return array
 }
 
 async function transformLogs(logs) {
+    startLog('Transformando Logs em JSON')
     const JSONLogs = await logsToJson(logs)
     JSONLogs.sort(function (a, b) { return b.Date - a.Date });
     
+    finishLog('Feito')
     return JSONLogs
 }
 
-async function getSetEnvs() {
-    const author = await ask('Qual o inicio do email (antes do @)?', '')
-    const project = await ask('Qual a url do projeto que deverá ser feito o commit?', '')
 
+async function commitToGit(json) {
+    startLog('Modificando Arquivos e realizando Commits')
+    await cloneProject()
+    await setProject()
+    await modifyAndCommit(json)
 
-    await setEnvironmentVariable({author, project})
+    finishLog('Finalizado')
+    
+    return
 }
 
-export {getAllProjectsURLs, getLogsFromUrls, transformLogs, getSetEnvs}
+
+export {getAllProjectsURLs, getLogsFromUrls, transformLogs, commitToGit}
