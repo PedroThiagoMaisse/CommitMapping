@@ -1,20 +1,14 @@
 ## COMMIT MAPPING
 
-Um executável de Node que procura todos os repositórios de git na sua máquina, armazena os commmits que você realizou em cada um deles e sobe um espelho deles no projeto desejado.
+Um executável de Node que procura todos os repositórios de git na sua máquina, armazena os commmits que você realizou em cada um deles e sobe um espelho deles no projeto desejado. 
 
-
-Esse espelho conta com as informações:
-
-    Código do commit;
-
-    Author;
-
-    Data;
-
+Esse espelho conta com as informações: 
+    Código do commit; 
+    Author; 
+    Data; 
     Descrição do commit.
 
-
-Não há informações sobre a natureza do projeto daonde o commit surge ou snippets do código.
+Não há informações sobre a natureza do projeto daonde o commit surge ou snippets do código. 
 
 
 
@@ -22,15 +16,11 @@ Não há informações sobre a natureza do projeto daonde o commit surge ou snip
 ## RODANDO
 
 Use 
->Npx xxxxxxx@x.x.x
-
+>Npx xxxxxxx@x.x.x 
 para rodar ele sem a necessidade de instalar.
 
-
-
 Para rodar com acesso ao código utilize,
->node .
-
+>node . 
 dentro do repositório clonado.
 
 
@@ -40,9 +30,8 @@ dentro do repositório clonado.
 
 Há apenas duas variáveis que o código utiliza:
 
-commitpath : a rota para armazernamento das informações e clonagem / commit dos repositórios
-
-lookatpath : a rota base apartir da qual o crawler irá procurar em cada filho por repositórios
+commitpath : a rota para armazernamento das informações e clonagem / commit dos repositórios  
+lookatpath : a rota base apartir da qual o crawler irá procurar em cada filho por repositórios 
 
 Pode-se setar ela utilizando o git bash como:
 > commitpath="" lookatpath="" node.
@@ -53,14 +42,14 @@ Pode-se setar ela utilizando o git bash como:
 ## PRÓXIMOS PASSOS
 
 
-- ~~ Criar um caso de testes que não pusha; ~~
+- ~~Criar um caso de testes que não pusha;~~
+- ~~Melhorar a leitura do readme;~~
 - Função de DeleteFile em utils;
 - Break o modifyAndCommit() no git.controller;
 - Break o Born() no pasher;
 - Possibilitar vários processos de estarem ocupando a thread quando executando em loop;
 - Arrumar as envs de ambiente p/ incluir email, token e repo;
 - Armazenar os commits que deram erro;
-- Melhorar a leitura do readme;
 - Organização de arquivos;
 - Error Handler mais completo;
 - Subir para o NPX (e trocar de nome, talvez);
