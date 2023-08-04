@@ -145,8 +145,13 @@ Commit: ${element.commit}
             await execute(`cd ${path} && git add . && git commit -m "${element.desc}" --date "${element.Date[Symbol.toPrimitive]('number')}" `)
         } else {count = count + 1}
     }
+    log(`\r${length - count} commits realizados com ${count} erros                                 `, 'grey', { stdout: true })
 
     await execute(`date ${u[0]}-${u[1]}-${u[2]}`)
+    if (process.env.isTest != 'false') {
+        log('\n\nProjeto Rodado em modo de TESTE, \nArquivos já alterados e Commits feitos, porém o PUSH não será realizado.', 'red')
+        return false
+    }
     await execute(`git remote set-url origin https://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@github.com/PedroThiagoMaisse/CommitMappingTwoEletricBugaloo.git && cd ${path} && git push`)
     
     return true

@@ -1,5 +1,5 @@
 import { ask, createFile} from "./inOut.controller.js"
-import { spinner, warn } from "../services/log.js"
+import { log, spinner, warn } from "../services/log.js"
 import { setEnvironmentVariable } from "../services/Envs.js"
 import { promisify } from 'util'
 import fs from 'fs'
@@ -22,13 +22,15 @@ async function born() {
     const s = await execute('date /t')
     u = s.stdout.split('/')
     
+    log('Iniciando o fluxo', ['inverse', 'green'])
 
     const obj = {}
-    obj.author = await ask('Qual o inicio do email (antes do @)?', 'pedro.thiago')
-    obj.project = await ask('Qual a url do projeto aonde será realizado os commits?', 'https://github.com/PedroThiagoMaisse/COMMIT_LOGGER_BRF.git')
-    obj.token = await ask('Um token com acesso ao repositório, para gerar um vá à: https://github.com/settings/tokens', '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', true)
 
-    const check = { commitpath: '/commitMapping', lookatpath: '/Users' }
+    obj.author = process.env.author? process.env.author : await ask('Qual o inicio do email (antes do @)?', 'pedro.thiago')
+    obj.project = process.env.project? process.env.project : await ask('Qual a url do projeto aonde será realizado os commits?', '')
+    obj.token = process.env.token? process.env.token : await ask('Um token com acesso ao repositório, para gerar um vá à: https://github.com/settings/tokens', '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', true)
+
+    const check = { commitpath: '/commitMapping', lookatpath: '/Users', isTest: false }
 
     for (const [key, value] of Object.entries(check)) {
         if(!process.env[key]) {obj[key] = value} 

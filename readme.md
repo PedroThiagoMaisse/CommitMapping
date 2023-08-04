@@ -52,14 +52,18 @@ Pode-se setar ela utilizando o git bash como:
 
 ## PRÓXIMOS PASSOS
 
-Organização de arquivos;
 
-Error Handler mais completo;
-
-Subir para o NPX (e trocar de nome, talvez);
-
-Nos detalhes do commit, colocar o número de linhas;
-
-Nos detalhes do commit, colocar o nome do projeto (e perguntar no setting);
-
-Nos detalhes do commit, colocar as linguagens dos arquivos alterados.
+- ~~ Criar um caso de testes que não pusha; ~~
+- Função de DeleteFile em utils;
+- Break o modifyAndCommit() no git.controller;
+- Break o Born() no pasher;
+- Possibilitar vários processos de estarem ocupando a thread quando executando em loop;
+- Arrumar as envs de ambiente p/ incluir email, token e repo;
+- Armazenar os commits que deram erro;
+- Melhorar a leitura do readme;
+- Organização de arquivos;
+- Error Handler mais completo;
+- Subir para o NPX (e trocar de nome, talvez);
+- Nos detalhes do commit, colocar o número de linhas;
+- Nos detalhes do commit, colocar o nome do projeto (e perguntar no setting);
+- Nos detalhes do commit, colocar as linguagens dos arquivos alterados.

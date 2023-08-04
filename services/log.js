@@ -24,7 +24,7 @@ async function log(info, style, options) {
 }
 
 async function warn(info) {
-    log(`Warning: ${info}`, ['yellow', 'bold'])
+    log(`Aviso: ${info}`, ['yellow', 'bold'])
 }
 
 async function err(info) {
@@ -37,7 +37,13 @@ const spinner = {
 
     Start: async function () {
         this.start = Date.now()
-        const P = ['\\', '|', '/', '-'];
+        const P = ['[--=--]', '[---=-]', '[----=]',
+            // '[---=-]',
+            // '[--=--]',
+            // '[-=---]',
+            '[-----]',
+            '[=----]',
+            '[-=---]'];
         let x = 0;
         this.loader = setInterval(() => {
         process.stdout.write(`\r${P[x++]}`);

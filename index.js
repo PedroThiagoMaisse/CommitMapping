@@ -14,8 +14,6 @@ async function main() {
     await commitToGit(JSONLogs)
 
     await die()
-
-    return
 }
 
 main()
