@@ -26,9 +26,9 @@ async function born() {
 
     const obj = {}
 
-    obj.author = process.env.author? process.env.author : await ask('Qual o inicio do email (antes do @)?', 'pedro.thiago')
+    obj.author = process.env.author? process.env.author : await ask('Qual o inicio do email (antes do @)?', '')
     obj.project = process.env.project? process.env.project : await ask('Qual a url do projeto aonde será realizado os commits?', '')
-    obj.token = process.env.token? process.env.token : await ask('Um token com acesso ao repositório, para gerar um vá à: https://github.com/settings/tokens', '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', true)
+    obj.token = process.env.token? process.env.token : await ask('Um token com acesso ao repositório, para gerar um vá à: https://github.com/settings/tokens', '', true)
 
     const check = { commitpath: '/commitMapping', lookatpath: '/Users', isTest: false }
 
