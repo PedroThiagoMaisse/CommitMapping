@@ -1,7 +1,11 @@
 import chalk from "chalk";
 const sep = `/-----------------------------------------------------/`
 
-
+function sleep(ms) {
+	return new Promise((resolve) => {
+		setTimeout(resolve, ms)
+	})
+}
 
 async function log(info, style, options) {
     if (typeof style !== 'object') { style = [style] }
@@ -34,28 +38,39 @@ async function err(info) {
 const spinner = {
     loader: null,
     start: null,
+    str: '',
+    logger: '',
+
+    ClearLogger: async function () {
+        this.logger = ''
+    },
+
+    AddToLogger: async function (string) {
+        this.logger = chalk.gray(string) + '\n'
+    },
 
     Start: async function () {
         this.start = Date.now()
-        const P = ['[--=--]', '[---=-]', '[----=]',
-            // '[---=-]',
-            // '[--=--]',
-            // '[-=---]',
-            '[-----]',
-            '[=----]',
-            '[-=---]'];
+        const P = ['[--=--]', '[---=-]', '[----=]','[-----]','[=----]','[-=---]'];
         let x = 0;
         this.loader = setInterval(() => {
-        process.stdout.write(`\r${P[x++]}`);
-        x %= P.length;
-        }, 250);
+            const visualizer = P[x]
+            x++
+            if (this.logger !== '') {
+                process.stdout.write(`\r${this.logger}              `);
+                this.ClearLogger()
+            }
+            process.stdout.write(`\r${visualizer}  ${chalk.grey(this.str)}`);
+            x %= P.length;
+        }, 100);
     },
 
     End: async function () {
         const interval = Date.now() - this.start
         this.start = null
         clearInterval(this.loader)
-        process.stdout.write('\r')
+        process.stdout.write(`\r${this.logger}           `)
+        this.ClearLogger()
         return interval
     }
 }
@@ -71,7 +86,11 @@ async function finishLog(info) {
     if (interval > 1500) { complement = `, em ${interval / 1000}s` }
     else { complement = `, em ${interval}ms` }
     
-    log(`\n${info}${complement}\n`, 'green')
+    spinner.str = ''
+
+    log(`${info}${complement}                                 \n`, 'green', { stdout: true })
+    
+    return
 }
 
 export {startLog, finishLog, log, warn, err, spinner}

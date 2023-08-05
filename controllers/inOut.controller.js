@@ -1,8 +1,5 @@
 import inquirer from 'inquirer'
-import { promisify } from 'util'
-import fs from 'fs'
-const existFile = promisify(fs.exists)
-const _createFile = promisify(fs.writeFile)
+import { _createFile, existFile } from '../services/promisses.js'
 import { createFolder } from '../services/utils.js'
 import { err } from '../services/log.js'
 import { die } from './phaser.js'

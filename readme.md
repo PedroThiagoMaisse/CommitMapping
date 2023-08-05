@@ -28,13 +28,17 @@ dentro do repositório clonado.
 
 ## SETANDO VARIÁVEIS DE AMBIENTE
 
-Há apenas duas variáveis que o código utiliza:
+Essas são as variáveis que o código usa:
 
-commitpath : a rota para armazernamento das informações e clonagem / commit dos repositórios  
-lookatpath : a rota base apartir da qual o crawler irá procurar em cada filho por repositórios 
+commitpath : a rota para armazernamento das informações e clonagem / commit dos repositórios, quando não presente é assumido C:/commitMapping
+lookatpath : a rota base apartir da qual o crawler irá procurar em cada filho por repositórios, quando não presente é assumido C:/Users
+isTest     : Quando verdadeiro o projeto não irá dar Push dos dados, quando não presente é assumida Falso
+author     : o Email para servir como filtro nos commits, *quando não colocado é preenchido por diálogo na cli*
+project    : a URL do projeto no qual os commits serão feitos, *quando não colocado é preenchido por diálogo na cli*
+token      : um token de acesso da conta no github, *quando não colocado é preenchido por diálogo na cli* 
 
 Pode-se setar ela utilizando o git bash como:
-> commitpath="" lookatpath="" node.
+> author="" project="" token="" commitpath="" lookatpath="" isTest="" node ..
 
 
 
@@ -44,14 +48,19 @@ Pode-se setar ela utilizando o git bash como:
 
 - ~~Criar um caso de testes que não pusha;~~
 - ~~Melhorar a leitura do readme;~~
-- Função de DeleteFile em utils;
+- ~~Arrumar as envs de ambiente p/ incluir email, token e repo;~~
+- ~~Armazenar os commits que deram erro;~~
+- ~~Error Handler mais completo;~~
+- ~~Lidar com kill Switchs;~~
+- ~~Adicionar novas variáveis ao ReadMe;~~
+- ~~Função de DeleteFile em utils;~~
+- ~~Mudar o jeito que o crawler funciona p/ evitar a recorrencia da função;~~
+
+- Não duplicar Commits e não deletar o arquivo atual;
 - Break o modifyAndCommit() no git.controller;
-- Break o Born() no pasher;
+- Break o Born() no phaser;
 - Possibilitar vários processos de estarem ocupando a thread quando executando em loop;
-- Arrumar as envs de ambiente p/ incluir email, token e repo;
-- Armazenar os commits que deram erro;
 - Organização de arquivos;
-- Error Handler mais completo;
 - Subir para o NPX (e trocar de nome, talvez);
 - Nos detalhes do commit, colocar o número de linhas;
 - Nos detalhes do commit, colocar o nome do projeto (e perguntar no setting);

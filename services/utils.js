@@ -1,11 +1,6 @@
-import { promisify } from 'util'
-import fs from 'fs'
 import { createFile } from '../controllers/inOut.controller.js'
-const _createFolder = promisify(fs.mkdir)
-const deleteFolder = promisify(fs.rm)
-const readFile = promisify(fs.readFile)
-const readFolder = promisify(fs.readdir)
-const exist = promisify(fs.exists)
+import { ErrorLog } from './errorHandler.js';
+import {_createFolder, deleteFolder, readFile, readFolder, existFile} from './promisses.js'
 
 async function createFolder(path) {
     const brokenPath = path.split('/')
@@ -15,7 +10,7 @@ async function createFolder(path) {
         const element = brokenPath[index];
         if (element != '') {
             currentPath = currentPath ? currentPath + '/' + element : element
-            const flip = await exist(currentPath)
+            const flip = await existFile(currentPath)
             if (!flip) {
                 _createFolder(currentPath)
             }
@@ -41,27 +36,51 @@ async function crawler(path) {
     if (!path) { path = process.env.lookatpath }
     if (path != '/') { path = path + '/' }
     
-    let array = []
-    const y = await readFolder(path)
+    let nextPaths = await readFolder(path)
+    let nextFolders = []
+    const allPaths = []
 
-    for (let index = 0; index < y.length; index++) {
-        if (y[index].indexOf('.') === -1 && y[index] !== 'node_modules')
-            try {
-                const s = await crawler(path + y[index])
-                array.push(...s)
-            } catch  {
-                array.push()
+    while (nextPaths.length) {
+        nextFolders = []
+        for (let index = 0; index < nextPaths.length; index++) {
+            const element = nextPaths[index]
+            if (element.indexOf('.') === -1 && !element.includes('node_modules')) {
+                nextFolders.push(element)
             }
-        
-        array.push(path + y[index])
+
+            allPaths.push(element)
+        }
+
+        nextPaths = []
+
+        for (let index = 0; index <  nextFolders.length; index++) {
+            const element = nextFolders[index]
+            try {
+                const newPaths = await readFolder(path + element)
+                for (let index = 0; index < newPaths.length; index++) {
+                    newPaths[index] = element + '/' + newPaths[index]
+               }
+       
+               nextPaths.push(... newPaths)
+            } catch (err) {
+                if (err.code !== 'ENOTDIR') {
+                    ErrorLog.addNewLog(err)
+                }
+            }
+            
+        }
+
+
     }
 
-    return array
+    // throw(500)
+
+    return allPaths
 }
 
 async function generateTempFolder() {
     const path = process.env.commitpath + '/temp/'
-    if(await exist(path)) {await deleteFolder(path, { recursive: true, force: true })}
+    if(await existFile(path)) {await deleteFolder(path, { recursive: true, force: true })}
     process.env.commitpathtemp = path
    
     await createFolder(path)
@@ -69,7 +88,7 @@ async function generateTempFolder() {
 }
 
 async function getFile(path) {
-    if (!await exist(path)) {
+    if (!await existFile(path)) {
         createFile(path, '')
         return ''
     }

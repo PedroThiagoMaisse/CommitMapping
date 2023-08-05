@@ -1,45 +1,59 @@
-import { exec } from 'child_process'
-import { promisify } from 'util'
-import { log } from '../services/log.js'
-import fs from 'fs'
 import { createFolder, getFile } from '../services/utils.js'
 import { createFile } from './inOut.controller.js'
-const execute = promisify(exec)
-const exist = promisify(fs.exists)
-const deleteFolder = promisify(fs.rm)
+import { spinner } from '../services/log.js'
+import { ErrorLog, errorHandler } from '../services/errorHandler.js'
+import { execute, existFile, deleteFolder } from '../services/promisses.js'
 
 async function logsToJson(logs) {
     if (typeof logs !== 'object') { logs = [logs] }
+    let count = 0
+    let obj = {}
 
     const returnArray = []
     for (let index = 0; index < logs.length; index++) {
         const commits = logs[index].data.split('commit')
 
         for (let index = 0; index < commits.length; index++) {
+            let element = commits[index].split('\n')
             try {
-            const element = commits[index].split('\n')
-            const obj = {commit: element[0].trim(), Author: element[1].slice(8), Date: new Date(element[2].slice(8)), desc: element[4].trim()}
-            returnArray.push(obj)
+                if (commits[index].toLowerCase().includes('merge')) {
+                    element = element.splice(1, 2)
+                }
+                const obj = { commit: element[0].trim(), Author: element[1].slice(8), Date: new Date(element[2].slice(8)), desc: element[4].trim() }
+                returnArray.push(obj)
+            } catch (err) {
+                if (element != '') {
+                    count++
+                    ErrorLog.addNewLog('Cannot produce JSON from commit: "' + element + '"\n Error: ' + err)
+                }
             }
-            catch (err) {}
         }
     }
 
+    if(count)spinner.AddToLogger(`${count} commits são inválidos para serem transformados em JSON`)
     return returnArray
 }
 
 async function cloneRepository(url, path) {
     if (typeof url !== 'object') { url = [url] }
     const returnArray = []
-    
+    let count = 0
+
     for (let index = 0; index < url.length; index++) {
         const element = url[index];
         await createFolder(path + '/' + index)
         try {
             let output = (await execute(`cd ${path + '/' + index} && git clone ${element}`)).stdout
-        } catch (err) { }
+        } catch (err) {
+            count ++
+            ErrorLog.addNewLog(err)
+        }
         returnArray.push(path + '/' + index + element.slice(element.lastIndexOf('/')))
-        log(`Project Cloned: ${element}`, ['grey'], {stdout: true})
+        spinner.AddToLogger(`Project Cloned: ${element}`)
+    }
+
+    if (count === url.length) {
+        errorHandler('NONE GIT CLONE WAS ABLE TO FINISH')
     }
 
     return returnArray
@@ -51,8 +65,8 @@ async function getUrlPerPath(path) {
     const returnArray = []
 
     for (let index = 0; index < path.length; index++) {
+        const element = process.env.lookatpath + '/' +path[index];
         try {
-            const element = path[index];
             let config = (await execute(`cd ${element} && git config --list`)).stdout
             const start = config.indexOf('remote.origin.url')
             config = config.slice(start)
@@ -61,7 +75,9 @@ async function getUrlPerPath(path) {
             if (!returnArray.includes(config) && config !== '') {
                 returnArray.push(config)
             }
-        } catch (err) {}
+        } catch (err) {
+            ErrorLog.addNewLog('ERROR WHILE GETTING URL: ' + element + '\n, ERROR:' + err)
+        }
     }
 
 
@@ -75,15 +91,17 @@ async function generateFilteredLogs(paths) {
     let count = 0
 
     for (let index = 0; index < paths.length; index++) {
+        const element = paths[index];
         try {
-            const element = paths[index];
             let res = (await execute(`cd ${element} && git log --author=${author}`)).stdout
             array.push({ source: element, data: res })
             const regex = /commit/g
             const found = res.match(regex)
         
             count += found.length
-        } catch (err) { }
+        } catch (err) { 
+            ErrorLog.addNewLog('ERROR WHILE FILTERING THE PATH: ' + element + '\n, ERROR:' + err)
+        }
     }
 
 
@@ -96,7 +114,7 @@ async function cloneProject() {
     const token = process.env.token
 
     const trueUrl = 'https://' + token + '@' + url.replace("https://", '')
-    if(await exist(path + '/project')) {deleteFolder(path + '/project', { recursive: true, force: true })}
+    if(await existFile(process.env.commitpath + '/project')) {deleteFolder(process.env.commitpath + '/project', { recursive: true, force: true })}
     await execute(`cd ${path} && git clone ${trueUrl} project`)
 
     return true
@@ -119,7 +137,7 @@ async function modifyAndCommit(json) {
     const length = json.length
 
     for (let index = 0; index < length; index++) {
-        log(`\r\t ${index} já realizados com ${count} erros, faltam ${length - index}  `, 'grey', { stdout: true })
+        spinner.str = `${index - count} bem sucedidos, ${count} erros, faltam ${length - index}  `
         const element = json[index];
         await createFolder(path + element.Date.getFullYear())
         const filePath = path + element.Date.getFullYear() + '/' + element.Date.getMonth() + '.txt'
@@ -143,17 +161,17 @@ Commit: ${element.commit}
         if (element.Date != 'Invalid Date') {
             const r = await execute(str5)
             await execute(`cd ${path} && git add . && git commit -m "${element.desc}" --date "${element.Date[Symbol.toPrimitive]('number')}" `)
-        } else {count = count + 1}
+        } else {
+            ErrorLog.addRawLog(str)
+            count = count + 1
+        }
     }
-    log(`\r${length - count} commits realizados com ${count} erros                                 `, 'grey', { stdout: true })
 
-    await execute(`date ${u[0]}-${u[1]}-${u[2]}`)
-    if (process.env.isTest != 'false') {
-        log('\n\nProjeto Rodado em modo de TESTE, \nArquivos já alterados e Commits feitos, porém o PUSH não será realizado.', 'red')
-        return false
-    }
-    await execute(`git remote set-url origin https://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@github.com/PedroThiagoMaisse/CommitMappingTwoEletricBugaloo.git && cd ${path} && git push`)
     
+    await execute(`date ${u[0]}-${u[1]}-${u[2]}`)
+
+    spinner.AddToLogger(`\r${length - count} commits bem sucedidos e ${count} erros                  `)
+        
     return true
 }
 
