@@ -21,7 +21,7 @@ const ErrorLog = {
     },
 
     createLog: async function () {
-        if (this.log !== '') await createFile(process.env.commitpath + '/errors.txt', this.log)
+        if (this.log !== '') await createFile(process.env.COMMITPATH + '/errors.txt', this.log)
         return
     }
 

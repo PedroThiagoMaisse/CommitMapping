@@ -33,7 +33,7 @@ async function filterFor(string, array) {
 }
 
 async function crawler(path) {
-    if (!path) { path = process.env.lookatpath }
+    if (!path) { path = process.env.LOOKOUTPATH }
     if (path != '/') { path = path + '/' }
     
     let nextPaths = await readFolder(path)
@@ -79,9 +79,9 @@ async function crawler(path) {
 }
 
 async function generateTempFolder() {
-    const path = process.env.commitpath + '/temp/'
+    const path = process.env.COMMITPATH + '/temp/'
     if(await existFile(path)) {await deleteFolder(path, { recursive: true, force: true })}
-    process.env.commitpathtemp = path
+    process.env.COMMITPATHtemp = path
    
     await createFolder(path)
     return path 

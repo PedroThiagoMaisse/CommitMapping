@@ -4,57 +4,62 @@ import { setEnvironmentVariable } from "../services/Envs.js"
 import { ErrorLog } from "../services/errorHandler.js"
 import { execute, deleteFolder } from "../services/promisses.js"
 
-let finish = true
-
 async function exitHandler(options, exitCode) {
-    if (finish) {
-        console.log('FORCED CLOSING \n\n' + exitCode)
-        await execute(`date ${u[0]}-${u[1]}-${u[2]}`)
-    }
-    finish = false
+    console.log('\nFORCED EXIT: ' + exitCode)
+    execute(`date ${startingDate[0]}-${startingDate[1]}-${startingDate[2]}`)
     process.exit();
 }
 
-//do something when app is closing
-process.on('exit', exitHandler.bind(null,{cleanup:true}));
-
-//catches ctrl+c event
 process.on('SIGINT', exitHandler.bind(null, {exit:true}));
-
-// catches "kill pid" (for example: nodemon restart)
 process.on('SIGUSR1', exitHandler.bind(null, {exit:true}));
 process.on('SIGUSR2', exitHandler.bind(null, {exit:true}));
-
-//catches uncaught exceptions
 process.on('uncaughtException', exitHandler.bind(null, {exit:true}));
 
-let u = []
+let startingDate = []
+let mainPath = ''
 
 async function die() {
     warn('Finalizando processo')
     spinner.End()
     await ErrorLog.createLog()
-    await deleteFolder(process.env.commitpath + '/temp', { recursive: true, force: true })
+    await deleteFolder(process.env.COMMITPATH + '/temp', { recursive: true, force: true })
 
-    await execute(`date ${u[0]}-${u[1]}-${u[2]}`)
+    await execute(`date ${startingDate[0]}-${startingDate[1]}-${startingDate[2]}`)
     finish = false
     process.exit()
 }
 
 async function born() {
-    const s = await execute('date /t')
-    u = s.stdout.split('/')
-    
+    await setConsole()
+    await gettingEnvInfo()
+    await writingVarsToEnv()
+
+    return true
+
+}
+
+async function setConsole() {
     console.clear()
     log('\n/----  Iniciando o fluxo ----/\n', ['inverse'])
 
+     return true
+}
+
+async function gettingEnvInfo() {
+    const s = await execute('date /t')
+    startingDate = s.stdout.split('/')
+
+    mainPath = (await execute('cd')).stdout.split(':')[0] + ':'
+}
+
+async function writingVarsToEnv() {
     const obj = {}
 
-    obj.author = process.env.author? process.env.author : await ask('Qual o inicio do email (antes do @)?', '')
-    obj.project = process.env.project? process.env.project : await ask('Qual a url do projeto aonde será realizado os commits?', '')
-    obj.token = process.env.token? process.env.token : await ask('Um token com acesso ao repositório, para gerar um vá à: https://github.com/settings/tokens', '', true)
+    obj.AUTHOR = process.env.AUTHOR? process.env.AUTHOR : await ask('Qual o inicio do email (antes do @)?', '')
+    obj.PROJECTURL = process.env.PROJECTURL? process.env.PROJECTURL : await ask('Qual a url do projeto aonde será realizado os commits?', '')
+    obj.TOKEN = process.env.TOKEN? process.env.TOKEN : await ask('Um token com acesso ao repositório, para gerar um vá à: https://github.com/settings/tokens', '', true)
 
-    const check = { commitpath: '/commitMapping', lookatpath: '/Users', isTest: false }
+    const check = { COMMITPATH: mainPath + '/commitMapping', LOOKOUTPATH: mainPath + '/Users', ISTEST: false }
 
     for (const [key, value] of Object.entries(check)) {
         if(!process.env[key]) {obj[key] = value} 
@@ -62,12 +67,12 @@ async function born() {
 
     await setEnvironmentVariable(obj)
 
-    if (obj.token === 'none') {
-        warn(`\nA falta do tokens pode gerar problemas no push, caso isso ocorra vá a rota ${process.env.commitpath}/project e faça o push manualmente`)
+    if (obj.TOKEN === 'none') {
+        warn(`\nA falta do tokens pode gerar problemas no push, caso isso ocorra vá a rota ${process.env.COMMITPATH}/project e faça o push manualmente`)
     }
 
-    return true
 
+    return true
 }
 
 export {die, born}

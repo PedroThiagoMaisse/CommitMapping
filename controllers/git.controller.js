@@ -65,7 +65,7 @@ async function getUrlPerPath(path) {
     const returnArray = []
 
     for (let index = 0; index < path.length; index++) {
-        const element = process.env.lookatpath + '/' +path[index];
+        const element = process.env.LOOKOUTPATH + '/' +path[index];
         try {
             let config = (await execute(`cd ${element} && git config --list`)).stdout
             const start = config.indexOf('remote.origin.url')
@@ -87,7 +87,7 @@ async function getUrlPerPath(path) {
 async function generateFilteredLogs(paths) {
     if (typeof paths !== 'object') {paths = [paths]}
     let array = []
-    let author = process.env.author
+    let author = process.env.AUTHOR
     let count = 0
 
     for (let index = 0; index < paths.length; index++) {
@@ -109,19 +109,19 @@ async function generateFilteredLogs(paths) {
 }
 
 async function cloneProject() {
-    const path = process.env.commitpath
-    const url = process.env.project
-    const token = process.env.token
+    const path = process.env.COMMITPATH
+    const url = process.env.PROJECTURL
+    const token = process.env.TOKEN
 
     const trueUrl = 'https://' + token + '@' + url.replace("https://", '')
-    if(await existFile(process.env.commitpath + '/project')) {deleteFolder(process.env.commitpath + '/project', { recursive: true, force: true })}
+    if(await existFile(process.env.COMMITPATH + '/project')) {deleteFolder(process.env.COMMITPATH + '/project', { recursive: true, force: true })}
     await execute(`cd ${path} && git clone ${trueUrl} project`)
 
     return true
 }
 
 async function setProject() {
-    const path = process.env.commitpath + '/project/'
+    const path = process.env.COMMITPATH + '/project/'
 
     await createFile(path + 'README.md', 'Esse projeto serve apenas como placeholder para demonstrar no histórico do git os pushs feitos em repositórios fechado e de outros sistemas,\nCada commit contem author, data, descrição e url de repositório em suas infos')
     await createFolder(path + 'Commits')
@@ -132,7 +132,7 @@ async function setProject() {
 async function modifyAndCommit(json) {
     const s = await execute('date /t')
     const u = s.stdout.split('/')
-    const path = process.env.commitpath + '/project/Commits/'
+    const path = process.env.COMMITPATH + '/project/Commits/'
     let count = 0
     const length = json.length
 

@@ -24,15 +24,17 @@ dentro do repositório clonado.
 
 Essas são as variáveis que o código usa:
 
-commitpath : a rota para armazernamento das informações e clonagem / commit dos repositórios, quando não presente é assumido C:/commitMapping  
-lookatpath : a rota base apartir da qual o crawler irá procurar em cada filho por repositórios, quando não presente é assumido C:/Users  
-isTest     : Quando verdadeiro o projeto não irá dar Push dos dados, quando não presente é assumida Falso  
-author     : o Email para servir como filtro nos commits, *quando não colocado é preenchido por diálogo na cli*  
-project    : a URL do projeto no qual os commits serão feitos, *quando não colocado é preenchido por diálogo na cli*  
-token      : um token de acesso da conta no github, *quando não colocado é preenchido por diálogo na cli*  
+| Nome          | Descrição                                      | Padrão                   |
+| ------------- | ---------------------------------------------- | ------------------------ |
+| COMMITPATH    | Rota p/ armazenamento do script                | C:/commitMapping         |
+| LOOKOUTPATH   | Rota p/ aonde o crawler inicia                 | C:/Users                 |
+| ISTEST        | Impede o push dos dados p/ o projeto           | False                    |
+| AUTHOR        | O Email que serve como filtro nos commits      | *preenchido por diálogo* |
+| PROJECTURL    | A Url do projeto aonde os commits serão feitos | *preenchido por diálogo* |
+| TOKEN         | Um token de acesso p/ a conta                  | *preenchido por diálogo* |
 
-Pode-se setar ela utilizando o git bash como:
-> author="" project="" token="" commitpath="" lookatpath="" isTest="" node ..
+Pode-se setar elas utilizando o git bash como:
+> AUTHOR="" PROJECTURL="" TOKEN="" COMMITPATH="" LOOKOUTPATH="" ISTEST="" node .
 
 ## PRÓXIMOS PASSOS
 
@@ -45,10 +47,12 @@ Pode-se setar ela utilizando o git bash como:
 - ~~Adicionar novas variáveis ao ReadMe;~~
 - ~~Função de DeleteFile em utils;~~
 - ~~Mudar o jeito que o crawler funciona p/ evitar a recorrencia da função;~~
+- ~~Ajustes na escrita e novas tasks;~~
+- ~~Break o Born() no phaser;~~
+- ~~Pegar o diretório atual e usar ele para construir as rotas padrões;~~
 
 - Não duplicar Commits e não deletar o arquivo atual;
 - Break o modifyAndCommit() no git.controller;
-- Break o Born() no phaser;
 - Possibilitar vários processos de estarem ocupando a thread quando executando em loop;
 - Organização de arquivos;
 - Subir para o NPX (e trocar de nome, talvez);

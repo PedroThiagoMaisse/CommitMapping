@@ -22,7 +22,7 @@ async function getAllProjectsURLs() {
 
 async function getLogsFromUrls(urls) {
     try {
-        startLog(`Pegando todos os commits feitos por "${process.env.author}"`)
+        startLog(`Pegando todos os commits feitos por "${process.env.AUTHOR}"`)
         const tempFolderPath = await generateTempFolder()
         const clonedReposPath = await cloneRepository(urls, tempFolderPath)
         const { array, count } = await generateFilteredLogs(clonedReposPath)
@@ -59,11 +59,11 @@ async function commitToGit(json) {
 
     await finishLog('Finalizado')
     
-    if (process.env.isTest != 'false') {
+    if (process.env.ISTEST != 'false') {
         log('\nProjeto Rodado em modo de TESTE, \nArquivos já alterados e Commits feitos, porém o PUSH não será realizado.\n', 'red')
         return false
     }
-    await execute(`cd ${process.env.commitpath}/project && git remote set-url origin https://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@github.com/PedroThiagoMaisse/CommitMappingTwoEletricBugaloo.git && git push`)
+    await execute(`cd ${process.env.COMMITPATH}/project && git remote set-url origin https://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@github.com/PedroThiagoMaisse/CommitMappingTwoEletricBugaloo.git && git push`)
 
 
         return
