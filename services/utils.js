@@ -1,6 +1,13 @@
 import { createFile } from '../controllers/inOut.controller.js'
-import { ErrorLog } from './errorHandler.js';
+import { ErrorLog, errorHandler } from './errorHandler.js';
 import {_createFolder, deleteFolder, readFile, readFolder, existFile} from './promisses.js'
+
+function sleep(ms) {
+	return new Promise((resolve) => {
+		setTimeout(resolve, ms)
+	})
+}
+
 
 async function createFolder(path) {
     const brokenPath = path.split('/')
@@ -39,6 +46,8 @@ async function crawler(path) {
     let nextPaths = await readFolder(path)
     let nextFolders = []
     const allPaths = []
+    let count = 0
+
 
     while (nextPaths.length) {
         nextFolders = []
@@ -53,21 +62,23 @@ async function crawler(path) {
 
         nextPaths = []
 
+        count = 0
         for (let index = 0; index <  nextFolders.length; index++) {
             const element = nextFolders[index]
-            try {
-                const newPaths = await readFolder(path + element)
+            readFolder(path + element).then((newPaths) => {
                 for (let index = 0; index < newPaths.length; index++) {
                     newPaths[index] = element + '/' + newPaths[index]
-               }
-       
-               nextPaths.push(... newPaths)
-            } catch (err) {
-                if (err.code !== 'ENOTDIR') {
-                    ErrorLog.addNewLog(err)
                 }
-            }
-            
+                nextPaths.push(...newPaths)
+                count ++
+            }).catch((err) => {
+                ErrorLog.addNewLog(err)
+                count ++
+            })
+        }
+
+        while (count !== nextFolders.length) {
+            await sleep(25)
         }
 
 
@@ -101,4 +112,4 @@ async function getFile(path) {
 
 
 
-export {crawler, filterFor, generateTempFolder, createFolder, getFile}
+export {crawler, filterFor, generateTempFolder, createFolder, getFile, sleep}

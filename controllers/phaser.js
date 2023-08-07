@@ -8,6 +8,7 @@ async function exitHandler(options, exitCode) {
     console.log('\nFORCED EXIT: ' + exitCode)
     execute(`date ${startingDate[0]}-${startingDate[1]}-${startingDate[2]}`)
     process.exit();
+    process.kill()
 }
 
 process.on('SIGINT', exitHandler.bind(null, {exit:true}));
@@ -25,7 +26,6 @@ async function die() {
     await deleteFolder(process.env.COMMITPATH + '/temp', { recursive: true, force: true })
 
     await execute(`date ${startingDate[0]}-${startingDate[1]}-${startingDate[2]}`)
-    finish = false
     process.exit()
 }
 

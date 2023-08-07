@@ -50,10 +50,10 @@ Pode-se setar elas utilizando o git bash como:
 - ~~Ajustes na escrita e novas tasks;~~
 - ~~Break o Born() no phaser;~~
 - ~~Pegar o diretório atual e usar ele para construir as rotas padrões;~~
+- ~~Possibilitar vários processos de estarem ocupando a thread quando executando em loop;~~
 
 - Não duplicar Commits e não deletar o arquivo atual;
 - Break o modifyAndCommit() no git.controller;
-- Possibilitar vários processos de estarem ocupando a thread quando executando em loop;
 - Organização de arquivos;
 - Subir para o NPX (e trocar de nome, talvez);
 - Nos detalhes do commit, colocar o número de linhas;

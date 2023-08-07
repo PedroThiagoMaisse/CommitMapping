@@ -1,4 +1,4 @@
-import { createFolder, getFile } from '../services/utils.js'
+import { createFolder, getFile, sleep } from '../services/utils.js'
 import { createFile } from './inOut.controller.js'
 import { spinner } from '../services/log.js'
 import { ErrorLog, errorHandler } from '../services/errorHandler.js'
@@ -38,22 +38,33 @@ async function cloneRepository(url, path) {
     if (typeof url !== 'object') { url = [url] }
     const returnArray = []
     let count = 0
+    let errorCount = 0
 
     for (let index = 0; index < url.length; index++) {
         const element = url[index];
-        await createFolder(path + '/' + index)
-        try {
-            let output = (await execute(`cd ${path + '/' + index} && git clone ${element}`)).stdout
-        } catch (err) {
+        createFolder(path + '/' + index).then(() => {
+            const output = execute(`cd ${path + '/' + index} && git clone ${element}`).then(() => {
+                returnArray.push(path + '/' + index + element.slice(element.lastIndexOf('/')))
+                spinner.AddToLogger(`Project Cloned: ${element}`)
+                count ++
+            }).catch((err) => {
+                count ++
+                errorCount ++
+                ErrorLog.addNewLog(err)
+            })
+        }).catch((err) => {
             count ++
+            errorCount ++
             ErrorLog.addNewLog(err)
-        }
-        returnArray.push(path + '/' + index + element.slice(element.lastIndexOf('/')))
-        spinner.AddToLogger(`Project Cloned: ${element}`)
+        })
     }
 
-    if (count === url.length) {
+    if (errorCount === url.length) {
         errorHandler('NONE GIT CLONE WAS ABLE TO FINISH')
+    }
+
+    while (count !== url.length) {
+        await sleep(10)
     }
 
     return returnArray
@@ -63,11 +74,12 @@ async function cloneRepository(url, path) {
 async function getUrlPerPath(path) {
     if (typeof path !== 'object') {path = [path]}
     const returnArray = []
+    let count = 0
 
     for (let index = 0; index < path.length; index++) {
         const element = process.env.LOOKOUTPATH + '/' +path[index];
-        try {
-            let config = (await execute(`cd ${element} && git config --list`)).stdout
+        execute(`cd ${element} && git config --list`).then((config) => {
+            config = config.stdout
             const start = config.indexOf('remote.origin.url')
             config = config.slice(start)
             const finish = config.indexOf('\n')
@@ -75,9 +87,15 @@ async function getUrlPerPath(path) {
             if (!returnArray.includes(config) && config !== '') {
                 returnArray.push(config)
             }
-        } catch (err) {
-            ErrorLog.addNewLog('ERROR WHILE GETTING URL: ' + element + '\n, ERROR:' + err)
-        }
+            count ++
+        }).catch((err) => {
+            ErrorLog.addNewLog('ERROR WHILE GETTING URL: ' + element + '\n, ERROR:' + err)  
+            count ++
+        })
+    }
+
+    while (count !== path.length) {
+        await sleep(10)
     }
 
 
