@@ -1,4 +1,4 @@
-# COMMIT MAPPING
+# Private Repository Participation Mapping (Aceito sugestões de nomes)
 
 Um executável de Node que procura todos os repositórios de git na sua máquina, armazena os commmits que você realizou em cada um deles e sobe um espelho deles no projeto desejado.  
 
@@ -13,11 +13,13 @@ Não há informações sobre a natureza do projeto daonde o commit surge ou snip
 ## RODANDO
 
 Use  
->Npx xxxxxxx  
+>Npx privaterepomapping
+
 para rodar ele sem a necessidade de instalar.  
 
 Para rodar com acesso ao código utilize,  
 >node .  
+
 dentro do repositório clonado.  
 
 ## SETANDO VARIÁVEIS DE AMBIENTE

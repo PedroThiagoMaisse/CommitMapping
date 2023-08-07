@@ -1,6 +1,6 @@
 {
-  "name": "commitmapping",
-  "version": "1.0.0",
+  "name": "privaterepomapping",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
