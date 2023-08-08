@@ -174,8 +174,6 @@ Commit: ${element.commit}
 
 
 async function modifyAndCommit(json) {
-    const s = await execute('date /t')
-    const u = s.stdout.split('/')
     const path = process.env.COMMITPATH + '/project/Commits/'
     let count = 0
     const length = json.length
@@ -183,24 +181,22 @@ async function modifyAndCommit(json) {
     for (let index = 0; index < length; index++) {
         spinner.str = `${index - count} bem sucedidos, ${count} erros, faltam ${length - index}  `
         const element = json[index];
-        const {fileInfo, filePath} = await generateFileInfos(element) 
-        const commandToChangeDate = await getYearModel(element.Date) 
-
-        if (element.Date != 'Invalid Date' && process.env.ISTEST == 'false') {
-            await createFile(filePath, fileInfo)
-	        const r = await execute(commandToChangeDate)
-            await execute(`cd ${path} && git add . && git commit -m "${element.desc}" --date "${element.Date[Symbol.toPrimitive]('number')}" `)
-        } else if (element.Date != 'Invalid Date'){
-
-        } else {
+        
+        if (element.Date == 'Invalid Date') {
             ErrorLog.addRawLog(str)
             count = count + 1
         }
+        
+        const { fileInfo, filePath } = await generateFileInfos(element) 
+        const commandToChangeDate = await getYearModel(element.Date) 
+
+        await createFile(filePath, fileInfo)
+        await execute(commandToChangeDate)
+        await execute(`cd ${path} && git add . && git commit -m "${element.desc}" --date "${element.Date[Symbol.toPrimitive]('number')}" `)
     }
 
     
-    await execute(`date ${u[0]}-${u[1]}-${u[2]}`)
-
+    await execute(`date ${process.env.startingDate[0]}-${process.env.startingDate[1]}-${process.env.startingDate[2]}`)
     spinner.AddToLogger(`\r${length - count} commits bem sucedidos e ${count} erros                  `)
         
     return true

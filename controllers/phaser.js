@@ -61,6 +61,8 @@ async function writingVarsToEnv() {
 
     const check = { COMMITPATH: mainPath + '/commitMapping', LOOKOUTPATH: mainPath + '/Users', ISTEST: false }
 
+    obj.startingDate = (await execute('date /t')).stdout.split('/')
+
     for (const [key, value] of Object.entries(check)) {
         if(!process.env[key]) {obj[key] = value} 
     }
