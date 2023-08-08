@@ -147,6 +147,32 @@ async function setProject() {
     return true
 }
 
+async function getYearModel(date) {
+        let month = date.getMonth() + 1
+        if (month < 10) { month = String('0') + String(month) }
+        
+        let year = String(date.getFullYear()).slice(2)
+       
+        return  `date ${date.getDate()}-${month}-${year}`
+}
+
+async function generateFileInfos(element) {
+        await createFolder(path + element.Date.getFullYear())
+        const filePath = path + element.Date.getFullYear() + '/' + element.Date.getMonth() + '.txt'
+        const file = await getFile(filePath)
+
+        const fileInfo = file + `
+---------------------------------------------------------
+Commit: ${element.commit}
+    Author: ${element.Author}
+    Date: ${element.Date}
+    desc: ${element.desc}
+`
+
+	return {fileInfo, filePath}
+}
+
+
 async function modifyAndCommit(json) {
     const s = await execute('date /t')
     const u = s.stdout.split('/')
@@ -157,28 +183,15 @@ async function modifyAndCommit(json) {
     for (let index = 0; index < length; index++) {
         spinner.str = `${index - count} bem sucedidos, ${count} erros, faltam ${length - index}  `
         const element = json[index];
-        await createFolder(path + element.Date.getFullYear())
-        const filePath = path + element.Date.getFullYear() + '/' + element.Date.getMonth() + '.txt'
-        const file = await getFile(filePath)
+        const {fileInfo, filePath} = await generateFileInfos(element) 
+        const commandToChangeDate = await getYearModel(element.Date) 
 
-        const str = file + `
----------------------------------------------------------
-Commit: ${element.commit}
-    Author: ${element.Author}
-    Date: ${element.Date}
-    desc: ${element.desc}
-`
-
-        await createFile(filePath, str)
-        let month = element.Date.getMonth() + 1
-        if (month < 10) { month = String('0') + String(month) }
-        
-        let year = String(element.Date.getFullYear()).slice(2)
-       
-        const str5 = `date ${element.Date.getDate()}-${month}-${year}`
-        if (element.Date != 'Invalid Date') {
-            const r = await execute(str5)
+        if (element.Date != 'Invalid Date' && process.env.ISTEST == 'false') {
+            await createFile(filePath, fileInfo)
+	        const r = await execute(commandToChangeDate)
             await execute(`cd ${path} && git add . && git commit -m "${element.desc}" --date "${element.Date[Symbol.toPrimitive]('number')}" `)
+        } else if (element.Date != 'Invalid Date'){
+
         } else {
             ErrorLog.addRawLog(str)
             count = count + 1
