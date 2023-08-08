@@ -1,4 +1,4 @@
-import { createFolder, getFile, sleep } from '../services/utils.js'
+import { createFolder, getFile, sleep, setCorrectTime } from '../services/utils.js'
 import { createFile } from './inOut.controller.js'
 import { spinner } from '../services/log.js'
 import { ErrorLog, errorHandler } from '../services/errorHandler.js'
@@ -195,8 +195,7 @@ async function modifyAndCommit(json) {
         await execute(`cd ${path} && git add . && git commit -m "${element.desc}" --date "${element.Date[Symbol.toPrimitive]('number')}" `)
     }
 
-    
-    await execute(`date ${process.env.startingDate[0]}-${process.env.startingDate[1]}-${process.env.startingDate[2]}`)
+    await setCorrectTime()
     spinner.AddToLogger(`\r${length - count} commits bem sucedidos e ${count} erros                  `)
         
     return true

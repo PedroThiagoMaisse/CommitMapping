@@ -8,6 +8,12 @@ function sleep(ms) {
 	})
 }
 
+async function setCorrectTime() {
+    await execute(`date ${process.env.startingDate[0]}-${process.env.startingDate[1]}-${process.env.startingDate[2]}`)
+
+    return
+}
+
 
 async function createFolder(path) {
     const brokenPath = path.split('/')
@@ -112,4 +118,4 @@ async function getFile(path) {
 
 
 
-export {crawler, filterFor, generateTempFolder, createFolder, getFile, sleep}
+export {crawler, filterFor, generateTempFolder, createFolder, getFile, sleep, setCorrectTime}

@@ -1,4 +1,5 @@
-import { ask, createFile} from "./inOut.controller.js"
+import { setCorrectTime } from "../services/utils.js"
+import { ask, createFile } from "./inOut.controller.js"
 import { err, log, spinner, warn } from "../services/log.js"
 import { setEnvironmentVariable } from "../services/Envs.js"
 import { ErrorLog } from "../services/errorHandler.js"
@@ -6,7 +7,7 @@ import { execute, deleteFolder } from "../services/promisses.js"
 
 async function exitHandler(options, exitCode) {
     console.log('\nFORCED EXIT: ' + exitCode)
-    execute(`date ${startingDate[0]}-${startingDate[1]}-${startingDate[2]}`)
+    setCorrectTime()
     process.exit();
     process.kill()
 }
@@ -25,7 +26,7 @@ async function die() {
     await ErrorLog.createLog()
     await deleteFolder(process.env.COMMITPATH + '/temp', { recursive: true, force: true })
 
-    await execute(`date ${startingDate[0]}-${startingDate[1]}-${startingDate[2]}`)
+    await setCorrectTime()
     process.exit()
 }
 
