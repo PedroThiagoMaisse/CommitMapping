@@ -53,9 +53,11 @@ Pode-se setar elas utilizando o git bash como:
 - ~~Break o Born() no phaser;~~
 - ~~Pegar o diretório atual e usar ele para construir as rotas padrões;~~
 - ~~Possibilitar vários processos de estarem ocupando a thread quando executando em loop;~~
+- ~~Break o modifyAndCommit() no git.controller;~~
 
+
+- Testar o set de date pelo commit e não pela máquina;
 - Não duplicar Commits e não deletar o arquivo atual;
-- Break o modifyAndCommit() no git.controller;
 - Organização de arquivos;
 - Subir para o NPX (e trocar de nome, talvez);
 - Nos detalhes do commit, colocar o número de linhas;

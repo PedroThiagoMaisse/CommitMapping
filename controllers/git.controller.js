@@ -191,8 +191,7 @@ async function modifyAndCommit(json) {
         const commandToChangeDate = await getYearModel(element.Date) 
 
         await createFile(filePath, fileInfo)
-        await execute(commandToChangeDate)
-        await execute(`cd ${path} && git add . && git commit -m "${element.desc}" --date "${element.Date[Symbol.toPrimitive]('number')}" `)
+        await execute(`${commandToChangeDate} && cd ${path} && git add . && git commit -m "${element.desc}" --date "${element.Date[Symbol.toPrimitive]('number')}" `)
     }
 
     await setCorrectTime()
