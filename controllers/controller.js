@@ -63,7 +63,7 @@ async function commitToGit(json) {
         log('\nProjeto Rodado em modo de TESTE, \nArquivos já alterados e Commits feitos, porém o PUSH não será realizado.\n', 'red')
         return false
     }
-    await execute(`cd ${process.env.COMMITPATH}/project && git remote set-url origin https://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@github.com/PedroThiagoMaisse/CommitMappingTwoEletricBugaloo.git && git push`)
+    await execute(`cd ${process.env.COMMITPATH}/project && git remote set-url origin https://${process.env.TOKEN}@${proccess.env.PROJECTURL} && git push`)
 
 
         return

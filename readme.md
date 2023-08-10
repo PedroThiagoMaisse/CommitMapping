@@ -54,7 +54,7 @@ Pode-se setar elas utilizando o git bash como:
 - ~~Pegar o diretório atual e usar ele para construir as rotas padrões;~~
 - ~~Possibilitar vários processos de estarem ocupando a thread quando executando em loop;~~
 - ~~Break o modifyAndCommit() no git.controller;~~
-
+- ~~Token e URL estão hardcoded;~~
 
 - Testar o set de date pelo commit e não pela máquina;
 - Não duplicar Commits e não deletar o arquivo atual;
