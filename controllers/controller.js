@@ -56,14 +56,14 @@ async function commitToGit(json) {
     await cloneProject()
     await setProject()
     await modifyAndCommit(json)
-
+        
     await finishLog('Finalizado')
     
     if (process.env.ISTEST != 'false') {
         log('\nProjeto Rodado em modo de TESTE, \nArquivos já alterados e Commits feitos, porém o PUSH não será realizado.\n', 'red')
         return false
     }
-    await execute(`cd ${process.env.COMMITPATH}/project && git remote set-url origin https://${process.env.TOKEN}@${proccess.env.PROJECTURL} && git push`)
+    await execute(`cd ${process.env.COMMITPATH}/project && git remote set-url origin https://${process.env.TOKEN}@${process.env.PROJECTURL} && git push`)
 
 
         return

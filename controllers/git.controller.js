@@ -132,7 +132,7 @@ async function cloneProject() {
     const token = process.env.TOKEN
 
     const trueUrl = 'https://' + token + '@' + url.replace("https://", '')
-    if(await existFile(process.env.COMMITPATH + '/project')) {deleteFolder(process.env.COMMITPATH + '/project', { recursive: true, force: true })}
+    if(await existFile(process.env.COMMITPATH + '/project')) {await deleteFolder(process.env.COMMITPATH + '/project', { recursive: true, force: true })}
     await execute(`cd ${path} && git clone ${trueUrl} project`)
 
     return true
@@ -156,7 +156,7 @@ async function getYearModel(date) {
         return  `date ${date.getDate()}-${month}-${year}`
 }
 
-async function generateFileInfos(element) {
+async function generateFileInfos(element, path) {
         await createFolder(path + element.Date.getFullYear())
         const filePath = path + element.Date.getFullYear() + '/' + element.Date.getMonth() + '.txt'
         const file = await getFile(filePath)
@@ -185,13 +185,18 @@ async function modifyAndCommit(json) {
         if (element.Date == 'Invalid Date') {
             ErrorLog.addRawLog(str)
             count = count + 1
-        }
+        } else {
         
-        const { fileInfo, filePath } = await generateFileInfos(element) 
-        const commandToChangeDate = await getYearModel(element.Date) 
+            const { fileInfo, filePath } = await generateFileInfos(element, path)
+            const commandToChangeDate = await getYearModel(element.Date)
 
-        await createFile(filePath, fileInfo)
-        await execute(`${commandToChangeDate} && cd ${path} && git add . && git commit -m "${element.desc}" --date "${element.Date[Symbol.toPrimitive]('number')}" `)
+            await createFile(filePath, fileInfo)
+            // await execute(`${commandToChangeDate} && cd ${path} && git add . && git commit -m "${element.desc}" --date "${element.Date[Symbol.toPrimitive]('number')}" `)
+            // console.log(`git commit -m "${element.desc}" --date "${element.Date[Symbol.toPrimitive]('number')}" `)
+            // await execute(`cd ${path} && set GIT_AUTHOR_DATE = '0' && set GIT_COMMITTER_DATE = '0' && git add . && git commit -m "${element.desc}" --date "${element.Date[Symbol.toPrimitive]('number')}" `)
+
+            await execute(`${commandToChangeDate} && cd ${path} && git add . && git commit -m "${element.desc}" --date "${element.Date[Symbol.toPrimitive]('number')}" `)
+        }
     }
 
     await setCorrectTime()

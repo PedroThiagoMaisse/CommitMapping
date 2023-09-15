@@ -56,6 +56,16 @@ Pode-se setar elas utilizando o git bash como:
 - ~~Break o modifyAndCommit() no git.controller;~~
 - ~~Token e URL estão hardcoded;~~
 
+- Mudar para o Bun
+- Melhorar o log de quit
+- ~Bug no horário~
+- ~Bug no caso do projeto já existir~
+- Tirar as funcs do git controller
+- Organizar melhor o código
+- Criar um wrapper de erros
+- Quebrar a função de editar e de commitar em 2 diferentes
+- Fazer a execução desse passo acima ser de 10 em 10
+- Mudar p/ gitbash;
 - Testar o set de date pelo commit e não pela máquina;
 - Não duplicar Commits e não deletar o arquivo atual;
 - Organização de arquivos;

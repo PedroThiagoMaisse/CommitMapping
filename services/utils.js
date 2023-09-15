@@ -1,6 +1,7 @@
 import { createFile } from '../controllers/inOut.controller.js'
 import { ErrorLog, errorHandler } from './errorHandler.js';
-import {_createFolder, deleteFolder, readFile, readFolder, existFile} from './promisses.js'
+import { spinner } from './log.js';
+import { _createFolder, deleteFolder, readFile, readFolder, existFile, execute } from './promisses.js'
 
 function sleep(ms) {
 	return new Promise((resolve) => {
@@ -9,7 +10,8 @@ function sleep(ms) {
 }
 
 async function setCorrectTime() {
-    await execute(`date ${process.env.startingDate[0]}-${process.env.startingDate[1]}-${process.env.startingDate[2]}`)
+    const time = process.env.startingDate.replaceAll('\r', '').replaceAll('\n', '').replaceAll(' ', '').split(',')
+    await execute(`date ${time[0]}-${time[1]}-${time[2]}`)
 
     return
 }
@@ -53,11 +55,16 @@ async function crawler(path) {
     let nextFolders = []
     const allPaths = []
     let count = 0
+    let trueCount = 0
 
 
     while (nextPaths.length) {
         nextFolders = []
-        for (let index = 0; index < nextPaths.length; index++) {
+        let pathLength = nextPaths.length
+        trueCount += pathLength
+        
+        spinner.str = `${trueCount} rotas verificadas, verificando ${pathLength} rotas`
+        for (let index = 0; index < pathLength; index++) {
             const element = nextPaths[index]
             if (element.indexOf('.') === -1 && !element.includes('node_modules')) {
                 nextFolders.push(element)
@@ -86,8 +93,6 @@ async function crawler(path) {
         while (count !== nextFolders.length) {
             await sleep(25)
         }
-
-
     }
 
     // throw(500)

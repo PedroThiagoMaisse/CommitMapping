@@ -1,4 +1,4 @@
-import { setCorrectTime } from "../services/utils.js"
+import { setCorrectTime, sleep } from "../services/utils.js"
 import { ask, createFile } from "./inOut.controller.js"
 import { err, log, spinner, warn } from "../services/log.js"
 import { setEnvironmentVariable } from "../services/Envs.js"
@@ -6,10 +6,12 @@ import { ErrorLog } from "../services/errorHandler.js"
 import { execute, deleteFolder } from "../services/promisses.js"
 
 async function exitHandler(options, exitCode) {
-    console.log('\nFORCED EXIT: ' + exitCode)
-    setCorrectTime()
+    spinner.End()
+    await sleep(500)
+    await setCorrectTime()
+    console.clear()
+    console.log('\n\nFORCED EXIT: ' + exitCode + '\n\n')
     process.exit();
-    process.kill()
 }
 
 process.on('SIGINT', exitHandler.bind(null, {exit:true}));
@@ -22,6 +24,7 @@ let mainPath = ''
 
 async function die() {
     warn('Finalizando processo')
+    await setCorrectTime()
     spinner.End()
     await ErrorLog.createLog()
     await deleteFolder(process.env.COMMITPATH + '/temp', { recursive: true, force: true })
@@ -48,7 +51,7 @@ async function setConsole() {
 
 async function gettingEnvInfo() {
     const s = await execute('date /t')
-    startingDate = s.stdout.split('/')
+    startingDate = s.stdout
 
     mainPath = (await execute('cd')).stdout.split(':')[0] + ':'
 }

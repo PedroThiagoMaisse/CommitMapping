@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 import { getAllProjectsURLs, getLogsFromUrls, transformLogs, commitToGit } from './controllers/controller.js'
 import { die, born } from './controllers/phaser.js';
-import { createFile } from './controllers/inOut.controller.js';
 
 async function main() {
     await born()
