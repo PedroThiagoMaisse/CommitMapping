@@ -39,37 +39,42 @@ Pode-se setar elas utilizando o git bash como:
 > AUTHOR="" PROJECTURL="" TOKEN="" COMMITPATH="" LOOKOUTPATH="" ISTEST="" node .
 
 ## PRÓXIMOS PASSOS
-
-- ~~Criar um caso de testes que não pusha;~~
-- ~~Melhorar a leitura do readme;~~
-- ~~Arrumar as envs de ambiente p/ incluir email, token e repo;~~
-- ~~Armazenar os commits que deram erro;~~
-- ~~Error Handler mais completo;~~
-- ~~Lidar com kill Switchs;~~
-- ~~Adicionar novas variáveis ao ReadMe;~~
-- ~~Função de DeleteFile em utils;~~
-- ~~Mudar o jeito que o crawler funciona p/ evitar a recorrencia da função;~~
-- ~~Ajustes na escrita e novas tasks;~~
-- ~~Break o Born() no phaser;~~
-- ~~Pegar o diretório atual e usar ele para construir as rotas padrões;~~
-- ~~Possibilitar vários processos de estarem ocupando a thread quando executando em loop;~~
-- ~~Break o modifyAndCommit() no git.controller;~~
-- ~~Token e URL estão hardcoded;~~
-
-- Mudar para o Bun
-- Melhorar o log de quit
-- ~Bug no horário~
-- ~Bug no caso do projeto já existir~
-- Tirar as funcs do git controller
-- Organizar melhor o código
-- Criar um wrapper de erros
-- Quebrar a função de editar e de commitar em 2 diferentes
-- Fazer a execução desse passo acima ser de 10 em 10
+- Analisar a possibilidade de mudar para o Bun;
+- Disponibilizar p/ outros sistemas (atualmente só funciona em windows em pt);
+- Melhorar o log de saída do sistemas;
+- Tirar a lógica complexa do git controller;
+- Organizar melhor o código;
+- Criar um wrapper de erros;
+- Quebrar a função de editar e de commitar em 2 diferentes;
 - Mudar p/ gitbash;
-- Testar o set de date pelo commit e não pela máquina;
-- Não duplicar Commits e não deletar o arquivo atual;
 - Organização de arquivos;
 - Subir para o NPX (e trocar de nome, talvez);
+    - Usar localmente no diretório apontado (quando mudar p/ npx)
+- ~Fazer a execução desse passo acima ser de 10 em 10~ (não funcionaria se continuarmos pelo método de alteração de horário)
+    - Testar o set de date pelo commit e não pela máquina;
+
+## FINALIZADOS
+<details>
 - Nos detalhes do commit, colocar o número de linhas;
-- Nos detalhes do commit, colocar o nome do projeto (e perguntar no setting);
-- Nos detalhes do commit, colocar as linguagens dos arquivos alterados.
+- Nos detalhes do commit, colocar o nome do projeto; (poderia ser considerado vazamento de info)
+- Nos detalhes do commit, colocar as linguagens dos arquivos alterados. (poderia ser considerado vazamento de info)
+- URLs dão problema
+- Não duplicar Commits e não deletar o arquivo atual;
+- Criar um caso de testes que não pusha;
+- Melhorar a leitura do readme;
+- Arrumar as envs de ambiente p/ incluir email, token e repo;
+- Armazenar os commits que deram erro;
+- Error Handler mais completo;
+- Lidar com kill Switchs;
+- Adicionar novas variáveis ao ReadMe;
+- Função de DeleteFile em utils;
+- Mudar o jeito que o crawler funciona p/ evitar a recorrencia da função;
+- Ajustes na escrita e novas tasks;
+- Break o Born() no phaser;
+- Pegar o diretório atual e usar ele para construir as rotas padrões;
+- Possibilitar vários processos de estarem ocupando a thread quando executando em loop;
+- Break o modifyAndCommit() no git.controller;
+- Token e URL estão hardcoded;
+- Bug no horário
+- Bug no caso do projeto já existir
+</details>

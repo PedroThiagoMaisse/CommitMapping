@@ -19,7 +19,8 @@ async function logsToJson(logs) {
                 if (commits[index].toLowerCase().includes('merge')) {
                     element = element.splice(1, 2)
                 }
-                const obj = { commit: element[0].trim(), Author: element[1].slice(8), Date: new Date(element[2].slice(8)), desc: element[4].trim() }
+                while(element[element.length-1] === '') {element.pop()}
+                const obj = { commit: element[0].trim(), Author: element[1].slice(8), Date: new Date(element[2].slice(8)), desc: element[4].trim(), details: element[element.length - 1]}
                 returnArray.push(obj)
             } catch (err) {
                 if (element != '') {
@@ -111,7 +112,8 @@ async function generateFilteredLogs(paths) {
     for (let index = 0; index < paths.length; index++) {
         const element = paths[index];
         try {
-            let res = (await execute(`cd ${element} && git log --author=${author}`)).stdout
+            let res = (await execute(`cd ${element} && git log --stat --author=${author}`)).stdout
+            // console.log(res)
             array.push({ source: element, data: res })
             const regex = /commit/g
             const found = res.match(regex)
@@ -133,7 +135,7 @@ async function cloneProject() {
 
     const trueUrl = 'https://' + token + '@' + url.replace("https://", '')
     if(await existFile(process.env.COMMITPATH + '/project')) {await deleteFolder(process.env.COMMITPATH + '/project', { recursive: true, force: true })}
-    await execute(`cd ${path} && git clone ${trueUrl} project`)
+    await execute(`cd ${path} && git clone ${trueUrl} project && git config --global core.autocrlf false`)
 
     return true
 }
@@ -157,50 +159,56 @@ async function getYearModel(date) {
 }
 
 async function generateFileInfos(element, path) {
-        await createFolder(path + element.Date.getFullYear())
-        const filePath = path + element.Date.getFullYear() + '/' + element.Date.getMonth() + '.txt'
-        const file = await getFile(filePath)
-
-        const fileInfo = file + `
+    await createFolder(path + element.Date.getFullYear())
+    const filePath = path + element.Date.getFullYear() + '/' + element.Date.getMonth() + '.txt'
+    const file = await getFile(filePath)
+    let fileInfo = file
+    let flip = false
+        
+    if (!file.includes(element.commit)) {
+        flip = true
+        fileInfo += `
 ---------------------------------------------------------
 Commit: ${element.commit}
     Author: ${element.Author}
     Date: ${element.Date}
     desc: ${element.desc}
+    ${element.details}
 `
 
-	return {fileInfo, filePath}
+    }
+    return { fileInfo, filePath, flip }
 }
 
 
 async function modifyAndCommit(json) {
     const path = process.env.COMMITPATH + '/project/Commits/'
     let count = 0
+    let aCount = 0
     const length = json.length
 
     for (let index = 0; index < length; index++) {
-        spinner.str = `${index - count} bem sucedidos, ${count} erros, faltam ${length - index}  `
+        spinner.str = `${index - (count - aCount)} bem sucedidos, ${aCount} já existentes, ${count} erros, faltam ${length - index}  `
         const element = json[index];
         
         if (element.Date == 'Invalid Date') {
-            ErrorLog.addRawLog(str)
+            ErrorLog.addRawLog(element)
             count = count + 1
         } else {
         
-            const { fileInfo, filePath } = await generateFileInfos(element, path)
-            const commandToChangeDate = await getYearModel(element.Date)
+            const { fileInfo, filePath, flip } = await generateFileInfos(element, path)
 
-            await createFile(filePath, fileInfo)
-            // await execute(`${commandToChangeDate} && cd ${path} && git add . && git commit -m "${element.desc}" --date "${element.Date[Symbol.toPrimitive]('number')}" `)
-            // console.log(`git commit -m "${element.desc}" --date "${element.Date[Symbol.toPrimitive]('number')}" `)
-            // await execute(`cd ${path} && set GIT_AUTHOR_DATE = '0' && set GIT_COMMITTER_DATE = '0' && git add . && git commit -m "${element.desc}" --date "${element.Date[Symbol.toPrimitive]('number')}" `)
+            if (flip) {
+                const commandToChangeDate = await getYearModel(element.Date)
 
-            await execute(`${commandToChangeDate} && cd ${path} && git add . && git commit -m "${element.desc}" --date "${element.Date[Symbol.toPrimitive]('number')}" `)
+                await createFile(filePath, fileInfo)
+                await execute(`${commandToChangeDate} && cd ${path} && git add . && git commit -m "${element.desc}" --date "${element.Date[Symbol.toPrimitive]('number')}" `)
+            } else {aCount ++}
         }
     }
 
     await setCorrectTime()
-    spinner.AddToLogger(`\r${length - count} commits bem sucedidos e ${count} erros                  `)
+    spinner.AddToLogger(`\r${length - (count + aCount)} commits bem sucedidos, ${aCount} já existentes e ${count} erros                  `)
         
     return true
 }
