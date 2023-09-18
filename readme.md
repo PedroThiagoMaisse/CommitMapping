@@ -13,7 +13,7 @@ Não há informações sobre a natureza do projeto daonde o commit surge ou snip
 ## RODANDO
 
 Use  
->Npx privaterepomapping
+>Npx commitMapping
 
 para rodar ele sem a necessidade de instalar.  
 
@@ -48,13 +48,13 @@ Pode-se setar elas utilizando o git bash como:
 - Quebrar a função de editar e de commitar em 2 diferentes;
 - Mudar p/ gitbash;
 - Organização de arquivos;
-- Subir para o NPX (e trocar de nome, talvez);
-    - Usar localmente no diretório apontado (quando mudar p/ npx)
 - ~Fazer a execução desse passo acima ser de 10 em 10~ (não funcionaria se continuarmos pelo método de alteração de horário)
     - Testar o set de date pelo commit e não pela máquina;
 
 ## FINALIZADOS
 <details>
+- Subir para o NPX (e trocar de nome, talvez);
+    - Usar localmente no diretório apontado (quando mudar p/ npx)
 - Nos detalhes do commit, colocar o número de linhas;
 - Nos detalhes do commit, colocar o nome do projeto; (poderia ser considerado vazamento de info)
 - Nos detalhes do commit, colocar as linguagens dos arquivos alterados. (poderia ser considerado vazamento de info)

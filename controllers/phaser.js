@@ -4,6 +4,7 @@ import { err, log, spinner, warn } from "../services/log.js"
 import { setEnvironmentVariable } from "../services/Envs.js"
 import { ErrorLog } from "../services/errorHandler.js"
 import { execute, deleteFolder } from "../services/promisses.js"
+import { parse } from "../services/parser.js"
 
 async function exitHandler(options, exitCode) {
     spinner.End()
@@ -59,14 +60,17 @@ async function gettingEnvInfo() {
 async function writingVarsToEnv() {
     const obj = {}
 
-    obj.AUTHOR = process.env.AUTHOR? process.env.AUTHOR : await ask('Qual o inicio do email (antes do @)?', '')
-    obj.PROJECTURL = process.env.PROJECTURL? process.env.PROJECTURL : await ask('Qual a url do projeto aonde será realizado os commits?', '')
-    obj.TOKEN = process.env.TOKEN? process.env.TOKEN : await ask('Um token com acesso ao repositório, para gerar um vá à: https://github.com/settings/tokens', '', true)
-
-    const check = { COMMITPATH: mainPath + '/commitMapping', LOOKOUTPATH: mainPath + '/Users', ISTEST: false }
+    const options = parse(process.argv.slice(2))
+    for (const [key, value] of Object.entries(options)) { options[key.toUpperCase()] = value }
+    await setEnvironmentVariable(options)
 
     obj.startingDate = (await execute('date /t')).stdout.split('/')
+    obj.AUTHOR = process.env.AUTHOR || await ask('Qual o inicio do email (antes do @)?', '')
+    obj.PROJECTURL = process.env.PROJECTURL || process.env.PROJECT || await ask('Qual a url do projeto aonde será realizado os commits?', '')
+    obj.TOKEN = process.env.TOKEN || await ask('Um token com acesso ao repositório, para gerar um vá à: https://github.com/settings/tokens', '', true)
+    obj.ISTEST = !!process.env.test || !!process.env.ISTEST
 
+    const check = { COMMITPATH: mainPath + '/commitMapping', LOOKOUTPATH: process.cwd()}
     for (const [key, value] of Object.entries(check)) {
         if(!process.env[key]) {obj[key] = value} 
     }
