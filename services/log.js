@@ -1,4 +1,5 @@
 import chalk from "chalk";
+import { isOn } from "../controllers/phaser.js";
 const sep = `/-----------------------------------------------------/`
 
 function sleep(ms) {
@@ -51,7 +52,7 @@ const spinner = {
 
     Start: async function () {
         this.start = Date.now()
-        const P = ['[--=--]', '[---=-]', '[----=]','[-----]','[=----]','[-=---]'];
+        const P = ['[--=--]', '[---=-]', '[----=]', '[-----]', '[=----]', '[-=---]'];
         let x = 0;
         this.loader = setInterval(() => {
             const visualizer = P[x]
@@ -62,7 +63,7 @@ const spinner = {
             }
             process.stdout.write(`\r${visualizer}  ${chalk.grey(this.str)}`);
             x %= P.length;
-        }, 100);
+        }, 100)
     },
 
     End: async function () {

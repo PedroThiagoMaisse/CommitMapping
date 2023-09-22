@@ -3,6 +3,7 @@ import { createFile } from './inOut.controller.js'
 import { spinner } from '../services/log.js'
 import { ErrorLog, errorHandler } from '../services/errorHandler.js'
 import { execute, existFile, deleteFolder } from '../services/promisses.js'
+import { isOn } from './phaser.js'
 
 async function logsToJson(logs) {
     if (typeof logs !== 'object') { logs = [logs] }
@@ -64,7 +65,7 @@ async function cloneRepository(url, path) {
         errorHandler('NONE GIT CLONE WAS ABLE TO FINISH')
     }
 
-    while (count !== url.length) {
+    while (count !== url.length && isOn) {
         await sleep(10)
     }
 
@@ -95,7 +96,7 @@ async function getUrlPerPath(path) {
         })
     }
 
-    while (count !== path.length) {
+    while (count !== path.length && isOn) {
         await sleep(10)
     }
 
@@ -188,7 +189,7 @@ async function modifyAndCommit(json) {
     const length = json.length
 
     for (let index = 0; index < length; index++) {
-        spinner.str = `${index - (count - aCount)} bem sucedidos, ${aCount} já existentes, ${count} erros, faltam ${length - index}  `
+        spinner.str = `${index - (count + aCount)} bem sucedidos, ${aCount} já existentes, ${count} erros, faltam ${length - index}  `
         const element = json[index];
         
         if (element.Date == 'Invalid Date') {

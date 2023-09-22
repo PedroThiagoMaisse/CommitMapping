@@ -5,13 +5,19 @@ import { setEnvironmentVariable } from "../services/Envs.js"
 import { ErrorLog } from "../services/errorHandler.js"
 import { execute, deleteFolder } from "../services/promisses.js"
 import { parse } from "../services/parser.js"
+import chalk from "chalk"
+
+let isOn = false
+
 
 async function exitHandler(options, exitCode) {
+    isOn = false
     spinner.End()
-    await sleep(500)
     await setCorrectTime()
-    console.clear()
-    console.log('\n\nFORCED EXIT: ' + exitCode + '\n\n')
+    await ErrorLog.addNewLog('\n\nFORCED EXIT: ' + exitCode + '\n\n' + JSON.stringify(options))
+    await ErrorLog.createLog()
+    // console.clear()
+    console.log(chalk.red('\n\nFORCED EXIT!\nSalvando detalhes em: ' + process.env.COMMITPATH + '/errors.txt'))
     process.exit();
 }
 
@@ -26,6 +32,7 @@ let mainPath = ''
 async function die() {
     warn('Finalizando processo')
     await setCorrectTime()
+    isOn = false
     spinner.End()
     await ErrorLog.createLog()
     await deleteFolder(process.env.COMMITPATH + '/temp', { recursive: true, force: true })
@@ -35,6 +42,7 @@ async function die() {
 }
 
 async function born() {
+    isOn = true
     await setConsole()
     await gettingEnvInfo()
     await writingVarsToEnv()
@@ -85,4 +93,4 @@ async function writingVarsToEnv() {
     return true
 }
 
-export {die, born}
+export {die, born, isOn}

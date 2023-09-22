@@ -1,4 +1,5 @@
 import { createFile } from '../controllers/inOut.controller.js'
+import { isOn } from '../controllers/phaser.js';
 import { ErrorLog, errorHandler } from './errorHandler.js';
 import { spinner } from './log.js';
 import { _createFolder, deleteFolder, readFile, readFolder, existFile, execute } from './promisses.js'
@@ -58,7 +59,7 @@ async function crawler(path) {
     let trueCount = 0
 
 
-    while (nextPaths.length) {
+    while (nextPaths.length && isOn) {
         nextFolders = []
         let pathLength = nextPaths.length
         trueCount += pathLength
@@ -66,7 +67,7 @@ async function crawler(path) {
         spinner.str = `${trueCount} rotas verificadas, verificando ${pathLength} rotas`
         for (let index = 0; index < pathLength; index++) {
             const element = nextPaths[index]
-            if (element.indexOf('.') === -1 && !element.includes('node_modules')) {
+            if (element.indexOf('.') === -1 && !element.includes('node_modules') && !element.includes('go-build')) {
                 nextFolders.push(element)
             }
 
@@ -90,7 +91,7 @@ async function crawler(path) {
             })
         }
 
-        while (count !== nextFolders.length) {
+        while (count !== nextFolders.length && isOn) {
             await sleep(25)
         }
     }

@@ -12,13 +12,13 @@ Não há informações sobre a natureza do projeto daonde o commit surge ou snip
 
 ## RODANDO
 
-Use  
+Use ***Em um console com acesso de admin***
 >Npx commitMapping
 
 para rodar ele sem a necessidade de instalar.  
 
 Para rodar com acesso ao código utilize,  
->node .  
+>node .  --looktoutpath c:/Users
 
 dentro do repositório clonado.  
 
@@ -26,22 +26,21 @@ dentro do repositório clonado.
 
 Essas são as variáveis que o código usa:
 
-| Nome          | Descrição                                      | Padrão                   |
-| ------------- | ---------------------------------------------- | ------------------------ |
-| COMMITPATH    | Rota p/ armazenamento do script                | C:/commitMapping         |
-| LOOKOUTPATH   | Rota p/ aonde o crawler inicia                 | C:/Users                 |
-| ISTEST        | Impede o push dos dados p/ o projeto           | False                    |
-| AUTHOR        | O Email que serve como filtro nos commits      | *preenchido por diálogo* |
-| PROJECTURL    | A Url do projeto aonde os commits serão feitos | *preenchido por diálogo* |
-| TOKEN         | Um token de acesso p/ a conta                  | *preenchido por diálogo* |
+| Nome          | Descrição                                      | Padrão                   | Alias       |
+| ------------- | ---------------------------------------------- | ------------------------ | ----------- |
+| COMMITPATH    | Rota p/ armazenamento do script                | C:/commitMapping         | commitpath  |
+| LOOKOUTPATH   | Rota p/ aonde o crawler inicia                 | C:/Users                 | lookoutpath |
+| ISTEST        | Impede o push dos dados p/ o projeto           | False                    | test        |
+| AUTHOR        | O Email que serve como filtro nos commits      | *preenchido por diálogo* | author      |
+| PROJECTURL    | A Url do projeto aonde os commits serão feitos | *preenchido por diálogo* | project     |
+| TOKEN         | Um token de acesso p/ a conta                  | *preenchido por diálogo* | token       |
 
-Pode-se setar elas utilizando o git bash como:
-> AUTHOR="" PROJECTURL="" TOKEN="" COMMITPATH="" LOOKOUTPATH="" ISTEST="" node .
+Pode-se setar elas as flagando, como:
+> npx commitmapping --author example.email --project https://... --token ghpz... --commitpath c:// --lookoutpath c:// --test
 
 ## PRÓXIMOS PASSOS
 - Analisar a possibilidade de mudar para o Bun;
 - Disponibilizar p/ outros sistemas (atualmente só funciona em windows em pt);
-- Melhorar o log de saída do sistemas;
 - Tirar a lógica complexa do git controller;
 - Organizar melhor o código;
 - Criar um wrapper de erros;
@@ -53,6 +52,7 @@ Pode-se setar elas utilizando o git bash como:
 
 ## FINALIZADOS
 <details>
+- Melhorar o log de saída do sistemas;
 - Subir para o NPX (e trocar de nome, talvez);
     - Usar localmente no diretório apontado (quando mudar p/ npx)
 - Nos detalhes do commit, colocar o número de linhas;
