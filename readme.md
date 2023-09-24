@@ -1,7 +1,4 @@
 # CommitMapping
-**Fique a vontade para contribuir com o projeto! na parte de próximos passos há alguns pontos sugeridos ou se sinta livre para melhorar o que quiser e realizar o pull request**
-
-
 Um executável de Node que procura todos os repositórios de git na sua máquina, armazena os commmits que você realizou em cada um deles e sobe um espelho deles no projeto desejado.  
 
 Esse espelho conta com as informações:  
