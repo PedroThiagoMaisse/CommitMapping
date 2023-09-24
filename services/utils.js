@@ -1,5 +1,6 @@
 import { createFile } from '../controllers/inOut.controller.js'
 import { isOn } from '../controllers/phaser.js';
+import { getSetDateModel } from './console.js';
 import { ErrorLog, errorHandler } from './errorHandler.js';
 import { spinner } from './log.js';
 import { _createFolder, deleteFolder, readFile, readFolder, existFile, execute } from './promisses.js'
@@ -11,8 +12,10 @@ function sleep(ms) {
 }
 
 async function setCorrectTime() {
-    const time = process.env.startingDate.replaceAll('\r', '').replaceAll('\n', '').replaceAll(' ', '').split(',')
-    await execute(`date ${time[0]}-${time[1]}-${time[2]}`)
+    const date = new Date(process.env.startingDate)
+    
+    const t = await getSetDateModel(date)
+    await execute(t)
 
     return
 }

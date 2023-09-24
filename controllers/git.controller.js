@@ -4,6 +4,7 @@ import { spinner } from '../services/log.js'
 import { ErrorLog, errorHandler } from '../services/errorHandler.js'
 import { execute, existFile, deleteFolder } from '../services/promisses.js'
 import { isOn } from './phaser.js'
+import { getSetDateModel } from '../services/console.js'
 
 async function logsToJson(logs) {
     if (typeof logs !== 'object') { logs = [logs] }
@@ -150,15 +151,6 @@ async function setProject() {
     return true
 }
 
-async function getYearModel(date) {
-        let month = date.getMonth() + 1
-        if (month < 10) { month = String('0') + String(month) }
-        
-        let year = String(date.getFullYear()).slice(2)
-       
-        return  `date ${date.getDate()}-${month}-${year}`
-}
-
 async function generateFileInfos(element, path) {
     await createFolder(path + element.Date.getFullYear())
     const filePath = path + element.Date.getFullYear() + '/' + element.Date.getMonth() + '.txt'
@@ -200,7 +192,7 @@ async function modifyAndCommit(json) {
             const { fileInfo, filePath, flip } = await generateFileInfos(element, path)
 
             if (flip) {
-                const commandToChangeDate = await getYearModel(element.Date)
+                const commandToChangeDate = await getSetDateModel(element.Date)
 
                 await createFile(filePath, fileInfo)
                 await execute(`${commandToChangeDate} && cd ${path} && git add . && git commit -m "${element.desc}" --date "${element.Date[Symbol.toPrimitive]('number')}" `)

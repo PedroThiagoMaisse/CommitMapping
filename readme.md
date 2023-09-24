@@ -43,7 +43,6 @@ Pode-se setar elas as flagando, como:
 - Disponibilizar p/ outros sistemas (atualmente só funciona em windows em pt);
 - Tirar a lógica complexa do git controller;
 - Organizar melhor o código;
-- Criar um wrapper de erros;
 - Quebrar a função de editar e de commitar em 2 diferentes;
 - Mudar p/ gitbash;
 - Organização de arquivos;
@@ -52,6 +51,7 @@ Pode-se setar elas as flagando, como:
 
 ## FINALIZADOS
 <details>
+- Criar um wrapper de erros;
 - Melhorar o log de saída do sistemas;
 - Subir para o NPX (e trocar de nome, talvez);
     - Usar localmente no diretório apontado (quando mudar p/ npx)

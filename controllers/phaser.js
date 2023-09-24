@@ -6,6 +6,7 @@ import { ErrorLog } from "../services/errorHandler.js"
 import { execute, deleteFolder } from "../services/promisses.js"
 import { parse } from "../services/parser.js"
 import chalk from "chalk"
+import { getCurrentDate } from "../services/console.js"
 
 let isOn = false
 
@@ -59,8 +60,7 @@ async function setConsole() {
 }
 
 async function gettingEnvInfo() {
-    const s = await execute('date /t')
-    startingDate = s.stdout
+    startingDate = await getCurrentDate()
 
     mainPath = (await execute('cd')).stdout.split(':')[0] + ':'
 }
@@ -72,7 +72,7 @@ async function writingVarsToEnv() {
     for (const [key, value] of Object.entries(options)) { options[key.toUpperCase()] = value }
     await setEnvironmentVariable(options)
 
-    obj.startingDate = (await execute('date /t')).stdout.split('/')
+    obj.startingDate = await getCurrentDate()
     obj.AUTHOR = process.env.AUTHOR || await ask('Qual o inicio do email (antes do @)?', '')
     obj.PROJECTURL = process.env.PROJECTURL || process.env.PROJECT || await ask('Qual a url do projeto aonde será realizado os commits?', '')
     obj.TOKEN = process.env.TOKEN || await ask('Um token com acesso ao repositório, para gerar um vá à: https://github.com/settings/tokens', '', true)
