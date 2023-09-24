@@ -5,11 +5,11 @@
 Um executável de Node que procura todos os repositórios de git na sua máquina, armazena os commmits que você realizou em cada um deles e sobe um espelho deles no projeto desejado.  
 
 Esse espelho conta com as informações:  
-    - Código do commit;  
-    - Author;  
-    - Data;  
-    - Descrição do commit;
-    - Número de linhas deletadas, adicionadas e alteradas;
+- Código do commit;  
+- Author;  
+- Data;  
+- Descrição do commit;
+- Número de linhas deletadas, adicionadas e alteradas;
 
 **Não há informações sobre a natureza do projeto daonde o commit surge ou snippets do código.** 
 
@@ -53,6 +53,7 @@ Pode-se setar elas as flagando, como:
 
 ## Finalizados
 <details>
+
 - Criar um wrapper de erros;
 
 - Melhorar o log de saída do sistemas;
