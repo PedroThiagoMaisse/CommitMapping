@@ -21,6 +21,7 @@ Use ***Em um console com acesso de admin***
 
 Ou Clone na sua máquina e use
 >node .  --looktoutpath c:/Users
+
 dentro do repositório.  
 
 ## Variáveis
