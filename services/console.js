@@ -2,14 +2,17 @@
 
 async function getSetDateModel(date) {
     try {
-        let month = date.getMonth() + 1
-        if (month < 10) { month = String('0') + String(month) }
+        if (process.platform === 'ex' && process.env.lang === 'ex') {
+            console.log('how?')
+        } else {
+            let month = date.getMonth() + 1
+            if (month < 10) { month = String('0') + String(month) }
     
-        let year = String(date.getFullYear()).slice(2)
+            let year = String(date.getFullYear()).slice(2)
    
-        return `date ${date.getDate()}-${month}-${year}`
+            return `date ${date.getDate()}-${month}-${year}`
+        }
     }
-
     catch (err) {
         return 'echo error in date'
     }

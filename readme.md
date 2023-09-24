@@ -39,15 +39,16 @@ Pode-se setar elas as flagando, como:
 > npx commitmapping --author example.email --project https://... --token ghpz... --commitpath c:// --lookoutpath c:// --test
 
 ## PRÓXIMOS PASSOS
-- Analisar a possibilidade de mudar para o Bun;
-- Disponibilizar p/ outros sistemas (atualmente só funciona em windows em pt);
-- Tirar a lógica complexa do git controller;
+- Talvez mudar para bun (a API de escrever arquivos e de clone parece ser muito mais rápida);
+- Melhorar a lógica p/ a troca de sistemas operacionais e linguagens;
 - Organizar melhor o código;
-- Quebrar a função de editar e de commitar em 2 diferentes;
-- Mudar p/ gitbash;
-- Organização de arquivos;
-- ~Fazer a execução desse passo acima ser de 10 em 10~ (não funcionaria se continuarmos pelo método de alteração de horário)
-    - Testar o set de date pelo commit e não pela máquina;
+- Forçar o sistema a rodar os comandos no GitBash (para facilitar essa padronização na hora de setar datas, abrir arquivos, etc);
+- Tentar alterar a data do commit pelas próprias opções da API do git (ou mudando as variáveis de ambiente)
+
+- Disponibilizar para novas linguages / Sistemas
+    - Melhorar essa lógica
+    - Possibiitar a tradução dos logs (como??????)
+    - Disponibilizar para EN
 
 ## FINALIZADOS
 <details>
