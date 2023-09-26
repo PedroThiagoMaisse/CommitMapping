@@ -188,14 +188,12 @@ async function modifyAndCommit(json) {
             ErrorLog.addRawLog(element)
             count = count + 1
         } else {
-        
             const { fileInfo, filePath, flip } = await generateFileInfos(element, path)
 
             if (flip) {
-                const commandToChangeDate = await getSetDateModel(element.Date)
-
+                const commitDateObject = await getSetDateModel(element.Date)
                 await createFile(filePath, fileInfo)
-                await execute(`${commandToChangeDate} && cd ${path} && git add . && git commit -m "${element.desc}" --date "${element.Date[Symbol.toPrimitive]('number')}" `)
+                await execute(`cd ${path} && git add . && git commit -m "${element.desc}"`, { env: commitDateObject } )
             } else {aCount ++}
         }
     }

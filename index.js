@@ -9,7 +9,6 @@ import chalk from 'chalk';
 async function main() {
     await born()
     const urls = await wrapper(getAllProjectsURLs)
-    console.log(process.platform)
     const logs = await wrapper(getLogsFromUrls, urls)
     const JSONLogs = await wrapper(transformLogs, logs)
     await wrapper(commitToGit, JSONLogs)
