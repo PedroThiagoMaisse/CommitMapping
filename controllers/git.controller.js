@@ -3,13 +3,12 @@ import { createFile } from './inOut.controller.js'
 import { spinner } from '../services/log.js'
 import { ErrorLog, errorHandler } from '../services/errorHandler.js'
 import { execute, existFile, deleteFolder } from '../services/promisses.js'
-import { isOn } from './phaser.js'
+import { isOn } from './phaser/index.js'
 import { getSetDateModel } from '../services/console.js'
 
 async function logsToJson(logs) {
     if (typeof logs !== 'object') { logs = [logs] }
     let count = 0
-    let obj = {}
 
     const returnArray = []
     for (let index = 0; index < logs.length; index++) {

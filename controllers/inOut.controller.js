@@ -2,7 +2,7 @@ import inquirer from 'inquirer'
 import { _createFile, existFile } from '../services/promisses.js'
 import { createFolder } from '../services/utils.js'
 import { err } from '../services/log.js'
-import { die } from './phaser.js'
+import { die } from './phaser/index.js'
 
 async function ask(question, defaultAnswer, isOptional) {
     const answers = await inquirer.prompt({

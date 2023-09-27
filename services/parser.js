@@ -1,4 +1,5 @@
-function parse(array) {
+function parseArguments() {
+    const array = process.argv.slice(2)
     const obj = {}
 
     for (let index = 0; index < array.length; index++) {
@@ -21,4 +22,4 @@ function parse(array) {
 }
 
 
-export {parse}
+export {parseArguments}

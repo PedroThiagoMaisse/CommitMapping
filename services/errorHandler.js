@@ -1,5 +1,5 @@
 import { createFile } from "../controllers/inOut.controller.js"
-import { die } from "../controllers/phaser.js"
+import { die } from "../controllers/phaser/index.js"
 import { err } from "./log.js"
 const sep = `/-----------------------------------------------------/`
 

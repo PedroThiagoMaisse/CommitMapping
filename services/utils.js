@@ -1,5 +1,5 @@
 import { createFile } from '../controllers/inOut.controller.js'
-import { isOn } from '../controllers/phaser.js';
+import { isOn } from '../controllers/phaser/index.js';
 import { getSetDateModel } from './console.js';
 import { ErrorLog, errorHandler } from './errorHandler.js';
 import { spinner } from './log.js';
@@ -9,15 +9,6 @@ function sleep(ms) {
 	return new Promise((resolve) => {
 		setTimeout(resolve, ms)
 	})
-}
-
-async function setCorrectTime() {
-    const date = new Date(process.env.startingDate)
-    
-    const t = await getSetDateModel(date)
-    await execute(t)
-
-    return
 }
 
 
@@ -127,4 +118,4 @@ async function getFile(path) {
 
 
 
-export {crawler, filterFor, generateTempFolder, createFolder, getFile, sleep, setCorrectTime}
+export {crawler, filterFor, generateTempFolder, createFolder, getFile, sleep}

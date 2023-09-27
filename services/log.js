@@ -1,12 +1,14 @@
 import chalk from "chalk";
-import { isOn } from "../controllers/phaser.js";
 const sep = `/-----------------------------------------------------/`
 
-function sleep(ms) {
-	return new Promise((resolve) => {
-		setTimeout(resolve, ms)
-	})
+
+async function startConsole() {
+    console.clear()
+    log('\n/----  Iniciando o fluxo ----/\n', ['inverse'])
+
+     return true
 }
+
 
 async function log(info, style, options) {
     if (typeof style !== 'object') { style = [style] }
@@ -94,4 +96,4 @@ async function finishLog(info) {
     return
 }
 
-export {startLog, finishLog, log, warn, err, spinner}
+export {startLog, finishLog, log, warn, err, spinner, startConsole}
