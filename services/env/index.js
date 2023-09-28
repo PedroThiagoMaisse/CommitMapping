@@ -1,4 +1,5 @@
-import { parseArguments } from "./parser"
+import { parseArguments } from "../inputs/parser"
+import { ask } from "../inputs/console"
 
 async function setEnvironmentVariable(obj) {
 

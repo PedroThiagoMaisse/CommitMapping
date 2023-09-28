@@ -1,7 +1,7 @@
-import { spinner, startConsole, warn } from "../../services/log.js"
-import { writingVarsToEnv } from "../../services/Envs.js"
-import { ErrorLog } from "../../services/errorHandler.js"
-import { deleteFolder } from "../../services/promisses.js"
+import { spinner, startConsole, warn } from "../../services/outputs/log.js"
+import { writingVarsToEnv } from "../../services/env/index.js"
+import { ErrorLog } from "../../functions/errorHandler.js"
+import { deleteFolder } from "../../functions/promisses.js"
 import chalk from "chalk"
 import {verifyLanguage, verifyOS, verifyToken} from "verify.js"
 

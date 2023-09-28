@@ -1,10 +1,11 @@
 import { createFolder, getFile, sleep, setCorrectTime } from '../services/utils.js'
-import { createFile } from './inOut.controller.js'
-import { spinner } from '../services/log.js'
-import { ErrorLog, errorHandler } from '../services/errorHandler.js'
-import { execute, existFile, deleteFolder } from '../services/promisses.js'
+import { createFile } from '../services/outputs/fs.js'
+import { spinner } from '../services/outputs/log.js'
+import { ErrorLog, errorHandler } from '../functions/errorHandler.js'
+import { execute, existFile, deleteFolder } from '../functions/promisses.js'
 import { isOn } from './phaser/index.js'
 import { getSetDateModel } from '../services/console.js'
+import { setProject, cloneProject } from '../services/git/index.js'
 
 async function logsToJson(logs) {
     if (typeof logs !== 'object') { logs = [logs] }
@@ -36,7 +37,7 @@ async function logsToJson(logs) {
     return returnArray
 }
 
-async function cloneRepository(url, path) {
+async function cloneRepositories(url, path) {
     if (typeof url !== 'object') { url = [url] }
     const returnArray = []
     let count = 0
@@ -129,27 +130,6 @@ async function generateFilteredLogs(paths) {
     return { array, count }
 }
 
-async function cloneProject() {
-    const path = process.env.COMMITPATH
-    const url = process.env.PROJECTURL
-    const token = process.env.TOKEN
-
-    const trueUrl = 'https://' + token + '@' + url.replace("https://", '')
-    if(await existFile(process.env.COMMITPATH + '/project')) {await deleteFolder(process.env.COMMITPATH + '/project', { recursive: true, force: true })}
-    await execute(`cd ${path} && git clone ${trueUrl} project && git config --global core.autocrlf false`)
-
-    return true
-}
-
-async function setProject() {
-    const path = process.env.COMMITPATH + '/project/'
-
-    await createFile(path + 'README.md', 'Esse projeto serve apenas como placeholder para demonstrar no histórico do git os pushs feitos em repositórios fechado e de outros sistemas,\nCada commit contem author, data, descrição e url de repositório em suas infos')
-    await createFolder(path + 'Commits')
-
-    return true
-}
-
 async function generateFileInfos(element, path) {
     await createFolder(path + element.Date.getFullYear())
     const filePath = path + element.Date.getFullYear() + '/' + element.Date.getMonth() + '.txt'
@@ -197,10 +177,8 @@ async function modifyAndCommit(json) {
         }
     }
 
-    await setCorrectTime()
-    spinner.AddToLogger(`\r${length - (count + aCount)} commits bem sucedidos, ${aCount} já existentes e ${count} erros                  `)
-        
+    spinner.AddToLogger(`\r${length - (count + aCount)} commits bem sucedidos, ${aCount} já existentes e ${count} erros                  `)        
     return true
 }
 
-export {getUrlPerPath, cloneRepository, generateFilteredLogs, logsToJson, cloneProject, modifyAndCommit, setProject}
+export {getUrlPerPath, cloneRepositories, generateFilteredLogs, logsToJson, cloneProject, modifyAndCommit, setProject}

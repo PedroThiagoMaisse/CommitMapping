@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { getAllProjectsURLs, getLogsFromUrls, transformLogs, commitToGit } from './controllers/controller.js'
 import { die, born, exitHandler } from './controllers/phaser/index.js';
-import { wrapper } from './services/functions.js';
+import { wrapper } from './functions/wrapper.js';
 
 
 async function main() {

@@ -1,8 +1,8 @@
 import {crawler, filterFor, generateTempFolder} from '../services/utils.js'
-import {getUrlPerPath,cloneRepository, generateFilteredLogs, logsToJson, cloneProject, modifyAndCommit, setProject} from './git.controller.js'
-import { log, warn, err, spinner, startLog, finishLog } from '../services/log.js'
-import {errorHandler} from '../services/errorHandler.js'
-import { execute } from '../services/promisses.js'
+import {getUrlPerPath,cloneRepositories, generateFilteredLogs, logsToJson, cloneProject, modifyAndCommit, setProject} from './git.controller.js'
+import { log, warn, err, spinner, startLog, finishLog } from '../services/outputs/log.js'
+import {errorHandler} from '../functions/errorHandler.js'
+import { execute } from '../functions/promisses.js'
 
 
 async function getAllProjectsURLs() {
@@ -24,7 +24,7 @@ async function getLogsFromUrls(urls) {
     try {
         startLog(`Pegando todos os commits feitos por "${process.env.AUTHOR}"`)
         const tempFolderPath = await generateTempFolder()
-        const clonedReposPath = await cloneRepository(urls, tempFolderPath)
+        const clonedReposPath = await cloneRepositories(urls, tempFolderPath)
         const { array, count } = await generateFilteredLogs(clonedReposPath)
 
         finishLog(`${count} Commits encontrados`)

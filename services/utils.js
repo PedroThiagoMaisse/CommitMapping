@@ -1,9 +1,8 @@
-import { createFile } from '../controllers/inOut.controller.js'
+import { createFile } from './outputs/fs.js'
 import { isOn } from '../controllers/phaser/index.js';
-import { getSetDateModel } from './console.js';
-import { ErrorLog, errorHandler } from './errorHandler.js';
-import { spinner } from './log.js';
-import { _createFolder, deleteFolder, readFile, readFolder, existFile, execute } from './promisses.js'
+import { ErrorLog, errorHandler } from '../functions/errorHandler.js';
+import { spinner } from './outputs/log.js';
+import { _createFolder, deleteFolder, readFile, readFolder, existFile, execute } from '../functions/promisses.js'
 
 function sleep(ms) {
 	return new Promise((resolve) => {
