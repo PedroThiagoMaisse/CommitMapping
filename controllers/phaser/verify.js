@@ -1,3 +1,6 @@
+import { log, warn } from "../../services/outputs/log.js"
+import { die } from "./index.js"
+
 async function verifyOS() {
     const accepted = ['win32']
     if (accepted.join(';').includes(process.platform) || process.env.force) {

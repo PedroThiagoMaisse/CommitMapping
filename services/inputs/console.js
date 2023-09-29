@@ -1,6 +1,6 @@
 import inquirer from 'inquirer'
-import { err } from '../services/log.js'
-import { die } from './phaser/index.js'
+import { err } from '../outputs/log.js'
+import { die } from '../../controllers/phaser/index.js'
 
 async function ask(question, defaultAnswer, isOptional) {
     const answers = await inquirer.prompt({

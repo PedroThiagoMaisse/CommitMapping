@@ -6,6 +6,7 @@ import { wrapper } from './functions/wrapper.js';
 
 async function main() {
     await born()
+    
     const urls = await wrapper(getAllProjectsURLs)
     const logs = await wrapper(getLogsFromUrls, urls)
     const JSONLogs = await wrapper(transformLogs, logs)

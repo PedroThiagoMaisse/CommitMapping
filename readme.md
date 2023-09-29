@@ -29,6 +29,7 @@ Essas são as variáveis que o código usa:
 | ------------- | ---------------------------------------------------------- | ------------------------ | ----------- |
 | COMMITPATH    | Rota p/ armazenamento do script                            | C:/commitMapping         | commitpath  |
 | LOOKOUTPATH   | Rota p/ aonde o crawler inicia                             | C:/Users                 | lookoutpath |
+| DRY-RUN       | Impede o push dos dados p/ o projeto                       | False                    | dry-run     |
 | ISTEST        | Impede o push dos dados p/ o projeto                       | False                    | test        |
 | AUTHOR        | O Email que serve como filtro nos commits                  | *preenchido por diálogo* | author      |
 | PROJECTURL    | A Url do projeto aonde os commits serão feitos             | *preenchido por diálogo* | project     |
@@ -39,19 +40,25 @@ Pode-se setar elas as flagando, como:
 > npx commitmapping --author example.email --project https://... --token ghpz... --commitpath c:// --lookoutpath c:// --test --force
 
 ## Próximos passos
+- Criar um padrão de erro no caso de acontecer falhas antes do momento que pegamos o filepath
+- Tentar passar os arquivos para algum lugar temp
+- (Re) Organizar os arquivos
 - Talvez mudar para bun (a API de escrever arquivos e de clone parece ser muito mais rápida);
 - Melhorar a lógica p/ a troca de sistemas operacionais e linguagens;
 - Organizar melhor o código;
 - Forçar o sistema a rodar os comandos no GitBash (para facilitar essa padronização na hora de setar datas, abrir arquivos, etc);
-- Tentar alterar a data do commit pelas próprias opções da API do git (ou mudando as variáveis de ambiente)
+- Criar testes
 
 - Disponibilizar para novas linguages / Sistemas
-    - Melhorar essa lógica
     - Possibiitar a tradução dos logs (como??????)
     - Disponibilizar para EN
 
 ## Finalizados
 <details>
+    
+- Melhorar a lógica de tradução (a parte mais complexa disso vai ser descontinuada pela alteração da data ser feito pela própria API do git agora);
+
+- Tentar alterar a data do commit pelas próprias opções da API do git (ou mudando as variáveis de ambiente);
 
 - Criar um wrapper de erros;
 

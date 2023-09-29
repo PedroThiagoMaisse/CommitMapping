@@ -1,6 +1,6 @@
-import { createFolder } from '../services/utils.js'
-import { createFile } from '../services/outputs/fs.js'
-import { execute, existFile, deleteFolder } from '../functions/promisses.js'
+import { createFolder } from '../utils.js'
+import { createFile } from '../outputs/fs.js'
+import { execute, existFile, deleteFolder } from '../../functions/promisses.js'
 
 async function cloneProject() {
     const path = process.env.COMMITPATH
@@ -17,7 +17,7 @@ async function cloneProject() {
 async function setProject() {
     const path = process.env.COMMITPATH + '/project/'
 
-    await createFile(path + 'README.md', 'Esse projeto serve apenas como placeholder para demonstrar no histórico do git os pushs feitos em repositórios fechado e de outros sistemas,\nCada commit contem author, data, descrição e url de repositório em suas infos')
+    await createFile(path + 'README.md', 'Esse projeto serve apenas como placeholder para demonstrar no histórico do git os pushs feitos em repositórios fechado e de outros sistemas,\nCada commit contem author, data, descrição e quantia de linhas alteradas')
     await createFolder(path + 'Commits')
 
     return true

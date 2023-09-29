@@ -3,7 +3,7 @@ import { writingVarsToEnv } from "../../services/env/index.js"
 import { ErrorLog } from "../../functions/errorHandler.js"
 import { deleteFolder } from "../../functions/promisses.js"
 import chalk from "chalk"
-import {verifyLanguage, verifyOS, verifyToken} from "verify.js"
+import {verifyLanguage, verifyOS, verifyToken} from "./verify.js"
 
 let isOn = false
 
@@ -12,6 +12,7 @@ async function exitHandler(options, exitCode) {
     isOn = false
     spinner.End()
     await ErrorLog.addNewLog('\n\nFORCED EXIT: ' + exitCode + '\n\n' + JSON.stringify(options))
+    console.log(options, exitCode)
     await ErrorLog.createLog()
     console.log(chalk.red('\n\nFORCED EXIT!\nSalvando detalhes em: ' + process.env.COMMITPATH + '/errors.txt'))
     process.exit();

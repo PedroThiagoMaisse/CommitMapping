@@ -33,7 +33,7 @@ async function getLogsFromUrls(urls) {
     } catch (err) {
         errorHandler(err)
     }
-    }
+}
 
 async function transformLogs(logs) {
     try {
@@ -63,6 +63,12 @@ async function commitToGit(json) {
         log('\nProjeto Rodado em modo de TESTE, \nArquivos já alterados e Commits feitos, porém o PUSH não será realizado.\n', 'red')
         return false
     }
+        
+    if (process.env["DRY-RUN"] != 'false') {
+        log('\nProjeto Rodado em modo de DRY-RUN, \nArquivos já alterados e Commits feitos, porém o PUSH não será realizado.\n', 'red')
+        return false
+    }
+        
     await execute(`cd ${process.env.COMMITPATH}/project && git remote set-url origin https://${process.env.TOKEN}@${process.env.PROJECTURL.replaceAll('https://', '')} && git push`)
     return
 
