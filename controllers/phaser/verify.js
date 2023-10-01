@@ -27,7 +27,7 @@ async function verifyLanguage() {
 
 function verifyToken() {
     if (process.env.TOKEN === 'none') {
-        warn(`\nA falta do tokens pode gerar problemas no push, caso isso ocorra vá a rota ${process.env.COMMITPATH}/project e faça o push manualmente`)
+        warn(`\nA falta do tokens pode gerar problemas no push, caso isso ocorra vá a rota ${process.env.COMMITPATH}\\project e faça o push manualmente`)
     }
 
     return

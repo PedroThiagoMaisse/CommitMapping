@@ -1,6 +1,6 @@
 import { parseArguments } from "../inputs/parser.js"
 import { ask } from "../inputs/console.js"
-import { execute } from "../../functions/promisses.js"
+import os from 'os'
 
 async function setEnvironmentVariable(obj) {
 
@@ -12,12 +12,12 @@ async function setEnvironmentVariable(obj) {
 }
 
 async function getMainPath() {
-    return (await execute('cd')).stdout.split(':')[0] + ':'
+    return os.tmpdir()
 }
 
  
 async function writingVarsToEnv() {
-    const obj = { COMMITPATH: await getMainPath() + '/commitMapping', LOOKOUTPATH: process.cwd()}
+    const obj = { COMMITPATH: await getMainPath() + '\\commitMapping', LOOKOUTPATH: process.cwd()}
 
     const options = parseArguments()
     for (const [key, value] of Object.entries(options)) { obj[key.toUpperCase()] = value }

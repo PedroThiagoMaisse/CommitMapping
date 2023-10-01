@@ -41,7 +41,6 @@ Pode-se setar elas as flagando, como:
 
 ## Próximos passos
 - Criar um padrão de erro no caso de acontecer falhas antes do momento que pegamos o filepath
-- Tentar passar os arquivos para algum lugar temp
 - (Re) Organizar os arquivos
 - Talvez mudar para bun (a API de escrever arquivos e de clone parece ser muito mais rápida);
 - Melhorar a lógica p/ a troca de sistemas operacionais e linguagens;
@@ -55,6 +54,8 @@ Pode-se setar elas as flagando, como:
 
 ## Finalizados
 <details>
+
+- Tentar passar os arquivos para algum lugar temp
     
 - Melhorar a lógica de tradução (a parte mais complexa disso vai ser descontinuada pela alteração da data ser feito pela própria API do git agora);
 

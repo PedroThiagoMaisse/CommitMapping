@@ -12,7 +12,6 @@ async function exitHandler(options, exitCode) {
     isOn = false
     spinner.End()
     await ErrorLog.addNewLog('\n\nFORCED EXIT: ' + exitCode + '\n\n' + JSON.stringify(options))
-    console.log(options, exitCode)
     await ErrorLog.createLog()
     console.log(chalk.red('\n\nFORCED EXIT!\nSalvando detalhes em: ' + process.env.COMMITPATH + '/errors.txt'))
     process.exit();
