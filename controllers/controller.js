@@ -69,7 +69,7 @@ async function commitToGit(json) {
         return false
     }
         
-    await execute(`cd ${process.env.COMMITPATH}/project && git remote set-url origin https://${process.env.TOKEN}@${process.env.PROJECTURL.replaceAll('https://', '')} && git push`)
+        await execute(`git remote set-url origin https://${process.env.TOKEN}@${process.env.PROJECTURL.replaceAll('https://', '')} && git push`, { cwd: process.env.COMMITPATH + '/project' })
     return
 
     } catch (err) {

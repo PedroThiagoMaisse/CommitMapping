@@ -40,10 +40,11 @@ Pode-se setar elas as flagando, como:
 > npx commitmapping --author example.email --project https://... --token ghpz... --commitpath c:// --lookoutpath c:// --test --force
 
 ## Próximos passos
+- Ajustar TODO:
+    - Código ta feio, git controller 4
 - Criar um padrão de erro no caso de acontecer falhas antes do momento que pegamos o filepath
 - (Re) Organizar os arquivos
 - Talvez mudar para bun (a API de escrever arquivos e de clone parece ser muito mais rápida);
-- Melhorar a lógica p/ a troca de sistemas operacionais e linguagens;
 - Organizar melhor o código;
 - Forçar o sistema a rodar os comandos no GitBash (para facilitar essa padronização na hora de setar datas, abrir arquivos, etc);
 - Criar testes
@@ -54,6 +55,8 @@ Pode-se setar elas as flagando, como:
 
 ## Finalizados
 <details>
+
+- Melhorar a lógica p/ a troca de sistemas operacionais e linguagens (com a alteração p/ a padronização da função exec do node já ficou agnóstico ao sistema operacional e linguagem);
 
 - Tentar passar os arquivos para algum lugar temp
     

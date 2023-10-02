@@ -13,21 +13,22 @@ async function logsToJson(logs) {
 
     const returnArray = []
     for (let index = 0; index < logs.length; index++) {
-        const commits = logs[index].data.split('commit')
-
-        for (let index = 0; index < commits.length; index++) {
-            let element = commits[index].split('\n')
-            try {
-                if (commits[index].toLowerCase().includes('merge')) {
-                    element = element.splice(1, 2)
-                }
-                while(element[element.length-1] === '') {element.pop()}
-                const obj = { commit: element[0].trim(), Author: element[1].slice(8), Date: new Date(element[2].slice(8)), desc: element[4].trim(), details: element[element.length - 1]}
-                returnArray.push(obj)
-            } catch (err) {
-                if (element != '') {
-                    count++
-                    ErrorLog.addNewLog('Cannot produce JSON from commit: "' + element + '"\n Error: ' + err)
+        if (logs[index].data) {
+            const commits = logs[index].data.split('commit')
+            for (let index = 0; index < commits.length; index++) {
+                let element = commits[index].split('\n')
+                try {
+                    if (commits[index].toLowerCase().includes('merge')) {
+                        element = element.splice(1, 2)
+                    }
+                    while (element[element.length - 1] === '') { element.pop() }
+                    const obj = { commit: element[0].trim(), Author: element[1].slice(8), Date: new Date(element[2].slice(8)), desc: element[4].trim(), details: element[element.length - 1] }
+                    returnArray.push(obj)
+                } catch (err) {
+                    if (element != '') {
+                        count++
+                        ErrorLog.addNewLog('Cannot produce JSON from commit: "' + element + '"\n Error: ' + err)
+                    }
                 }
             }
         }
@@ -45,8 +46,9 @@ async function cloneRepositories(url, path) {
 
     for (let index = 0; index < url.length; index++) {
         const element = url[index];
+        //TODO: arrumar essa func
         createFolder(path + '/' + index).then(() => {
-            const output = execute(`cd ${path + '/' + index} && git clone ${element}`).then(() => {
+            const output = execute(`git clone ${element}`, {cwd: path+ '/' + index}).then(() => {
                 returnArray.push(path + '/' + index + element.slice(element.lastIndexOf('/')))
                 spinner.AddToLogger(`Project Cloned: ${element}`)
                 count ++
@@ -81,7 +83,7 @@ async function getUrlPerPath(path) {
 
     for (let index = 0; index < path.length; index++) {
         const element = process.env.LOOKOUTPATH + '/' +path[index];
-        execute(`cd ${element} && git config --list`).then((config) => {
+        execute(`git config --list`, {cwd: element}).then((config) => {
             config = config.stdout
             const start = config.indexOf('remote.origin.url')
             config = config.slice(start)
@@ -114,8 +116,7 @@ async function generateFilteredLogs(paths) {
     for (let index = 0; index < paths.length; index++) {
         const element = paths[index];
         try {
-            let res = (await execute(`cd ${element} && git log --stat --author=${author}`)).stdout
-            // console.log(res)
+            let res = (await execute(`git log --stat --author=${author}`, {cwd: element})).stdout
             array.push({ source: element, data: res })
             const regex = /commit/g
             const found = res.match(regex)
@@ -172,7 +173,7 @@ async function modifyAndCommit(json) {
             if (flip) {
                 const commitDateObject = await getSetDateModel(element.Date)
                 await createFile(filePath, fileInfo)
-                await execute(`cd ${path} && git add . && git commit -m "${element.desc}"`, { env: commitDateObject } )
+                await execute(`git add . && git commit -m "${element.desc}"`, { env: commitDateObject, cwd: path } )
             } else {aCount ++}
         }
     }

@@ -9,7 +9,7 @@ async function cloneProject() {
 
     const trueUrl = 'https://' + token + '@' + url.replace("https://", '')
     if(await existFile(process.env.COMMITPATH + '/project')) {await deleteFolder(process.env.COMMITPATH + '/project', { recursive: true, force: true })}
-    await execute(`cd ${path} && git clone ${trueUrl} project && git config --global core.autocrlf false`)
+    await execute(`git clone ${trueUrl} project && git config --global core.autocrlf false`, {cwd: path})
 
     return true
 }

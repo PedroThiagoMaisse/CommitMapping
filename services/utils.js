@@ -2,7 +2,7 @@ import { createFile } from './outputs/fs.js'
 import { isOn } from '../controllers/phaser/index.js';
 import { ErrorLog, errorHandler } from '../functions/errorHandler.js';
 import { spinner } from './outputs/log.js';
-import { _createFolder, deleteFolder, readFile, readFolder, existFile, execute } from '../functions/promisses.js'
+import { _createFolder, deleteFolder, readFile, readFolder, existFile } from '../functions/promisses.js'
 
 function sleep(ms) {
 	return new Promise((resolve) => {
