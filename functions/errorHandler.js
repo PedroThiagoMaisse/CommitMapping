@@ -1,6 +1,6 @@
-import { createFile } from '../services/outputs/fs.js'
-import { die } from "../controllers/phaser/index.js"
-import { err } from "../services/outputs/log.js"
+import { createFile } from '../services/fs.js'
+import { die } from "../controllers/phaser.js"
+import { err } from "../services/console.js"
 const sep = `/-----------------------------------------------------/`
 
 async function errorHandler(error) { 

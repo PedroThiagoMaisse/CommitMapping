@@ -1,6 +1,6 @@
-import { createFolder } from '../utils.js'
-import { createFile } from '../outputs/fs.js'
-import { execute, existFile, deleteFolder } from '../../functions/promisses.js'
+import { createFolder } from './utils.js'
+import { createFile } from './fs.js'
+import { execute, existFile, deleteFolder } from '../functions/promisses.js'
 
 async function cloneProject() {
     const path = process.env.COMMITPATH

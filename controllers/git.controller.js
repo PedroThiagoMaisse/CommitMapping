@@ -1,11 +1,11 @@
 import { createFolder, getFile, sleep } from '../services/utils.js'
-import { createFile } from '../services/outputs/fs.js'
-import { spinner } from '../services/outputs/log.js'
+import { createFile } from '../services/fs.js'
+import { loadingAnimation } from '../services/console.js'
 import { ErrorLog, errorHandler } from '../functions/errorHandler.js'
 import { execute, existFile, deleteFolder } from '../functions/promisses.js'
-import { isOn } from './phaser/index.js'
+import { isOn } from './phaser.js'
 import { getSetDateModel } from '../services/console.js'
-import { setProject, cloneProject } from '../services/git/index.js'
+import { setProject, cloneProject } from '../services/git.js'
 
 async function logsToJson(logs) {
     if (typeof logs !== 'object') { logs = [logs] }
@@ -34,7 +34,7 @@ async function logsToJson(logs) {
         }
     }
 
-    if(count)spinner.AddToLogger(`${count} commits são inválidos para serem transformados em JSON`)
+    if(count)loadingAnimation.AddToLogger(`${count} commits são inválidos para serem transformados em JSON`)
     return returnArray
 }
 
@@ -45,23 +45,25 @@ async function cloneRepositories(url, path) {
     let errorCount = 0
 
     for (let index = 0; index < url.length; index++) {
-        const element = url[index];
-        //TODO: arrumar essa func
-        createFolder(path + '/' + index).then(() => {
-            const output = execute(`git clone ${element}`, {cwd: path+ '/' + index}).then(() => {
-                returnArray.push(path + '/' + index + element.slice(element.lastIndexOf('/')))
-                spinner.AddToLogger(`Project Cloned: ${element}`)
-                count ++
-            }).catch((err) => {
+        const element = url[index]
+        createFolder(path + '/' + index)
+            .then(() => {
+                execute(`git clone ${element}`, {cwd: path+ '/' + index})
+                    .then(() => {
+                        returnArray.push(path + '/' + index + element.slice(element.lastIndexOf('/')))
+                        loadingAnimation.AddToLogger(`Project Cloned: ${element}`)
+                        count ++
+                    }).catch((err) => {
+                        count ++
+                        errorCount ++
+                        ErrorLog.addNewLog(err)
+                    })
+            })
+            .catch((err) => {
                 count ++
                 errorCount ++
                 ErrorLog.addNewLog(err)
             })
-        }).catch((err) => {
-            count ++
-            errorCount ++
-            ErrorLog.addNewLog(err)
-        })
     }
 
     if (errorCount === url.length) {
@@ -69,7 +71,7 @@ async function cloneRepositories(url, path) {
     }
 
     while (count !== url.length && isOn) {
-        await sleep(10)
+        await sleep(25)
     }
 
     return returnArray
@@ -161,7 +163,7 @@ async function modifyAndCommit(json) {
     const length = json.length
 
     for (let index = 0; index < length; index++) {
-        spinner.str = `${index - (count + aCount)} bem sucedidos, ${aCount} já existentes, ${count} erros, faltam ${length - index}  `
+        loadingAnimation.detail = `${index - (count + aCount)} bem sucedidos, ${aCount} já existentes, ${count} erros, faltam ${length - index}  `
         const element = json[index];
         
         if (element.Date == 'Invalid Date') {
@@ -178,7 +180,7 @@ async function modifyAndCommit(json) {
         }
     }
 
-    spinner.AddToLogger(`\r${length - (count + aCount)} commits bem sucedidos, ${aCount} já existentes e ${count} erros                  `)        
+    loadingAnimation.AddToLogger(`\r${length - (count + aCount)} commits bem sucedidos, ${aCount} já existentes e ${count} erros                  `)        
     return true
 }
 

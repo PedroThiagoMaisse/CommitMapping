@@ -1,4 +1,4 @@
-import { die, isOn } from "../controllers/phaser/index.js";
+import { die, isOn } from "../controllers/phaser.js";
 
 async function wrapper(func, el) {
     if (!isOn) { return false }

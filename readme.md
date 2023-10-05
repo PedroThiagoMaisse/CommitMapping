@@ -40,21 +40,44 @@ Pode-se setar elas as flagando, como:
 > npx commitmapping --author example.email --project https://... --token ghpz... --commitpath c:// --lookoutpath c:// --test --force
 
 ## Próximos passos
-- Ajustar TODO:
-    - Código ta feio, git controller 4
-- Criar um padrão de erro no caso de acontecer falhas antes do momento que pegamos o filepath
-- (Re) Organizar os arquivos
 - Talvez mudar para bun (a API de escrever arquivos e de clone parece ser muito mais rápida);
-- Organizar melhor o código;
-- Forçar o sistema a rodar os comandos no GitBash (para facilitar essa padronização na hora de setar datas, abrir arquivos, etc);
-- Criar testes
 
-- Disponibilizar para novas linguages / Sistemas
+- Disponibilizar para novas linguagens / Sistemas
     - Possibiitar a tradução dos logs (como??????)
     - Disponibilizar para EN
 
+- Rever o código
+    - Git Controller
+        - Quebrar as funcs
+        - Jogar para o service o que fizer sentido
+    - Conferir o Phaser
+    - Rever o Wrapper (tem algum jeito mais fácil de fazer ele?)
+    - Conferir as functions
+    - Conferir os services
+        - console
+        - env
+        - fs
+        - git
+        - utils
+
+- Posso quebrar alguns desses em mais projetos?
+    - uma api para o git?
+    - o loading animation?
+
+- Criar testes
+    - Nova variável "TEST" / "ISTEST"
+    - Confere depois de criar o temp se ele existe no local que deveria
+    - Cria um clone de um repositorio, e procura os commits feitos por um certo usuário
+    - Faz o crawler correr por ali
+    - Confere as lenghts dos resultados
+    - Não realiza o PUSH (?)
+
 ## Finalizados
 <details>
+
+- (Re) Organizar os arquivos;
+
+- Criar um padrão de erro no caso de acontecer falhas antes do momento que pegamos o filepath (com a alteração da função de exec p/ cwd ficou redundante);
 
 - Melhorar a lógica p/ a troca de sistemas operacionais e linguagens (com a alteração p/ a padronização da função exec do node já ficou agnóstico ao sistema operacional e linguagem);
 

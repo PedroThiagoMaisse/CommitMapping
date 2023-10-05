@@ -1,7 +1,7 @@
-import { createFile } from './outputs/fs.js'
-import { isOn } from '../controllers/phaser/index.js';
+import { createFile } from './fs.js'
+import { isOn } from '../controllers/phaser.js';
 import { ErrorLog, errorHandler } from '../functions/errorHandler.js';
-import { spinner } from './outputs/log.js';
+import { loadingAnimation } from './console.js';
 import { _createFolder, deleteFolder, readFile, readFolder, existFile } from '../functions/promisses.js'
 
 function sleep(ms) {
@@ -57,7 +57,7 @@ async function crawler(path) {
         let pathLength = nextPaths.length
         trueCount += pathLength
         
-        spinner.str = `${trueCount} rotas verificadas, verificando ${pathLength} rotas`
+        loadingAnimation.detail = `${trueCount} rotas verificadas, verificando ${pathLength} rotas`
         for (let index = 0; index < pathLength; index++) {
             const element = nextPaths[index]
             if (element.indexOf('.') === -1 && !element.includes('node_modules') && !element.includes('go-build')) {
