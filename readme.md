@@ -43,14 +43,14 @@ Pode-se setar elas as flagando, como:
 - Talvez mudar para bun (a API de escrever arquivos e de clone parece ser muito mais rápida);
 
 - Disponibilizar para novas linguagens / Sistemas
-    - Possibiitar a tradução dos logs (como??????)
-    - Disponibilizar para EN
+    - Puxar as langs apartir de um arquivo
 
 - Rever o código
     - Git Controller
         - Quebrar as funcs
         - Jogar para o service o que fizer sentido
     - Conferir o Phaser
+        - Ordem e funcionamento
     - Rever o Wrapper (tem algum jeito mais fácil de fazer ele?)
     - Conferir as functions
     - Conferir os services

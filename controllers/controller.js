@@ -3,16 +3,17 @@ import {getUrlPerPath,cloneRepositories, generateFilteredLogs, logsToJson, clone
 import { log, warn, err, loadingAnimation } from '../services/console.js'
 import {errorHandler} from '../functions/errorHandler.js'
 import { execute } from '../functions/promisses.js'
+import { buildText } from '../services/translation.js'
 
 
 async function getAllProjectsURLs() {
-    loadingAnimation.Start('Pegando Todas as urls de projetos')
+    loadingAnimation.Start(buildText('start_getProjectUrls'))
     try {
         const unfilteredPaths = await crawler()
         const paths = await filterFor('.git', unfilteredPaths)
         const urls = await getUrlPerPath(paths)
 
-        loadingAnimation.End(urls.length + ' Urls encontradas')
+        loadingAnimation.End(buildText('end_getProjectUrls', urls.length))
         return urls
 
     } catch (err) {
@@ -22,12 +23,12 @@ async function getAllProjectsURLs() {
 
 async function getLogsFromUrls(urls) {
     try {
-        loadingAnimation.Start(`Pegando todos os commits feitos por "${process.env.AUTHOR}"`)
+        loadingAnimation.Start(buildText('start_getLogsFromUrls', process.env.AUTHOR))
         const tempFolderPath = await generateTempFolder()
         const clonedReposPath = await cloneRepositories(urls, tempFolderPath)
         const { array, count } = await generateFilteredLogs(clonedReposPath)
 
-        loadingAnimation.End(`${count} Commits encontrados`)
+        loadingAnimation.End(buildText('end_getLogsFromUrls', count))
         return array
         
     } catch (err) {
@@ -37,11 +38,11 @@ async function getLogsFromUrls(urls) {
 
 async function transformLogs(logs) {
     try {
-        loadingAnimation.Start('Transformando Logs em JSON')
+        loadingAnimation.Start(buildText('start_transformLogs'))
         const JSONLogs = await logsToJson(logs)
         JSONLogs.sort(function (a, b) { return b.Date - a.Date });
         
-        loadingAnimation.End('Feito')
+        loadingAnimation.End(buildText('end_transformLogs'))
         return JSONLogs
 
     } catch (err) {
@@ -52,24 +53,24 @@ async function transformLogs(logs) {
 
 async function commitToGit(json) {
     try {
-    loadingAnimation.Start('Modificando Arquivos e realizando Commits')
+    loadingAnimation.Start(buildText('start_commitToGit'))
     await cloneProject()
     await setProject()
     await modifyAndCommit(json)
         
-    await loadingAnimation.End('Finalizado')
+    await loadingAnimation.End(buildText('end_commitToGit'))
     
     if (process.env.ISTEST != 'false') {
-        log('\nProjeto Rodado em modo de TESTE, \nArquivos já alterados e Commits feitos, porém o PUSH não será realizado.\n', 'red')
+        log(buildText('end_test'), 'red')
         return false
     }
         
     if (process.env["DRY-RUN"] != 'false') {
-        log('\nProjeto Rodado em modo de DRY-RUN, \nArquivos já alterados e Commits feitos, porém o PUSH não será realizado.\n', 'red')
+        log(buildText('end_dryRun'), 'red')
         return false
     }
         
-        await execute(`git remote set-url origin https://${process.env.TOKEN}@${process.env.PROJECTURL.replaceAll('https://', '')} && git push`, { cwd: process.env.COMMITPATH + '/project' })
+    await execute(`git remote set-url origin https://${process.env.TOKEN}@${process.env.PROJECTURL.replaceAll('https://', '')} && git push`, { cwd: process.env.COMMITPATH + '/project' })
     return
 
     } catch (err) {

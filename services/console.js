@@ -2,6 +2,7 @@
 import inquirer from 'inquirer'
 import { die } from '../controllers/phaser.js'
 import chalk from "chalk";
+import { buildText } from './translation.js';
 const separation = `/-----------------------------------------------------/`
 
 function parseArguments() {
@@ -29,10 +30,9 @@ function parseArguments() {
 
 
 async function startConsole() {
-    console.clear()
-    log('\n/----  Iniciando o fluxo ----/\n', ['inverse'])
+    log(buildText('start_process'), ['inverse'])
 
-     return true
+    return true
 }
 
 
@@ -58,7 +58,7 @@ async function log(info, style, options) {
 }
 
 async function warn(info) {
-    log(`Aviso: ${info}`, ['yellow', 'bold'])
+    log(`${buildText('warn') || 'Warning: '}${info}`, ['yellow', 'bold'])
 }
 
 async function err(info) {
@@ -106,9 +106,7 @@ const loadingAnimation = {
         const interval = Date.now() - this.start
         this.start = null
 
-        let complement = ''
-        if (interval > 1500) { complement = `, em ${interval / 1000}s` }
-        else { complement = `, em ${interval}ms` }
+        let complement =  buildText('timing', interval)
         loadingAnimation.detail = ''
 
         if (!flip)
@@ -146,7 +144,7 @@ async function ask(question, defaultAnswer, isOptional) {
  
 
     if (answers.variable === 'none' && !isOptional) {
-        err('Esse dado não é opcional, abortando o serviço...')
+        err(buildText('error_noVar'))
         die()
     }
     return answers.variable

@@ -1,5 +1,6 @@
 import { ask } from "./console.js"
 import os from 'os'
+import { buildText } from "./translation.js"
 
 function parseArguments() {
     const array = process.argv.slice(2)
@@ -45,9 +46,9 @@ async function writingVarsToEnv() {
     const options = parseArguments()
     for (const [key, value] of Object.entries(options)) { obj[key.toUpperCase()] = value }
 
-    obj.AUTHOR ??= await ask('Qual o inicio do email (antes do @)?', '')
-    obj.PROJECTURL ??= obj.PROJECT || obj.PROJECTURL || await ask('Qual a url do projeto aonde será realizado os commits?', '')
-    obj.TOKEN ??= await ask('Um token com acesso ao repositório, para gerar um vá à: https://github.com/settings/tokens', '', true)
+    obj.AUTHOR ??= await ask(buildText('ask_author'), '')
+    obj.PROJECTURL ??= obj.PROJECT || obj.PROJECTURL || await ask(buildText('ask_project'), '')
+    obj.TOKEN ??= await ask(buildText('ask_token'), '', true)
     obj.ISTEST ??= !!obj.TEST
 
     await setEnvironmentVariable(obj)

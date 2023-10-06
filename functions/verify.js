@@ -1,25 +1,32 @@
 import { log, warn } from "../services/console.js"
 import { die } from "../controllers/phaser.js"
+import { buildText } from "../services/translation.js";
 
 async function verifyLanguage() {
     const env = process.env;
     const language = env.LANG || env.LANGUAGE || env.LC_ALL || env.LC_MESSAGES;
+    let flip = false
 
-
-    const accepted = ['pt_BR.UTF-8', 'en_US.UTF-8']
-    if (accepted.join(';').includes(language) || process.env.force) {
-        process.env.LANG = language
-        return
+    const accepted = ['pt_BR.UTF-8', 'en_US.UTF-']
+    if (accepted.join(';').includes(language)) {
+        flip = true
+        process.env.LANG = language    
     }
-    log('\n\nLinguagem não suportada, para mais detalhes veja: \nhttps://github.com/PedroThiagoMaisse/CommitMapping\n\n', 'red')
-    warn('é possível forçar o programa usando --force porém pode gerar problemas na organização dos arquivos\n')
-    return die()
+
+    if (flip)
+        return
+
+    log('\n\nLanguage not supported, for more details see: \nhttps://github.com/PedroThiagoMaisse/CommitMapping\n\n', 'red')
+    warn('It will be run in english\n')
+
+    process.env.Lang = 'en_US.UTF-8'
+    return
 }
  
 
 function verifyToken() {
     if (process.env.TOKEN === 'none') {
-        warn(`\nA falta do tokens pode gerar problemas no push, caso isso ocorra vá a rota ${process.env.COMMITPATH}\\project e faça o push manualmente`)
+        warn(buildText('no_token', process.env.COMMITPATH))
     }
 
     return

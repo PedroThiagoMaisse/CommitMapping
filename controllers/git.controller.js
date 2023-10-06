@@ -6,6 +6,7 @@ import { execute, existFile, deleteFolder } from '../functions/promisses.js'
 import { isOn } from './phaser.js'
 import { getSetDateModel } from '../services/console.js'
 import { setProject, cloneProject } from '../services/git.js'
+import {buildText} from '../services/translation.js'
 
 async function logsToJson(logs) {
     if (typeof logs !== 'object') { logs = [logs] }
@@ -34,7 +35,7 @@ async function logsToJson(logs) {
         }
     }
 
-    if(count)loadingAnimation.AddToLogger(`${count} commits são inválidos para serem transformados em JSON`)
+    if(count)loadingAnimation.AddToLogger(buildText('update_logsToJson', count))
     return returnArray
 }
 
@@ -51,7 +52,7 @@ async function cloneRepositories(url, path) {
                 execute(`git clone ${element}`, {cwd: path+ '/' + index})
                     .then(() => {
                         returnArray.push(path + '/' + index + element.slice(element.lastIndexOf('/')))
-                        loadingAnimation.AddToLogger(`Project Cloned: ${element}`)
+                        loadingAnimation.AddToLogger( buildText('update_cloneRepositories', element))
                         count ++
                     }).catch((err) => {
                         count ++
@@ -67,7 +68,7 @@ async function cloneRepositories(url, path) {
     }
 
     if (errorCount === url.length) {
-        errorHandler('NONE GIT CLONE WAS ABLE TO FINISH')
+        errorHandler(buildText('error_noRepCloned'))
     }
 
     while (count !== url.length && isOn) {
@@ -163,7 +164,7 @@ async function modifyAndCommit(json) {
     const length = json.length
 
     for (let index = 0; index < length; index++) {
-        loadingAnimation.detail = `${index - (count + aCount)} bem sucedidos, ${aCount} já existentes, ${count} erros, faltam ${length - index}  `
+        loadingAnimation.detail = buildText('update_modifyAndCommit',(index - (count + aCount)),(aCount),(count),(length - index))
         const element = json[index];
         
         if (element.Date == 'Invalid Date') {
@@ -180,7 +181,7 @@ async function modifyAndCommit(json) {
         }
     }
 
-    loadingAnimation.AddToLogger(`\r${length - (count + aCount)} commits bem sucedidos, ${aCount} já existentes e ${count} erros                  `)        
+    loadingAnimation.AddToLogger(buildText('end_modifyAndCommit', (length - (count + aCount)), aCount, count))        
     return true
 }
 
