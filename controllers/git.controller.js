@@ -6,7 +6,7 @@ import { execute, existFile, deleteFolder } from '../functions/promisses.js'
 import { isOn } from './phaser.js'
 import { getSetDateModel } from '../services/console.js'
 import { setProject, cloneProject } from '../services/git.js'
-import {buildText} from '../services/translation.js'
+import {buildText} from '../services/translation/index.js'
 
 async function logsToJson(logs) {
     if (typeof logs !== 'object') { logs = [logs] }

@@ -3,7 +3,7 @@ import {getUrlPerPath,cloneRepositories, generateFilteredLogs, logsToJson, clone
 import { log, warn, err, loadingAnimation } from '../services/console.js'
 import {errorHandler} from '../functions/errorHandler.js'
 import { execute } from '../functions/promisses.js'
-import { buildText } from '../services/translation.js'
+import { buildText } from '../services/translation/index.js'
 
 
 async function getAllProjectsURLs() {
@@ -60,7 +60,7 @@ async function commitToGit(json) {
         
     await loadingAnimation.End(buildText('end_commitToGit'))
     
-    if (process.env.ISTEST != 'false') {
+    if (process.env.TEST != 'false') {
         log(buildText('end_test'), 'red')
         return false
     }

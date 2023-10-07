@@ -30,7 +30,7 @@ Essas são as variáveis que o código usa:
 | COMMITPATH    | Rota p/ armazenamento do script                            | C:/commitMapping         | commitpath  |
 | LOOKOUTPATH   | Rota p/ aonde o crawler inicia                             | C:/Users                 | lookoutpath |
 | DRY-RUN       | Impede o push dos dados p/ o projeto                       | False                    | dry-run     |
-| ISTEST        | Impede o push dos dados p/ o projeto                       | False                    | test        |
+| TEST          | Impede o push dos dados p/ o projeto                       | False                    | test        |
 | AUTHOR        | O Email que serve como filtro nos commits                  | *preenchido por diálogo* | author      |
 | PROJECTURL    | A Url do projeto aonde os commits serão feitos             | *preenchido por diálogo* | project     |
 | TOKEN         | Um token de acesso p/ a conta                              | *preenchido por diálogo* | token       |
@@ -40,6 +40,15 @@ Pode-se setar elas as flagando, como:
 > npx commitmapping --author example.email --project https://... --token ghpz... --commitpath c:// --lookoutpath c:// --test --force
 
 ## Próximos passos
+- new code order:
+    - get envs
+    - get language
+    - start flux
+
+- Unify the place where i get langs
+
+-- Commits finded ?? falta info nesse text depois dos clones
+
 - Talvez mudar para bun (a API de escrever arquivos e de clone parece ser muito mais rápida);
 
 - Disponibilizar para novas linguagens / Sistemas
@@ -74,6 +83,8 @@ Pode-se setar elas as flagando, como:
 
 ## Finalizados
 <details>
+
+- Testar o --test e o --dryrun
 
 - (Re) Organizar os arquivos;
 

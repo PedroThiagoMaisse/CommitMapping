@@ -1,6 +1,6 @@
 import { ask } from "./console.js"
 import os from 'os'
-import { buildText } from "./translation.js"
+import { buildText } from "./translation/index.js"
 
 function parseArguments() {
     const array = process.argv.slice(2)
@@ -49,7 +49,7 @@ async function writingVarsToEnv() {
     obj.AUTHOR ??= await ask(buildText('ask_author'), '')
     obj.PROJECTURL ??= obj.PROJECT || obj.PROJECTURL || await ask(buildText('ask_project'), '')
     obj.TOKEN ??= await ask(buildText('ask_token'), '', true)
-    obj.ISTEST ??= !!obj.TEST
+    obj.TEST ??= !!obj.ISTEST
 
     await setEnvironmentVariable(obj)
 

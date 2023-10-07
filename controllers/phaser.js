@@ -4,7 +4,7 @@ import { ErrorLog } from "../functions/errorHandler.js"
 import { deleteFolder } from "../functions/promisses.js"
 import chalk from "chalk"
 import {verifyLanguage, verifyToken} from "../functions/verify.js"
-import { buildText, chooseLang } from "../services/translation.js"
+import { buildText, chooseLang } from "../services/translation/index.js"
 import { sleep } from "../services/utils.js"
 
 let isOn = false

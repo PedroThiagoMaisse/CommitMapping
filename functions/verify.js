@@ -1,14 +1,23 @@
 import { log, warn } from "../services/console.js"
 import { die } from "../controllers/phaser.js"
-import { buildText } from "../services/translation.js";
+import { buildText } from "../services/translation/index.js";
 
 async function verifyLanguage() {
-    const env = process.env;
-    const language = env.LANG || env.LANGUAGE || env.LC_ALL || env.LC_MESSAGES;
+    const array = process.argv.slice(2)
+    const env = process.env
+
+    for (let index = 0; index < array.length; index++) {
+        const element = array[index];
+        if (element === '--LANG' || element === '--lang') {
+            env.LANG = array[index + 1]
+        }
+    }
+
+    const language = env.LANG || env.LANGUAGE || env.LC_ALL || env.LC_MESSAGES
     let flip = false
 
-    const accepted = ['pt_BR.UTF-8', 'en_US.UTF-']
-    if (accepted.join(';').includes(language)) {
+    const accepted = ['pt_BR.UTF-8', 'en_US.UTF-8']
+    if (accepted.join(';').includes(language + ';')) {
         flip = true
         process.env.LANG = language    
     }
@@ -16,7 +25,7 @@ async function verifyLanguage() {
     if (flip)
         return
 
-    log('\n\nLanguage not supported, for more details see: \nhttps://github.com/PedroThiagoMaisse/CommitMapping\n\n', 'red')
+    log('Language not supported, for more details see: \nhttps://github.com/PedroThiagoMaisse/CommitMapping', 'red')
     warn('It will be run in english\n')
 
     process.env.Lang = 'en_US.UTF-8'
