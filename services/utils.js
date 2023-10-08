@@ -3,7 +3,7 @@ import { isOn } from '../controllers/phaser.js';
 import { ErrorLog, errorHandler } from '../functions/errorHandler.js';
 import { loadingAnimation } from './console.js';
 import { _createFolder, deleteFolder, readFile, readFolder, existFile } from '../functions/promisses.js'
-import { buildText } from './translation/index.js';
+import { buildText } from './translation.js';
 
 function sleep(ms) {
 	return new Promise((resolve) => {

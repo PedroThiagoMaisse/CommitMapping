@@ -2,7 +2,7 @@
 import inquirer from 'inquirer'
 import { die } from '../controllers/phaser.js'
 import chalk from "chalk";
-import { buildText } from './translation/index.js';
+import { buildText } from './translation.js';
 const separation = `/-----------------------------------------------------/`
 
 function parseArguments() {

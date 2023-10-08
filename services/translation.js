@@ -1,13 +1,13 @@
-import { readFile, readFolder } from "../../functions/promisses.js"
+import { readFile, readFolder } from "../functions/promisses.js"
 let choosed = {}
 
 async function chooseLang() {
-    const r = await readFolder('./services/translation/data')
+    const r = await getLanguages()
 
     for (let index = 0; index < r.length; index++) {
         const element = r[index];
         if (element.split('.json')[0] === process.env.LANG) {
-            const s = await readFile('./services/translation/data/' + element, 'utf-8')
+            const s = await readFile('./assets/languages/' + element, 'utf-8')
             choosed = JSON.parse(s)
         }
     }
@@ -16,7 +16,7 @@ async function chooseLang() {
 }
 
 async function getLanguages() {
-    const r = await readFolder('./services/translation/data')
+    const r = await readFolder('./assets/languages')
 
     return r
 }

@@ -1,15 +1,15 @@
 import { log, warn } from "../services/console.js"
 import { die } from "../controllers/phaser.js"
-import { buildText, getLanguages } from "../services/translation/index.js"
+import { buildText, getLanguages } from "../services/translation.js"
 
-async function verifyLanguage() {
-    const env = process.env
+async function verifyLanguage(vars) {
+    const env = {...process.env, ...vars}
 
     const language = env.LANG || env.LANGUAGE || env.LC_ALL || env.LC_MESSAGES
     let flip = false
 
     const accepted = await getLanguages()
-    if (accepted.join(';').includes(language + ';')) {
+    if ((accepted.join(';').replaceAll('.json', '') + ';').includes(language + ';')) {
         flip = true
         process.env.LANG = language
     }

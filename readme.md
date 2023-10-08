@@ -41,12 +41,11 @@ Pode-se setar elas as flagando, como:
 
 ## Próximos passosv
 
-- Unify the place where i get langs
+- Mudar a lingua de tudo aqui para en
+
+- Ordem do parse e toUpperKey() das envs
 
 - Talvez mudar para bun (a API de escrever arquivos e de clone parece ser muito mais rápida);
-
-- Disponibilizar para novas linguagens / Sistemas
-    - Puxar as langs apartir de um arquivo
 
 - Rever o código
     - Git Controller
@@ -77,6 +76,10 @@ Pode-se setar elas as flagando, como:
 
 ## Finalizados
 <details>
+
+- Organizar os arquivos de linguas
+
+- Disponibilizar em inglês
 
 - new code order:
     - get envs

@@ -1,6 +1,6 @@
 import { ask } from "./console.js"
 import os from 'os'
-import { buildText } from "./translation/index.js"
+import { buildText } from "./translation.js"
 
 function parseArguments() {
     const array = process.argv.slice(2)
@@ -42,8 +42,8 @@ async function getMainPath() {
  
 async function writingVarsToEnv() {
     const obj = { COMMITPATH: await getMainPath() + '\\commitMapping', LOOKOUTPATH: process.cwd()}
-
     const options = parseArguments()
+
     for (const [key, value] of Object.entries(options)) { obj[key.toUpperCase()] = value }
 
     obj.TEST ??= !!obj.ISTEST
