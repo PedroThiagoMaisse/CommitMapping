@@ -39,15 +39,9 @@ Essas são as variáveis que o código usa:
 Pode-se setar elas as flagando, como:
 > npx commitmapping --author example.email --project https://... --token ghpz... --commitpath c:// --lookoutpath c:// --test --force
 
-## Próximos passos
-- new code order:
-    - get envs
-    - get language
-    - start flux
+## Próximos passosv
 
 - Unify the place where i get langs
-
--- Commits finded ?? falta info nesse text depois dos clones
 
 - Talvez mudar para bun (a API de escrever arquivos e de clone parece ser muito mais rápida);
 
@@ -83,6 +77,12 @@ Pode-se setar elas as flagando, como:
 
 ## Finalizados
 <details>
+
+- new code order:
+    - get envs
+    - get language
+    - console.clear
+    - start flux
 
 - Testar o --test e o --dryrun
 

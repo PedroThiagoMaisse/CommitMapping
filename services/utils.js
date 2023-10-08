@@ -3,6 +3,7 @@ import { isOn } from '../controllers/phaser.js';
 import { ErrorLog, errorHandler } from '../functions/errorHandler.js';
 import { loadingAnimation } from './console.js';
 import { _createFolder, deleteFolder, readFile, readFolder, existFile } from '../functions/promisses.js'
+import { buildText } from './translation/index.js';
 
 function sleep(ms) {
 	return new Promise((resolve) => {
@@ -57,7 +58,7 @@ async function crawler(path) {
         let pathLength = nextPaths.length
         trueCount += pathLength
         
-        loadingAnimation.detail = `${trueCount} rotas verificadas, verificando ${pathLength} rotas`
+        loadingAnimation.detail = buildText('update_routes', trueCount, pathLength)
         for (let index = 0; index < pathLength; index++) {
             const element = nextPaths[index]
             if (element.indexOf('.') === -1 && !element.includes('node_modules') && !element.includes('go-build')) {

@@ -1,6 +1,7 @@
 {
     "warn": "Aviso:",
     "end_process": "Finalizando processo",
+    "update_routes": "{{1}} rotas verificadas, verificando {{2}} rotas",
     "start_getProjectUrls": "Pegando Todas as urls de projetos",
     "end_getProjectUrls": "{{1}} Urls encontradas",
     "start_getLogsFromUrls": "Pegando todos os commits feitos por {{1}}",

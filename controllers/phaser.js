@@ -1,5 +1,5 @@
 import { loadingAnimation, startConsole, warn } from "../services/console.js"
-import { writingVarsToEnv } from "../services/env.js"
+import { askVars, writingVarsToEnv } from "../services/env.js"
 import { ErrorLog } from "../functions/errorHandler.js"
 import { deleteFolder } from "../functions/promisses.js"
 import chalk from "chalk"
@@ -34,12 +34,14 @@ async function born() {
 
     console.clear()
 
-    await verifyLanguage()
+    const vars = await writingVarsToEnv()
+    await verifyLanguage(vars)
 
     await chooseLang()
 
     await startConsole()
-    await writingVarsToEnv()
+
+    await askVars(vars)
 
     verifyToken()
 

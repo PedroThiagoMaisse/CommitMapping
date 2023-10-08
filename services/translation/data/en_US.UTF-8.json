@@ -1,5 +1,6 @@
 {
     "warn": "Warn: ",
+    "update_routes": "{{1}} verified routes, {{2}} to go",
     "end_process": "Ending Process",
     "start_getProjectUrls": "Getting all the projects urls",
     "end_getProjectUrls": "{{1}} Urls finded",

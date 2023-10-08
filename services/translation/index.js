@@ -15,6 +15,12 @@ async function chooseLang() {
     return true
 }
 
+async function getLanguages() {
+    const r = await readFolder('./services/translation/data')
+
+    return r
+}
+
 function buildText(textName, arg) {
     let element = JSON.parse(JSON.stringify(choosed))[textName]
     const args = Array.from(arguments)
@@ -30,4 +36,4 @@ function buildText(textName, arg) {
     return element
 }
 
-export {buildText, chooseLang}
+export {buildText, chooseLang, getLanguages}

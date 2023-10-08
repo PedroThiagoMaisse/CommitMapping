@@ -46,14 +46,21 @@ async function writingVarsToEnv() {
     const options = parseArguments()
     for (const [key, value] of Object.entries(options)) { obj[key.toUpperCase()] = value }
 
-    obj.AUTHOR ??= await ask(buildText('ask_author'), '')
-    obj.PROJECTURL ??= obj.PROJECT || obj.PROJECTURL || await ask(buildText('ask_project'), '')
-    obj.TOKEN ??= await ask(buildText('ask_token'), '', true)
     obj.TEST ??= !!obj.ISTEST
 
     await setEnvironmentVariable(obj)
 
-    return true
+    return obj
 }
 
-export {setEnvironmentVariable, getMainPath, writingVarsToEnv}
+async function askVars(obj) {
+    
+    obj.AUTHOR ??= await ask(buildText('ask_author'), '')
+    obj.PROJECTURL ??= obj.PROJECT || obj.PROJECTURL || await ask(buildText('ask_project'), '')
+    obj.TOKEN ??= await ask(buildText('ask_token'), '', true)
+
+    await setEnvironmentVariable(obj)
+
+}
+
+export {setEnvironmentVariable, getMainPath, writingVarsToEnv, askVars}
