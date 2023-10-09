@@ -34,11 +34,17 @@ async function born() {
 
     console.clear()
 
+    process.stdout.write('\r' + chalk.gray('start-up (1/4), getting vars      '))
     const vars = await writingVarsToEnv()
+
+    process.stdout.write('\r' + chalk.gray('start-up (2/4), verifying language'))
     await verifyLanguage(vars)
 
+    
+    process.stdout.write('\r' + chalk.gray('start-up (3/4), setting language  '))
     await chooseLang()
 
+    process.stdout.write('\r' + chalk.gray('start-up (4/4), starting console  '))
     await startConsole()
 
     await askVars(vars)
