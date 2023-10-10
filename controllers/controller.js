@@ -1,4 +1,4 @@
-import {crawler, filterFor, generateTempFolder} from '../services/utils.js'
+import {crawler, filterFor, generateTempFolder, sleep} from '../services/utils.js'
 import {getUrlPerPath,cloneRepositories, generateFilteredLogs, logsToJson, cloneProject, modifyAndCommit, setProject} from './git.controller.js'
 import { log, warn, err, loadingAnimation } from '../services/console.js'
 import {errorHandler} from '../functions/errorHandler.js'
@@ -60,15 +60,15 @@ async function commitToGit(json) {
         
     await loadingAnimation.End(buildText('end_commitToGit'))
     
-    if (process.env.TEST != 'false') {
-        log(buildText('end_test'), 'red')
-        return false
-    }
+    // if (process.env.TEST != 'false') {
+    //     log(buildText('end_test'), 'red')
+    //     return false
+    // }
         
-    if (process.env["DRY-RUN"] != 'false') {
-        log(buildText('end_dryRun'), 'red')
-        return false
-    }
+    // if (process.env["DRY-RUN"] != 'false') {
+    //     log(buildText('end_dryRun'), 'red')
+    //     return false
+    // }
         
     await execute(`git remote set-url origin https://${process.env.TOKEN}@${process.env.PROJECTURL.replaceAll('https://', '')} && git push`, { cwd: process.env.COMMITPATH + '/project' })
     return

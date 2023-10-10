@@ -40,7 +40,6 @@ async function born() {
     process.stdout.write('\r' + chalk.gray('start-up (2/4), verifying language'))
     await verifyLanguage(vars)
 
-    
     process.stdout.write('\r' + chalk.gray('start-up (3/4), setting language  '))
     await chooseLang()
 

@@ -39,13 +39,19 @@ Essas são as variáveis que o código usa:
 Pode-se setar elas as flagando, como:
 > npx commitmapping --author example.email --project https://... --token ghpz... --commitpath c:// --lookoutpath c:// --test --force
 
-## Próximos passosv
+## Próximos passos
+
+
+- Bugs kkk
+    - Para alguns projetos o git log não dá retorno
+    - Problemas de arquivo travado (como replicar pra começo de conversa)
+    - Log de finalização
 
 - Mudar a lingua de tudo aqui para en
 
 - Ordem do parse e toUpperKey() das envs
 
-- Talvez mudar para bun (a API de escrever arquivos e de clone parece ser muito mais rápida);
+- Achar os maiores problemas de performance
 
 - Rever o código
     - Git Controller
@@ -73,6 +79,12 @@ Pode-se setar elas as flagando, como:
     - Faz o crawler correr por ali
     - Confere as lenghts dos resultados
     - Não realiza o PUSH (?)
+    
+- Preparar devops
+    - Criar nova branch    
+    - Preparar as git actions
+        - Subir de master p/ PRD
+        - Quando subir p/ PRD subir p/ NPM
 
 ## Finalizados
 <details>

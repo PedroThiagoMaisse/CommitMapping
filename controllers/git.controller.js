@@ -117,9 +117,9 @@ async function generateFilteredLogs(paths) {
     let count = 0
 
     for (let index = 0; index < paths.length; index++) {
-        const element = paths[index];
+        const element = paths[index]
         try {
-            let res = (await execute(`git log --stat --author=${author}`, {cwd: element})).stdout
+            let res = (await execute(`git log --stat`, { cwd: element })).stdout
             array.push({ source: element, data: res })
             const regex = /commit/g
             const found = res.match(regex)
