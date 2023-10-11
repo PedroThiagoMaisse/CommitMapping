@@ -1,9 +1,0 @@
-
-
-/-----------------------------------------------------/
-
-
-
-FORCED EXIT: Error: EISDIR: illegal operation on a directory, read
-
-{"exit":true}

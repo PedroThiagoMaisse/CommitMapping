@@ -60,6 +60,7 @@ async function commitToGit(json) {
         
     await loadingAnimation.End(buildText('end_commitToGit'))
     
+    await sleep(500)
     if (process.env.TEST != 'false' && process.env.TEST) {
         log(buildText('end_test'), 'red')
         return false
@@ -70,7 +71,12 @@ async function commitToGit(json) {
         return false
     }
         
+    log("\n")
+    log(buildText("start_commit"), 'green')
+    
     await execute(`git remote set-url origin https://${process.env.TOKEN}@${process.env.PROJECTURL.replaceAll('https://', '')} && git push`, { cwd: process.env.COMMITPATH + '/project' })
+    
+    log(buildText("end_commit"), 'green')
     return
 
     } catch (err) {

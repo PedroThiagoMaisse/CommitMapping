@@ -45,7 +45,6 @@ Pode-se setar elas as flagando, como:
 - Bugs kkk
     - Para alguns projetos o git log não dá retorno
     - Problemas de arquivo travado (como replicar pra começo de conversa)
-    - Log de finalização
 
 - Mudar a lingua de tudo aqui para en
 

@@ -1,5 +1,7 @@
 {
     "warn": "Warn: ",
+    "start_commit": "Starting commit using the providing token...",
+    "end_commit": "Commit done!",
     "update_routes": "{{1}} verified routes, {{2}} to go",
     "end_process": "Ending Process",
     "start_getProjectUrls": "Getting all the projects urls",
