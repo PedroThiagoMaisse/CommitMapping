@@ -41,9 +41,10 @@ Pode-se setar elas as flagando, como:
 
 ## Próximos passos
 
+- Clonar apenas  .git
+- Melhorar o loop de realização de commits
 
 - Bugs kkk
-    - Para alguns projetos o git log não dá retorno
     - Problemas de arquivo travado (como replicar pra começo de conversa)
 
 - Mudar a lingua de tudo aqui para en
@@ -88,6 +89,7 @@ Pode-se setar elas as flagando, como:
 ## Finalizados
 <details>
 
+- Para alguns projetos o git log não dá retorno
 - Organizar os arquivos de linguas
 
 - Disponibilizar em inglês

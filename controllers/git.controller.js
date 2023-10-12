@@ -117,7 +117,7 @@ async function generateFilteredLogs(paths) {
     let count = 0
 
     for (let index = 0; index < paths.length; index++) {
-        const element = paths[index]
+        const element = paths[index].split('.git')[0]
         try {
             let res = (await execute(`git log --stat`, { cwd: element })).stdout
             array.push({ source: element, data: res })
@@ -125,7 +125,7 @@ async function generateFilteredLogs(paths) {
             const found = res.match(regex)
         
             count += found.length
-        } catch (err) { 
+        } catch (err) {
             ErrorLog.addNewLog('ERROR WHILE FILTERING THE PATH: ' + element + '\n, ERROR:' + err)
         }
     }

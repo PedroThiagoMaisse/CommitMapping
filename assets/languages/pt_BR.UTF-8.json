@@ -1,5 +1,7 @@
 {
     "warn": "Aviso:",
+    "start_commit": "Começando o push usando o token fornecido...",
+    "end_commit": "Push feito!",
     "end_process": "Finalizando processo",
     "update_routes": "{{1}} rotas verificadas, verificando {{2}} rotas",
     "start_getProjectUrls": "Pegando Todas as urls de projetos",
