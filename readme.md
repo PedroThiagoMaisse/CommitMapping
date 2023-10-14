@@ -41,7 +41,6 @@ Pode-se setar elas as flagando, como:
 
 ## Próximos passos
 
-- Clonar apenas  .git
 - Melhorar o loop de realização de commits
 
 - Bugs kkk
@@ -89,6 +88,7 @@ Pode-se setar elas as flagando, como:
 ## Finalizados
 <details>
 
+- Clonar apenas  .git
 - Para alguns projetos o git log não dá retorno
 - Organizar os arquivos de linguas
 

@@ -49,7 +49,7 @@ async function cloneRepositories(url, path) {
         const element = url[index]
         createFolder(path + '/' + index)
             .then(() => {
-                execute(`git clone ${element}`, {cwd: path+ '/' + index})
+                execute(`git clone --no-checkout ${element}`, {cwd: path+ '/' + index})
                     .then(() => {
                         returnArray.push(path + '/' + index + element.slice(element.lastIndexOf('/')))
                         loadingAnimation.AddToLogger( buildText('update_cloneRepositories', element))
