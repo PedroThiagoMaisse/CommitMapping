@@ -6,6 +6,8 @@ async function createFile(path, data) {
     
     await createFolder(path.slice(0, path.lastIndexOf('/')))
     await _createFile(path, data)
+
+    return true
  }
 
  export {createFile}

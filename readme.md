@@ -40,9 +40,6 @@ Pode-se setar elas as flagando, como:
 > npx commitmapping --author example.email --project https://... --token ghpz... --commitpath c:// --lookoutpath c:// --test --force
 
 ## Próximos passos
-
-- Melhorar o loop de realização de commits
-
 - Bugs kkk
     - Problemas de arquivo travado (como replicar pra começo de conversa)
 
@@ -51,6 +48,7 @@ Pode-se setar elas as flagando, como:
 - Ordem do parse e toUpperKey() das envs
 
 - Achar os maiores problemas de performance
+    - A parte de commit de arquivo ta demorando MT mais que a criação de arquivo
 
 - Rever o código
     - Git Controller
@@ -88,6 +86,8 @@ Pode-se setar elas as flagando, como:
 ## Finalizados
 <details>
 
+
+- Melhorar o loop de realização de commits (juntei o await de das Promises)
 - Clonar apenas  .git
 - Para alguns projetos o git log não dá retorno
 - Organizar os arquivos de linguas

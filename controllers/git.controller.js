@@ -174,8 +174,10 @@ async function modifyAndCommit(json) {
             const { fileInfo, filePath, flip } = await generateFileInfos(element, path)
 
             if (flip) {
-                const commitDateObject = await getSetDateModel(element.Date)
-                await createFile(filePath, fileInfo)
+                const commitDateObject = getSetDateModel(element.Date)
+                const y = createFile(filePath, fileInfo)
+
+                await Promise.all([commitDateObject, y])
                 await execute(`git add . && git commit -m "${element.desc}"`, { env: commitDateObject, cwd: path } )
             } else {aCount ++}
         }
