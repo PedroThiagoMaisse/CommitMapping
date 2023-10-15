@@ -45,8 +45,6 @@ Pode-se setar elas as flagando, como:
 
 - Mudar a lingua de tudo aqui para en
 
-- Ordem do parse e toUpperKey() das envs
-
 - Achar os maiores problemas de performance
     - A parte de commit de arquivo ta demorando MT mais que a criação de arquivo
 
@@ -66,8 +64,8 @@ Pode-se setar elas as flagando, como:
         - utils
 
 - Posso quebrar alguns desses em mais projetos?
-    - uma api para o git?
-    - o loading animation?
+    - uma api para o git? (já tem uma, se chama git)
+    - o loading animation? (isso talvez role, mas tenho que avançar)
 
 - Criar testes
     - Nova variável "TEST" / "ISTEST"
