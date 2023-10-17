@@ -42,6 +42,7 @@ Pode-se setar elas as flagando, como:
 ## Próximos passos
 - Bugs kkk
     - Problemas de arquivo travado (como replicar pra começo de conversa)
+    - Demora para escrever as variáveis no proccess.env (workarround é passar as variaveis como argumento para a função logo em seguida)
 
 - Mudar a lingua de tudo aqui para en
 
@@ -52,8 +53,6 @@ Pode-se setar elas as flagando, como:
     - Git Controller
         - Quebrar as funcs
         - Jogar para o service o que fizer sentido
-    - Conferir o Phaser
-        - Ordem e funcionamento
     - Rever o Wrapper (tem algum jeito mais fácil de fazer ele?)
     - Conferir as functions
     - Conferir os services
@@ -68,7 +67,7 @@ Pode-se setar elas as flagando, como:
     - o loading animation? (isso talvez role, mas tenho que avançar)
 
 - Criar testes
-    - Nova variável "TEST" / "ISTEST"
+    - Nova variável "TEST"
     - Confere depois de criar o temp se ele existe no local que deveria
     - Cria um clone de um repositorio, e procura os commits feitos por um certo usuário
     - Faz o crawler correr por ali
@@ -85,6 +84,8 @@ Pode-se setar elas as flagando, como:
 <details>
 
 
+- Conferir o Phaser
+    - Ordem e funcionamento
 - Melhorar o loop de realização de commits (juntei o await de das Promises)
 - Clonar apenas  .git
 - Para alguns projetos o git log não dá retorno

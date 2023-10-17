@@ -3,7 +3,7 @@ import { die } from "../controllers/phaser.js"
 import { buildText, getLanguages } from "../services/translation.js"
 
 async function verifyLanguage(vars) {
-    const env = {...process.env, ...vars}
+    const env = { ...process.env, ...vars }
 
     const language = env.LANG || env.LANGUAGE || env.LC_ALL || env.LC_MESSAGES
     let flip = false
@@ -17,7 +17,7 @@ async function verifyLanguage(vars) {
     if (flip)
         return
 
-    log('Language not supported, for more details see: \nhttps://github.com/PedroThiagoMaisse/CommitMapping', 'red')
+    log('\nLanguage not supported, for more details see: \nhttps://github.com/PedroThiagoMaisse/CommitMapping', 'red')
     warn('It will be run in english\n')
 
     process.env.Lang = 'en_US.UTF-8'

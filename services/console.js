@@ -5,7 +5,7 @@ import chalk from "chalk";
 import { buildText } from './translation.js';
 const separation = `/-----------------------------------------------------/`
 
-function parseArguments() {
+function getAndParseArguments() {
     const array = process.argv.slice(2)
     const obj = {}
 
@@ -151,4 +151,4 @@ async function ask(question, defaultAnswer, isOptional) {
 }
  
 
-export{getSetDateModel, ask, log, warn, err, loadingAnimation, startConsole, parseArguments}
+export{getSetDateModel, ask, log, warn, err, loadingAnimation, startConsole, getAndParseArguments}

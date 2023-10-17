@@ -2,33 +2,33 @@ import { ask } from "./console.js"
 import os from 'os'
 import { buildText } from "./translation.js"
 
-function parseArguments() {
-    const array = process.argv.slice(2)
-    const obj = {}
+function getAndParseArguments() {
+    const argumentsArray = process.argv.slice(2)
+    const argumentsVariables = {}
 
-    for (let index = 0; index < array.length; index++) {
-        const element = array[index]
-        const next = array[index + 1]
+    for (let index = 0; index < argumentsArray.length; index++) {
+        const element = argumentsArray[index]
+        const next = argumentsArray[index + 1]
 
         if (element.includes('--')) {
             try {
                 if (!next.includes('--')) {
-                    obj[element.slice(2)] = next
+                    argumentsVariables[element.slice(2)] = next
                 } else { throw('finded')}
 
             } catch (err) {
-                obj[element.slice(2)] = true
+                argumentsVariables[element.slice(2)] = true
             }
         }
     }
 
-    return obj
+    return argumentsVariables
 }
 
 
-async function setEnvironmentVariable(obj) {
+async function setEnvironmentVariable(vars) {
 
-    for (const [key, value] of Object.entries(obj)) {
+    for (const [key, value] of Object.entries(vars)) {
         if (!process.env[key])
             process.env[key] = value
     }
@@ -41,16 +41,14 @@ async function getMainPath() {
 
  
 async function writingVarsToEnv() {
-    const obj = { COMMITPATH: await getMainPath() + '\\commitMapping', LOOKOUTPATH: process.cwd()}
-    const options = parseArguments()
+    const variables = { COMMITPATH: await getMainPath() + '\\commitMapping', LOOKOUTPATH: process.cwd()}
+    const argumentsVariables = getAndParseArguments()
 
-    for (const [key, value] of Object.entries(options)) { obj[key.toUpperCase()] = value }
+    for (const [key, value] of Object.entries(argumentsVariables)) { variables[key.toUpperCase()] = value }
 
-    obj.TEST ??= !!obj.ISTEST
+    await setEnvironmentVariable(variables)
 
-    await setEnvironmentVariable(obj)
-
-    return obj
+    return variables
 }
 
 async function askVars(obj) {

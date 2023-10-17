@@ -6,13 +6,13 @@ async function chooseLang() {
 
     for (let index = 0; index < r.length; index++) {
         const element = r[index];
-        if (element.split('.json')[0] === process.env.LANG) {
+        if (element.replace('.json', '') === process.env.LANG) {
             const s = await readFile('./assets/languages/' + element, 'utf-8')
             choosed = JSON.parse(s)
         }
     }
     
-    return true
+    return
 }
 
 async function getLanguages() {
