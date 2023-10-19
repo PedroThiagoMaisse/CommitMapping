@@ -40,127 +40,89 @@ Pode-se setar elas as flagando, como:
 > npx commitmapping --author example.email --project https://... --token ghpz... --commitpath c:// --lookoutpath c:// --test --force
 
 ## Próximos passos
-- Bugs kkk
+V 1.3 (Re-escritas simples + lidando com bugs)
+- Bugs
     - Problemas de arquivo travado (como replicar pra começo de conversa)
     - Demora para escrever as variáveis no proccess.env (workarround é passar as variaveis como argumento para a função logo em seguida)
 
-- Mudar a lingua de tudo aqui para en
+- Melhoras / Re-escritas
+    - Mudar a lingua desse readme para en
+    - Achar os maiores problemas de performance (0/1)
+        - A parte de commit de arquivo
+    - Rever o código (1/5)
+        - Git Controller
+        ~- Phaser~
+        - Wrapper (tem algum jeito mais fácil de fazer ele?)
+        - Estudar a separação do services para services + utils e o uso do functions
+        - Services
 
-- Achar os maiores problemas de performance
-    - A parte de commit de arquivo ta demorando MT mais que a criação de arquivo
+V 2.0 (Automatização da pipeline + Criação de testes)
+<details>
 
-- Rever o código
-    - Git Controller
-        - Quebrar as funcs
-        - Jogar para o service o que fizer sentido
-    - Rever o Wrapper (tem algum jeito mais fácil de fazer ele?)
-    - Conferir as functions
-    - Conferir os services
-        - console
-        - env
-        - fs
-        - git
-        - utils
+- Criação de test
+    ~- Nova variável~
+    - Criar temp e conferir se existe
+    - Clonar um reposítório
+        - Fazer o crawler correr pegando alguns outros projetos
+        - Conferir o commits nesses projetos
 
-- Posso quebrar alguns desses em mais projetos?
-    - uma api para o git? (já tem uma, se chama git)
-    - o loading animation? (isso talvez role, mas tenho que avançar)
-
-- Criar testes
-    - Nova variável "TEST"
-    - Confere depois de criar o temp se ele existe no local que deveria
-    - Cria um clone de um repositorio, e procura os commits feitos por um certo usuário
-    - Faz o crawler correr por ali
-    - Confere as lenghts dos resultados
-    - Não realiza o PUSH (?)
-    
-- Preparar devops
-    - Criar nova branch    
-    - Preparar as git actions
-        - Subir de master p/ PRD
-        - Quando subir p/ PRD subir p/ NPM
+- DevOps
+    ~- Criar nova branch p/ teste e PRD~
+    - Git Actions (1/4)
+        ~- Subir de master p/ PRD~
+        - Subir de PRD p/ o NPM
+        - Testes automáticos na branch de dev
+        - Realizar testes antes de subir de master p/ PRD
+</details>
 
 ## Finalizados
 <details>
 
+V 0 até 1.2.0
+- Bugs
+    - Melhorar o loop de realização de commits
+    - Clonar apenas .git
+    - Para alguns projetos o git log não dá retorno
+    - Organizar os arquivos de linguas
+    - O --test e o --dryrun não travam ou travam tudo
+    - Bug no horário
+    - Bug no caso do projeto já existir
 
-- Conferir o Phaser
-    - Ordem e funcionamento
-- Melhorar o loop de realização de commits (juntei o await de das Promises)
-- Clonar apenas  .git
-- Para alguns projetos o git log não dá retorno
-- Organizar os arquivos de linguas
+- Melhorias/re-escritas
+    - Disponibilizar em inglês
+    - new code order:
+        - get envs
+        - get language
+        - console.clear
+        - start flux
+        - (Re) Organizar os arquivos;
+    - Tentar passar os arquivos para algum lugar temp
+    - Criar um padrão de erro no caso de acontecer falhas antes do momento que pegamos o filepath (com a alteração da função de exec p/ cwd ficou redundante);
+    - Melhorar a lógica p/ a troca de sistemas operacionais e linguagens (com a alteração p/ a padronização da função exec do node já ficou agnóstico ao sistema operacional e linguagem);
+    - Tentar alterar a data do commit pelas próprias opções da API do git (ou mudando as variáveis de ambiente);
+    - Criar um wrapper de erros;
+    - Melhorar o log de saída do sistemas;
+    - Nos detalhes do commit, colocar o número de linhas;
+    - Nos detalhes do commit, colocar o nome do projeto; (poderia ser considerado vazamento de info)
+    - Não duplicar Commits e não deletar o arquivo atual;
+    - Melhorar a leitura do readme;
+    - Criar um caso de testes que não pusha;
+    - Arrumar as envs de ambiente p/ incluir email, token e repo;
+    - Armazenar os commits que deram erro;
+    - Error Handler mais completo;
+    - Lidar com kill Switchs;
+    - Adicionar novas variáveis ao ReadMe;
+    - Função de DeleteFile em utils;
+    - Mudar o jeito que o crawler funciona p/ evitar a recorrencia da função;
+    - Ajustes na escrita e novas tasks;
+    - Break o Born() no phaser;
+    - Pegar o diretório atual e usar ele para construir as rotas padrões;
+    - Possibilitar vários processos de estarem ocupando a thread quando executando em loop;
+    - Break o modifyAndCommit() no git.controller;
+    - Token e URL estão hardcoded;
 
-- Disponibilizar em inglês
+DevOps
+    - Subir para o NPX (e trocar de nome, talvez);
+        - Usar localmente no diretório apontado (quando mudar p/ npx)
 
-- new code order:
-    - get envs
-    - get language
-    - console.clear
-    - start flux
-
-- Testar o --test e o --dryrun
-
-- (Re) Organizar os arquivos;
-
-- Criar um padrão de erro no caso de acontecer falhas antes do momento que pegamos o filepath (com a alteração da função de exec p/ cwd ficou redundante);
-
-- Melhorar a lógica p/ a troca de sistemas operacionais e linguagens (com a alteração p/ a padronização da função exec do node já ficou agnóstico ao sistema operacional e linguagem);
-
-- Tentar passar os arquivos para algum lugar temp
-    
-- Melhorar a lógica de tradução (a parte mais complexa disso vai ser descontinuada pela alteração da data ser feito pela própria API do git agora);
-
-- Tentar alterar a data do commit pelas próprias opções da API do git (ou mudando as variáveis de ambiente);
-
-- Criar um wrapper de erros;
-
-- Melhorar o log de saída do sistemas;
-
-- Subir para o NPX (e trocar de nome, talvez);
-    - Usar localmente no diretório apontado (quando mudar p/ npx)
-
-- Nos detalhes do commit, colocar o número de linhas;
-
-- Nos detalhes do commit, colocar o nome do projeto; (poderia ser considerado vazamento de info)
-
-- Nos detalhes do commit, colocar as linguagens dos arquivos alterados. (poderia ser considerado vazamento de info)
-
-- URLs dão problema
-
-- Não duplicar Commits e não deletar o arquivo atual;
-
-- Criar um caso de testes que não pusha;
-
-- Melhorar a leitura do readme;
-
-- Arrumar as envs de ambiente p/ incluir email, token e repo;
-
-- Armazenar os commits que deram erro;
-
-- Error Handler mais completo;
-
-- Lidar com kill Switchs;
-
-- Adicionar novas variáveis ao ReadMe;
-
-- Função de DeleteFile em utils;
-
-- Mudar o jeito que o crawler funciona p/ evitar a recorrencia da função;
-
-- Ajustes na escrita e novas tasks;
-
-- Break o Born() no phaser;
-
-- Pegar o diretório atual e usar ele para construir as rotas padrões;
-
-- Possibilitar vários processos de estarem ocupando a thread quando executando em loop;
-
-- Break o modifyAndCommit() no git.controller;
-
-- Token e URL estão hardcoded;
-
-- Bug no horário
-
-- Bug no caso do projeto já existir
 </details>
