@@ -43,16 +43,16 @@ Pode-se setar elas as flagando, como:
 V 1.3 (Re-escritas simples + lidando com bugs)
 - Bugs (1/2)
     - Problemas de arquivo travado (como replicar pra começo de conversa)
-    - ~Demora para escrever as variáveis no proccess.env (false alarm)~s
+    - ~Demora para escrever as variáveis no proccess.env (false alarm)~
 
 - Melhoras / Re-escritas
     - Mudar a lingua desse readme para en
     - Achar os maiores problemas de performance (0/1)
         - A parte de commit de arquivo
-    - Rever o código (1/5)
+    - Rever o código (2/5)
         - Git Controller
         - ~Phaser~
-        - Wrapper (tem algum jeito mais fácil de fazer ele?)
+        - ~Wrapper (tem algum jeito mais fácil de fazer ele?)~
         - Estudar a separação do services para services + utils e o uso do functions
         - Services
 

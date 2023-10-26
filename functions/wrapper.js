@@ -1,9 +1,14 @@
-import { die, isOn } from "../controllers/phaser.js";
+import { isOn } from "../controllers/phaser.js";
+import { errorHandler } from "./errorHandler.js";
 
 async function wrapper(func, el) {
-    if (!isOn) { return false }
-    const r = await func(el)
-    return r
+    try {
+        if (!isOn) { return false }
+        const r = await func(el)
+        return r
+    } catch (err) {
+        errorHandler(err + ' while executing ' + func.name)
+    }
 }
 
 export {wrapper}

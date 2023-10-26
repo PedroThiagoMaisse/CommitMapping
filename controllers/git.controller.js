@@ -1,7 +1,7 @@
 import { createFolder, getFile, sleep } from '../services/utils.js'
 import { createFile } from '../services/fs.js'
 import { loadingAnimation } from '../services/console.js'
-import { ErrorLog, errorHandler } from '../functions/errorHandler.js'
+import { ErrorLog } from '../functions/errorHandler.js'
 import { execute, existFile, deleteFolder } from '../functions/promisses.js'
 import { isOn } from './phaser.js'
 import { getSetDateModel } from '../services/console.js'
@@ -68,7 +68,7 @@ async function cloneRepositories(url, path) {
     }
 
     if (errorCount === url.length) {
-        errorHandler(buildText('error_noRepCloned'))
+        throw(buildText('error_noRepCloned'))
     }
 
     while (count !== url.length && isOn) {

@@ -1,58 +1,41 @@
 import {crawler, filterFor, generateTempFolder, sleep} from '../services/utils.js'
 import {getUrlPerPath,cloneRepositories, generateFilteredLogs, logsToJson, cloneProject, modifyAndCommit, setProject} from './git.controller.js'
 import { log, warn, err, loadingAnimation } from '../services/console.js'
-import {errorHandler} from '../functions/errorHandler.js'
 import { execute } from '../functions/promisses.js'
 import { buildText } from '../services/translation.js'
 
 
 async function getAllProjectsURLs() {
     loadingAnimation.Start(buildText('start_getProjectUrls'))
-    try {
-        const unfilteredPaths = await crawler()
-        const paths = await filterFor('.git', unfilteredPaths)
-        const urls = await getUrlPerPath(paths)
+    const unfilteredPaths = await crawler()
+    const paths = await filterFor('.git', unfilteredPaths)
+    const urls = await getUrlPerPath(paths)
 
-        loadingAnimation.End(buildText('end_getProjectUrls', urls.length))
-        return urls
-
-    } catch (err) {
-        errorHandler(err)
-    }
+    loadingAnimation.End(buildText('end_getProjectUrls', urls.length))
+    return urls
 }
 
 async function getLogsFromUrls(urls) {
-    try {
-        loadingAnimation.Start(buildText('start_getLogsFromUrls', process.env.AUTHOR))
-        const tempFolderPath = await generateTempFolder()
-        const clonedReposPath = await cloneRepositories(urls, tempFolderPath)
-        const { array, count } = await generateFilteredLogs(clonedReposPath)
+    loadingAnimation.Start(buildText('start_getLogsFromUrls', process.env.AUTHOR))
+    const tempFolderPath = await generateTempFolder()
+    const clonedReposPath = await cloneRepositories(urls, tempFolderPath)
+    const { array, count } = await generateFilteredLogs(clonedReposPath)
 
-        loadingAnimation.End(buildText('end_getLogsFromUrls', count))
-        return array
-        
-    } catch (err) {
-        errorHandler(err)
-    }
+    loadingAnimation.End(buildText('end_getLogsFromUrls', count))
+    return array
 }
 
 async function transformLogs(logs) {
-    try {
-        loadingAnimation.Start(buildText('start_transformLogs'))
-        const JSONLogs = await logsToJson(logs)
-        JSONLogs.sort(function (a, b) { return b.Date - a.Date });
-        
-        loadingAnimation.End(buildText('end_transformLogs'))
-        return JSONLogs
-
-    } catch (err) {
-        errorHandler(err)
-    }
+    loadingAnimation.Start(buildText('start_transformLogs'))
+    const JSONLogs = await logsToJson(logs)
+    JSONLogs.sort(function (a, b) { return b.Date - a.Date });
+    
+    loadingAnimation.End(buildText('end_transformLogs'))
+    return JSONLogs
 }
 
 
 async function commitToGit(json) {
-    try {
     loadingAnimation.Start(buildText('start_commitToGit'))
     await cloneProject()
     await setProject()
@@ -78,10 +61,6 @@ async function commitToGit(json) {
     
     log(buildText("end_commit"), 'green')
     return
-
-    } catch (err) {
-        errorHandler(err)
-    }
 }
 
 

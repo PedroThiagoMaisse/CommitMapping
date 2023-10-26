@@ -20,7 +20,9 @@ async function exitHandler(options, exitCode) {
 }
 
 async function die() {
-    warn(await buildText('end_process'))
+    if (isOn)
+        warn(await buildText('end_process'))
+    
     isOn = false
     loadingAnimation.End('', true)
     await ErrorLog.createLog()
