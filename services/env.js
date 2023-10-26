@@ -51,13 +51,14 @@ async function writingVarsToEnv() {
     return variables
 }
 
-async function askVars(obj) {
-    
-    obj.AUTHOR ??= await ask(buildText('ask_author'), '')
-    obj.PROJECTURL ??= obj.PROJECT || obj.PROJECTURL || await ask(buildText('ask_project'), '')
-    obj.TOKEN ??= await ask(buildText('ask_token'), '', true)
+async function askVars() {
+    const vars = {AUTHOR: process.env.AUTHOR, PROJECTURL: process.env.PROJECTURL, TOKEN: process.env.TOKEN}
 
-    await setEnvironmentVariable(obj)
+    vars.AUTHOR ??= await ask(buildText('ask_author'), '')
+    vars.PROJECTURL ??= process.env.PROJECT || process.env.PROJECTURL || await ask(buildText('ask_project'), '')
+    vars.TOKEN ??= await ask(buildText('ask_token'), '', true)
+
+    await setEnvironmentVariable(vars)
 
 }
 

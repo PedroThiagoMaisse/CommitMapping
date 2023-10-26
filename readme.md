@@ -41,9 +41,9 @@ Pode-se setar elas as flagando, como:
 
 ## Próximos passos
 V 1.3 (Re-escritas simples + lidando com bugs)
-- Bugs
+- Bugs (1/2)
     - Problemas de arquivo travado (como replicar pra começo de conversa)
-    - Demora para escrever as variáveis no proccess.env (workarround é passar as variaveis como argumento para a função logo em seguida)
+    - ~Demora para escrever as variáveis no proccess.env (false alarm)~s
 
 - Melhoras / Re-escritas
     - Mudar a lingua desse readme para en
@@ -51,7 +51,7 @@ V 1.3 (Re-escritas simples + lidando com bugs)
         - A parte de commit de arquivo
     - Rever o código (1/5)
         - Git Controller
-        ~- Phaser~
+        - ~Phaser~
         - Wrapper (tem algum jeito mais fácil de fazer ele?)
         - Estudar a separação do services para services + utils e o uso do functions
         - Services
@@ -60,16 +60,16 @@ V 2.0 (Automatização da pipeline + Criação de testes)
 <details>
 
 - Criação de test
-    ~- Nova variável~
+    - ~Nova variável~
     - Criar temp e conferir se existe
     - Clonar um reposítório
         - Fazer o crawler correr pegando alguns outros projetos
         - Conferir o commits nesses projetos
 
 - DevOps
-    ~- Criar nova branch p/ teste e PRD~
+    - ~Criar nova branch p/ teste e PRD~
     - Git Actions (1/4)
-        ~- Subir de master p/ PRD~
+        - ~Subir de master p/ PRD~
         - Subir de PRD p/ o NPM
         - Testes automáticos na branch de dev
         - Realizar testes antes de subir de master p/ PRD
