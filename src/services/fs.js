@@ -1,5 +1,5 @@
 import { _createFile } from '../functions/promisses.js'
-import { createFolder } from './utils.js'
+import { createFolder } from '../utils/general.js'
 
 async function createFile(path, data) {
     // if (typeof data !== String) { data = JSON.stringify(data) }

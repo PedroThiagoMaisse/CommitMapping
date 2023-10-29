@@ -1,11 +1,11 @@
-import { loadingAnimation, startConsole, warn } from "../services/console.js"
-import { askVars, writingVarsToEnv } from "../services/env.js"
+import { loadingAnimation } from "../services/console.js"
+import { askVars, writingVarsToEnv } from "../utils/env.js"
 import { ErrorLog } from "../functions/errorHandler.js"
 import { deleteFolder } from "../functions/promisses.js"
 import chalk from "chalk"
 import {verifyLanguage, verifyToken} from "../functions/verify.js"
 import { buildText, chooseLang } from "../services/translation.js"
-import { sleep } from "../services/utils.js"
+import { warn, startConsole } from "../utils/console.js"
 
 let isOn = false
 
@@ -36,16 +36,16 @@ async function born() {
 
     console.clear()
 
-    process.stdout.write('\r' + chalk.gray('start-up (1/4), getting vars      '))
+    process.stdout.write('\r' + chalk.gray('start-up (1/3), getting vars      '))
     await writingVarsToEnv()
 
-    process.stdout.write('\r' + chalk.gray('start-up (2/4), verifying language'))
+    process.stdout.write('\r' + chalk.gray('start-up (2/3), verifying language'))
     await verifyLanguage()
 
-    process.stdout.write('\r' + chalk.gray('start-up (3/4), setting language  '))
+    process.stdout.write('\r' + chalk.gray('start-up (3/3), setting language  '))
     await chooseLang()
 
-    process.stdout.write('\r' + chalk.gray('start-up (4/4), starting console  '))
+    process.stdout.write('\r' + chalk.gray('start-up finished, starting console  '))
     await startConsole()
 
     await askVars()

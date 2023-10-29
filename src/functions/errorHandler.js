@@ -1,6 +1,6 @@
 import { createFile } from '../services/fs.js'
 import { die } from "../controllers/phaser.js"
-import { err } from "../services/console.js"
+import { err } from "../utils/console.js"
 const sep = `/-----------------------------------------------------/`
 
 async function errorHandler(error) { 

@@ -1,9 +1,9 @@
-import { createFile } from './fs.js'
+import { createFile } from '../services/fs.js'
 import { isOn } from '../controllers/phaser.js';
 import { ErrorLog } from '../functions/errorHandler.js';
-import { loadingAnimation } from './console.js';
+import { loadingAnimation } from '../services/console.js';
 import { _createFolder, deleteFolder, readFile, readFolder, existFile } from '../functions/promisses.js'
-import { buildText } from './translation.js';
+import { buildText } from '../services/translation.js';
 
 function sleep(ms) {
 	return new Promise((resolve) => {

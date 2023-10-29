@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-import { getAllProjectsURLs, getLogsFromUrls, transformLogs, commitToGit } from './controllers/controller.js'
-import { die, born, exitHandler } from './controllers/phaser.js';
-import { wrapper } from './functions/wrapper.js';
+import { getAllProjectsURLs, getLogsFromUrls, transformLogs, commitToGit } from './src/controllers/controller.js'
+import { die, born, exitHandler } from './src/controllers/phaser.js';
+import { wrapper } from './src/functions/wrapper.js';
 
 async function main() {
     await born()
