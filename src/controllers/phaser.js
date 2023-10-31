@@ -1,9 +1,9 @@
 import { loadingAnimation } from "../services/console.js"
 import { askVars, writingVarsToEnv } from "../utils/env.js"
-import { ErrorLog } from "../functions/errorHandler.js"
-import { deleteFolder } from "../functions/promisses.js"
+import { ErrorLog } from "../utils/errorHandler.js"
+import { deleteFolder } from "../utils/promisses.js"
 import chalk from "chalk"
-import {verifyLanguage, verifyToken} from "../functions/verify.js"
+import {verifyLanguage, verifyToken} from "../utils/verify.js"
 import { buildText, chooseLang } from "../services/translation.js"
 import { warn, startConsole } from "../utils/console.js"
 

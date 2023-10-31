@@ -49,13 +49,13 @@ V 1.3 (Re-escritas simples + lidando com bugs)
     - Mudar a lingua desse readme para en
     - Achar os maiores problemas de performance (0/1)
         - A parte de commit de arquivo
-    - Rever o código (4/5)
+    - ~Rever o código (5/5)~
         - ~Git Controller~
             - ~Fazer + uma função rodar em paralelo~
             - ~Rever passo a passo a lógica do Modify and Commit~
         - ~Phaser~
         - ~Wrapper (tem algum jeito mais fácil de fazer ele?)~
-        - Estudar a separação do services para services + utils e o uso do functions
+        - ~Estudar a separação do services para services + utils e o uso do functions~
         - ~Services~
 
 V 2.0 (Automatização da pipeline + Criação de testes)

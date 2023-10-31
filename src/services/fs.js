@@ -1,4 +1,4 @@
-import { _createFile } from '../functions/promisses.js'
+import { _createFile } from '../utils/promisses.js'
 import { createFolder } from '../utils/general.js'
 
 async function createFile(path, data) {

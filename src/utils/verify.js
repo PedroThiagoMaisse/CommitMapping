@@ -1,6 +1,6 @@
 import { log } from "../services/console.js"
 import { buildText, getLanguages } from "../services/translation.js"
-import { warn } from "../utils/console.js"
+import { warn } from "./console.js"
 
 async function verifyLanguage(vars) {
     const env = { ...process.env, ...vars }

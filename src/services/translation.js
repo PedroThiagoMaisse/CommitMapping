@@ -1,4 +1,4 @@
-import { readFile, readFolder } from "../functions/promisses.js"
+import { readFile, readFolder } from "../utils/promisses.js"
 let choosed = {}
 
 async function chooseLang() {

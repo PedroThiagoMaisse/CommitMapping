@@ -1,7 +1,7 @@
 import {crawler, filterFor, generateTempFolder, sleep} from '../utils/general.js'
 import {getUrlPerPath,cloneRepositories, generateFilteredLogs, logsToJson, cloneProject, modifyAndCommit, setProject} from './git.controller.js'
 import { log, loadingAnimation } from '../services/console.js'
-import { execute } from '../functions/promisses.js'
+import { execute } from '../utils/promisses.js'
 import { buildText } from '../services/translation.js'
 
 
