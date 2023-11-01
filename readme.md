@@ -1,130 +1,139 @@
 # CommitMapping
-Um executável de Node que procura todos os repositórios de git na sua máquina, armazena os commmits que você realizou em cada um deles e sobe um espelho deles no projeto desejado.  
+An executable Node script that searches for all git repositories on your machine, stores the commits you made in each of them, and uploads a mirror of them to the desired project.
 
-Esse espelho conta com as informações:  
-- Código do commit;  
-- Author;  
-- Data;  
-- Descrição do commit;
-- Número de linhas deletadas, adicionadas e alteradas;
+This mirror includes the following information:
+- Commit code
+- Author
+- Date
+- Commit description
+- Number of lines deleted, added, and modified
 
-**Não há informações sobre a natureza do projeto daonde o commit surge ou snippets do código.** 
+**There is no information about the nature of the project from which the commit originates or code snippets.**
 
-## Rodando
+## Running
 
-Use ***Em um console com acesso de admin***
->Npx commitMapping
+Use ***In a console with admin access***
+> Npx commitMapping
 
+Or clone it to your machine and use
+> node . --lookoutpath c:/Users
 
-Ou Clone na sua máquina e use
->node .  --looktoutpath c:/Users
+inside the repository.
 
-dentro do repositório.  
+## Variables
 
-## Variáveis
+These are the variables that the code uses:
 
-Essas são as variáveis que o código usa:
+| Name          | Description                                             | Default                  | Alias       |
+| ------------- | ------------------------------------------------------- | ------------------------ | ----------- |
+| COMMITPATH    | Path to store the script                                | C:/commitMapping         | commitpath  |
+| LOOKOUTPATH   | Path where the crawler starts                           | C:/Users                 | lookoutpath |
+| DRY-RUN       | Prevents pushing data to the project                    | False                    | dry-run     |
+| TEST          | Prevents pushing data to the project                    | False                    | test        |
+| AUTHOR        | The email used as a filter in commits                   | *filled in dialogue*     | author      |
+| PROJECTURL    | The project URL where commits will be made              | *filled in dialogue*     | project     |
+| TOKEN         | An access token for the account                         | *filled in dialogue*     | token       |
+| FORCE         | Can be used to bypass some checks                      | false                    | force       |
 
-| Nome          | Descrição                                                  | Padrão                   | Alias       |
-| ------------- | ---------------------------------------------------------- | ------------------------ | ----------- |
-| COMMITPATH    | Rota p/ armazenamento do script                            | C:/commitMapping         | commitpath  |
-| LOOKOUTPATH   | Rota p/ aonde o crawler inicia                             | C:/Users                 | lookoutpath |
-| DRY-RUN       | Impede o push dos dados p/ o projeto                       | False                    | dry-run     |
-| TEST          | Impede o push dos dados p/ o projeto                       | False                    | test        |
-| AUTHOR        | O Email que serve como filtro nos commits                  | *preenchido por diálogo* | author      |
-| PROJECTURL    | A Url do projeto aonde os commits serão feitos             | *preenchido por diálogo* | project     |
-| TOKEN         | Um token de acesso p/ a conta                              | *preenchido por diálogo* | token       |
-| FORCE         | Pode ser usado para fazer o bypass de algumas verificações | false                    | force       |
-
-Pode-se setar elas as flagando, como:
+They can be set using flags, such as:
 > npx commitmapping --author example.email --project https://... --token ghpz... --commitpath c:// --lookoutpath c:// --test --force
 
-## Próximos passos
-V 1.3 (Re-escritas simples + lidando com bugs)
-- Bugs (1/2)
-    - Problemas de arquivo travado (como replicar pra começo de conversa)
-    - ~Demora para escrever as variáveis no proccess.env (false alarm)~
+## Next Steps
+V 1.3 (Simple rewrites + bug handling) *(Live Now!)* 
+- ~Bugs (1/1)~
+    - ~Delay in writing variables to process.env (false alarm)~
 
-- Melhoras / Re-escritas
-    - Mudar a lingua desse readme para en
-    - Achar os maiores problemas de performance (0/1)
-        - A parte de commit de arquivo
-    - ~Rever o código (5/5)~
+- ~Improvements / Rewrites~
+    - ~Change the language of this readme to English~
+    - ~Review the code (5/5)~
         - ~Git Controller~
-            - ~Fazer + uma função rodar em paralelo~
-            - ~Rever passo a passo a lógica do Modify and Commit~
+            - ~Make one more function run in parallel~
+            - ~Review the step-by-step logic of Modify and Commit~
         - ~Phaser~
-        - ~Wrapper (tem algum jeito mais fácil de fazer ele?)~
-        - ~Estudar a separação do services para services + utils e o uso do functions~
+        - ~Wrapper (is there an easier way to do it?)~
+        - ~Study the separation of services into services + utils and the use of functions~
         - ~Services~
 
-V 2.0 (Automatização da pipeline + Criação de testes)
+V 2.0 (Pipeline automation + Test creation)
 <details>
 
-- Criação de test
-    - ~Nova variável~
-    - Criar temp e conferir se existe
-    - Clonar um reposítório
-        - Fazer o crawler correr pegando alguns outros projetos
-        - Conferir o commits nesses projetos
+- Test creation
+    - ~New variable~
+    - Create temp and check if it exists
+    - Clone a repository
+        - Make the crawler run by fetching some other projects
+        - Check the commits in these projects
 
 - DevOps
-    - ~Criar nova branch p/ teste e PRD~
+    - ~Create a new branch for testing and PRD~
     - Git Actions (1/4)
-        - ~Subir de master p/ PRD~
-        - Subir de PRD p/ o NPM
-        - Testes automáticos na branch de dev
-        - Realizar testes antes de subir de master p/ PRD
+        - ~Push from master to PRD~
+        - Push from PRD to NPM
+        - Automatic tests on the dev branch
+        - Perform tests before pushing from master to PRD
 </details>
 
-## Finalizados
+# Future Improvements
+
 <details>
 
-V 0 até 1.2.0
-- Bugs
-    - Melhorar o loop de realização de commits
-    - Clonar apenas .git
-    - Para alguns projetos o git log não dá retorno
-    - Organizar os arquivos de linguas
-    - O --test e o --dryrun não travam ou travam tudo
-    - Bug no horário
-    - Bug no caso do projeto já existir
+- Bugs (0/1)
+    - File lock issues (how to replicate in the first place)
 
-- Melhorias/re-escritas
-    - Disponibilizar em inglês
+- Identify major performance problems (0/1)
+    - The file commit section
+
+</details>
+
+## Completed
+
+<details>
+
+V 0 to 1.2.0
+- Bugs
+    - Improve the commit execution loop
+    - Clone only .git
+    - For some projects, git log doesn't return
+    - Organize language files
+    - --test and --dryrun don't lock or lock everything
+    - Bug in time
+    - Bug in the case of an existing project
+
+- Improvements/Rewrites
+    - Provide in English
     - new code order:
         - get envs
         - get language
         - console.clear
         - start flux
-        - (Re) Organizar os arquivos;
-    - Tentar passar os arquivos para algum lugar temp
-    - Criar um padrão de erro no caso de acontecer falhas antes do momento que pegamos o filepath (com a alteração da função de exec p/ cwd ficou redundante);
-    - Melhorar a lógica p/ a troca de sistemas operacionais e linguagens (com a alteração p/ a padronização da função exec do node já ficou agnóstico ao sistema operacional e linguagem);
-    - Tentar alterar a data do commit pelas próprias opções da API do git (ou mudando as variáveis de ambiente);
-    - Criar um wrapper de erros;
-    - Melhorar o log de saída do sistemas;
-    - Nos detalhes do commit, colocar o número de linhas;
-    - Nos detalhes do commit, colocar o nome do projeto; (poderia ser considerado vazamento de info)
-    - Não duplicar Commits e não deletar o arquivo atual;
-    - Melhorar a leitura do readme;
-    - Criar um caso de testes que não pusha;
-    - Arrumar as envs de ambiente p/ incluir email, token e repo;
-    - Armazenar os commits que deram erro;
-    - Error Handler mais completo;
-    - Lidar com kill Switchs;
-    - Adicionar novas variáveis ao ReadMe;
-    - Função de DeleteFile em utils;
-    - Mudar o jeito que o crawler funciona p/ evitar a recorrencia da função;
-    - Ajustes na escrita e novas tasks;
-    - Break o Born() no phaser;
-    - Pegar o diretório atual e usar ele para construir as rotas padrões;
-    - Possibilitar vários processos de estarem ocupando a thread quando executando em loop;
-    - Break o modifyAndCommit() no git.controller;
-    - Token e URL estão hardcoded;
+        - (Re) Organize files;
+    - Try to move files to some temp location
+    - Create an error pattern in case of failures before we get the filepath (with the change of exec function to cwd, it became redundant);
+    - Improve logic for switching operating systems and languages (with the change to the standardization of the node exec function, it became agnostic to the operating system and language);
+    - Try to change the commit date through git API options (or changing environment variables);
+    - Create an error wrapper;
+    - Improve system output log;
+    - In commit details, include the number of lines;
+    - In commit details, include the project name; (could be considered information leakage)
+    - Do not duplicate commits and do not delete the current file;
+    - Improve readme readability;
+    - Create a test case that does not push;
+    - Fix environment variables to include email, token, and repo;
+    - Store commits that failed;
+    - More complete error handler;
+    - Handle kill switches;
+    - Add new variables to ReadMe;
+    - DeleteFile function in utils;
+    - Change the way the crawler works to avoid the recurrence of the function;
+    - Adjustments in writing and new tasks;
+    - Break the Born() in phaser;
+    - Get the current directory and use it to build default routes;
+    - Allow multiple processes to occupy the thread when running in a loop;
+    - Break the modifyAndCommit() in git.controller;
+    - Token and URL are hardcoded;
 
 DevOps
-    - Subir para o NPX (e trocar de nome, talvez);
-        - Usar localmente no diretório apontado (quando mudar p/ npx)
+    - Push to NPX (and maybe change the name);
+        - Use locally in the pointed directory (when switching to npx)
 
 </details>

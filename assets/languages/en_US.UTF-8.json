@@ -17,7 +17,7 @@
     "update_logsToJson": "{{1}} commits are invalid to be transformed in JSON",
     "update_cloneRepositories": "Project Cloned: {{1}}",
     "error_noRepCloned": "None Git Clone was able to finish",
-    "update_modifyAndCommit": "{{1}} succeded, {{2}} already exist, {{3}} error, {{4}} to go",
+    "update_modifyAndCommit": "{{1}} succeded, {{2}} already exist, {{3}} error, {{4}} to go   ",
     "end_modifyAndCommit": "\r{{1}} commits succeded, {{2}} already exist and {{3}} errors",
     "quit_process": "Process closed!",
     "no_token": "\nA missing token can generate problems during push, if this happens go to {{1}}\\project and do it manually",
