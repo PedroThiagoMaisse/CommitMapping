@@ -1,11 +1,10 @@
-
 import inquirer from 'inquirer'
 import { die } from '../controllers/phaser.js'
-import chalk from "chalk";
+import chalk from "chalk"
+import { err } from '../utils/console.js';
 import { buildText } from './translation.js';
-const separation = `/-----------------------------------------------------/`
 
-function parseArguments() {
+function getAndParseArguments() {
     const array = process.argv.slice(2)
     const obj = {}
 
@@ -29,13 +28,6 @@ function parseArguments() {
 }
 
 
-async function startConsole() {
-    log(buildText('start_process'), ['inverse'])
-
-    return true
-}
-
-
 async function log(info, style, options) {
     if (typeof style !== 'object') { style = [style] }
     if (typeof options !== 'object') { options = { options } }
@@ -55,20 +47,6 @@ async function log(info, style, options) {
     console.log(r)
 
     return true
-}
-
-async function warn(info) {
-    log(`${buildText('warn') || 'Warning: '}${info}`, ['yellow', 'bold'])
-}
-
-async function err(info) {
-    log(`
-${separation}
-ERROR
-
-${info}
-${separation}
-`, ['red', 'bold'])
 }
 
 const loadingAnimation = {
@@ -151,4 +129,4 @@ async function ask(question, defaultAnswer, isOptional) {
 }
  
 
-export{getSetDateModel, ask, log, warn, err, loadingAnimation, startConsole, parseArguments}
+export{getSetDateModel, ask, log, getAndParseArguments, loadingAnimation}

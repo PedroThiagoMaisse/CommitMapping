@@ -1,5 +1,7 @@
 {
     "warn": "Aviso:",
+    "start_commit": "Começando o push usando o token fornecido...",
+    "end_commit": "Push feito!",
     "end_process": "Finalizando processo",
     "update_routes": "{{1}} rotas verificadas, verificando {{2}} rotas",
     "start_getProjectUrls": "Pegando Todas as urls de projetos",
@@ -15,7 +17,7 @@
     "update_logsToJson": "{{1}} commits são inválidos para serem transformados em JSON",
     "update_cloneRepositories": "Projeto Clonado: {{1}}",
     "error_noRepCloned": "Nenhum Git Clone foi capaz de finalizar",
-    "update_modifyAndCommit": "{{1}} bem sucedidos, {{2}} já existentes, {{3}} erros, faltam {{4}}",
+    "update_modifyAndCommit": "{{1}} bem sucedidos, {{2}} já existentes, {{3}} erros, faltam {{4}}    ",
     "end_modifyAndCommit": "\r{{1}} commits bem sucedidos, {{2}} já existentes e {{3}} erros",
     "quit_process": "Processo fechado!",
     "no_token": "\nA falta do tokens pode gerar problemas no push, caso isso ocorra vá a rota {{1}}\\project e faça o push manualmente",
