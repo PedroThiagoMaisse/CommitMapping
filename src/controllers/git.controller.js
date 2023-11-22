@@ -180,10 +180,9 @@ async function modifyAndCommit(json) {
             const { fileInfo, filePath, newCommit } = await generateFileInfos(element, commitPath)
 
             if (newCommit) {
-                const commitDateObject = getSetDateModel(element.Date)
-                const FilePromisse = createFile(filePath, fileInfo)
-                await Promise.all([commitDateObject, FilePromisse])
-                
+                const commitDateObject = await getSetDateModel(element.Date)
+                await createFile(filePath, fileInfo)
+
                 await execute(`git add . && git commit -m "${element.desc.replaceAll('"', "'")}"`, { env: commitDateObject, cwd: commitPath } )
             } else {commitedPreviously ++}
         }
